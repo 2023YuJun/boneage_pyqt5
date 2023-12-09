@@ -533,52 +533,68 @@ border:none;
                  </spacer>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8">
-                  <property name="spacing">
-                   <number>5</number>
+                 <widget class="QGroupBox" name="groupBox_input">
+                  <property name="styleSheet">
+                   <string notr="true">#groupBox_input{
+border:none;
+}</string>
                   </property>
-                  <property name="leftMargin">
-                   <number>10</number>
+                  <property name="title">
+                   <string/>
                   </property>
-                  <property name="rightMargin">
-                   <number>10</number>
-                  </property>
-                  <item>
-                   <widget class="QPushButton" name="fileButton">
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="../UIqrc.qrc">
-                      <normaloff>:/images/icon/打开.png</normaloff>:/images/icon/打开.png</iconset>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="cameraButton">
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="../UIqrc.qrc">
-                      <normaloff>:/images/icon/摄像头开.png</normaloff>
-                      <activeon>:/images/icon/摄像头关.png</activeon>
-                      <selectedon>:/images/icon/摄像头关.png</selectedon>:/images/icon/摄像头开.png</iconset>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="rtspButton">
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="../UIqrc.qrc">
-                      <normaloff>:/images/icon/实时视频流解析.png</normaloff>:/images/icon/实时视频流解析.png</iconset>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                   <property name="spacing">
+                    <number>5</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>5</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="fileButton">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../UIqrc.qrc">
+                       <normaloff>:/images/icon/打开.png</normaloff>:/images/icon/打开.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="cameraButton">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../UIqrc.qrc">
+                       <normaloff>:/images/icon/摄像头开.png</normaloff>
+                       <activeon>:/images/icon/摄像头关.png</activeon>
+                       <selectedon>:/images/icon/摄像头关.png</selectedon>:/images/icon/摄像头开.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="rtspButton">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../UIqrc.qrc">
+                       <normaloff>:/images/icon/实时视频流解析.png</normaloff>:/images/icon/实时视频流解析.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
                 </item>
                </layout>
               </widget>

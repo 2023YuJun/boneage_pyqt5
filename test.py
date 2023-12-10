@@ -1,98 +1,96 @@
-import sys
-import cv2
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QPushButton, QGroupBox, QLabel, QWidget, QComboBox
-from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QMainWindow, QApplication, QLabel, QVBoxLayout, QPushButton, QFileDialog
 from PyQt5.QtGui import QPixmap, QImage
+import cv2
+import sys
+import os
+import json
+import numpy as np
+import torch
+import torch.backends.cudnn as cudnn
+import os
+import time
+import cv2
 
-class CameraWindow(QMainWindow):
+from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMenu, QAction, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtGui import QImage, QPixmap, QPainter, QIcon
+from PyQt5 import uic
+from mainUI.mainUI import Ui_MainWindow
+from toolUI.TipsMessageBox import TipsMessageBox
+from toolUI.cameranums import Camera
+
+from PyQt5.QtWidgets import QMainWindow, QLabel, QApplication, QVBoxLayout, QPushButton, QWidget, QProgressBar
+from PyQt5.QtCore import QTimer, Qt
+import cv2
+import sys
+
+class VideoPlayer(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Camera Viewer")
+        self.video_label = QLabel(self)
+        self.setCentralWidget(self.video_label)
 
-        # 创建主布局和窗口部件
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        self.layout = QVBoxLayout()
-        self.central_widget.setLayout(self.layout)
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setAlignment(Qt.AlignCenter)
+        self.progress_bar.setValue(0)
 
-        # 创建摄像头选择下拉菜单
-        self.camera_combo = QComboBox()
-        self.camera_combo.addItem("Select Camera")
-        self.detect_camera_devices()  # 检测摄像头设备
-        self.layout.addWidget(self.camera_combo)
-
-        # 创建按钮
-        self.btn_toggle_camera = QPushButton("Start Camera")
-        self.btn_toggle_camera.setCheckable(True)  # 设置按钮为可选中状态
-        self.btn_toggle_camera.clicked.connect(self.toggle_camera)
-        self.layout.addWidget(self.btn_toggle_camera)
-
-        # 创建用于显示摄像头画面的 QLabel
-        self.camera_groupbox = QGroupBox("Camera View")
-        self.camera_layout = QVBoxLayout()
-        self.camera_label = QLabel()
-        self.camera_label.setFixedSize(640, 480)  # 设置显示画面的大小
-        self.camera_layout.addWidget(self.camera_label)
-        self.camera_groupbox.setLayout(self.camera_layout)
-        self.layout.addWidget(self.camera_groupbox)
-
-        # 初始化摄像头和计时器
-        self.capture = None
         self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_frame)
+        self.timer.timeout.connect(self.show_video_frame)
 
-    def detect_camera_devices(self):
-        for i in range(10):  # 检测摄像头设备，可根据实际情况调整范围
-            cap = cv2.VideoCapture(i)
-            if cap.isOpened():
-                self.camera_combo.addItem(f"Camera {i}")
-                cap.release()
+        self.play_button = QPushButton('Play', self)
+        self.play_button.clicked.connect(self.play_video)
 
-    def toggle_camera(self):
-        if not self.btn_toggle_camera.isChecked():
-            self.stop_camera()
-            self.camera_combo.setEnabled(True)
+        self.layout = QVBoxLayout()
+        self.layout.addWidget(self.progress_bar)
+        self.layout.addWidget(self.play_button)
+
+        self.widget = QWidget()
+        self.widget.setLayout(self.layout)
+        self.setCentralWidget(self.widget)
+
+        self.file_path = 'your_video_file.mp4'  # 你的视频文件路径
+        self.cap = cv2.VideoCapture(self.file_path)
+        self.total_frames = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
+        self.frame_count = 0
+
+    def play_video(self):
+        if not self.timer.isActive():
+            self.timer.start(1000 // self.fps)  # 设置计时器，根据视频帧率调整时间间隔
+            self.play_button.setText('Pause')
         else:
-            self.start_camera()
-            self.camera_combo.setEnabled(False)
+            self.timer.stop()
+            self.play_button.setText('Play')
 
-    def start_camera(self):
-        if self.capture is None:
-            camera_index = self.camera_combo.currentIndex() - 1  # 获取选择的摄像头索引
-            if camera_index >= 0:
-                self.capture = cv2.VideoCapture(camera_index)  # 打开选择的摄像头
-                self.timer.start(20)  # 设置更新画面的时间间隔
-                self.btn_toggle_camera.setText("Stop Camera")
-
-    def stop_camera(self):
-        self.timer.stop()
-        if self.capture is not None:
-            self.capture.release()  # 释放摄像头
-            self.capture = None  # 将 self.capture 设为 None
-        self.camera_label.clear()
-        self.btn_toggle_camera.setText("Start Camera")
-
-    def update_frame(self):
-        ret, frame = self.capture.read()  # 读取摄像头画面
-
+    def show_video_frame(self):
+        ret, frame = self.cap.read()
         if ret:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # 将图像格式从 OpenCV 格式转换为 RGB 格式
-            h, w, ch = frame.shape
-            bytes_per_line = ch * w
-            convert_to_Qt_format = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
-            pixmap = QPixmap.fromImage(convert_to_Qt_format)
-            self.camera_label.setPixmap(pixmap.scaled(self.camera_label.size()))  # 在 QLabel 中显示画面
+            self.frame_count += 1
+            pixmap = self.convert_frame_to_pixmap(frame)
+            self.video_label.setPixmap(pixmap.scaled(self.video_label.size(), Qt.KeepAspectRatio))
+            progress_value = int((self.frame_count / self.total_frames) * 100)
+            self.progress_bar.setValue(progress_value)
+        else:
+            self.cap.release()
+            self.timer.stop()
+            self.play_button.setText('Play')
 
-    def closeEvent(self, event):
-        if self.capture is not None:
-            self.capture.release()  # 释放摄像头
-        event.accept()
+    def convert_frame_to_pixmap(self, frame):
+        rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        h, w, ch = rgb_image.shape
+        bytes_per_line = ch * w
+        q_img = QImage(rgb_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(q_img)
+        return pixmap
+
 
 def main():
     app = QApplication(sys.argv)
-    window = CameraWindow()
-    window.show()
+    player = VideoPlayer()
+    player.resize(800, 600)
+    player.show()
     sys.exit(app.exec_())
 
 if __name__ == '__main__':

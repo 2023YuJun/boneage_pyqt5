@@ -1096,13 +1096,15 @@ border:none;
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="pushButton_7">
+                 <widget class="QPushButton" name="runButton">
                   <property name="text">
                    <string/>
                   </property>
                   <property name="icon">
                    <iconset resource="../UIqrc.qrc">
-                    <normaloff>:/images/icon/运行.png</normaloff>:/images/icon/运行.png</iconset>
+                    <normaloff>:/images/icon/运行.png</normaloff>
+                    <activeon>:/images/icon/暂停.png</activeon>
+                    <selectedon>:/images/icon/暂停.png</selectedon>:/images/icon/运行.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1134,7 +1136,7 @@ background: rgba(55, 55, 55, 200);
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_8">
+                 <widget class="QPushButton" name="stopButton">
                   <property name="text">
                    <string/>
                   </property>

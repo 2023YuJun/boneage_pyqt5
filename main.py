@@ -41,11 +41,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.cameraButton.setCheckable(True)
         self.cameraButton.clicked.connect(self.chose_cam)
 
+        self.runButton.setCheckable(True)
+        self.runButton.clicked.connect(self.toggle_video_play)
+
         # 初始化摄像头和计时器
         self.cam = '0'
         self.capture = None
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_frame)
+        self.captimer = QTimer(self)
+        self.captimer.timeout.connect(self.update_frame)
+
+        # 视频播放
+        self.video = None
+        self.total_frames = 0
+        self.current_frame = 0
+        self.videotimer = QTimer(self)
+        self.videotimer.timeout.connect(self.show_next_frame)
 
         # 更改读条
         self.confSpinBox.valueChanged.connect(lambda x: self.change_val(x, 'confSpinBox'))
@@ -68,50 +78,58 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         open_fold = config['Default_path']
         if not os.path.exists(open_fold):
             open_fold = os.getcwd()
-        name, _ = QFileDialog.getOpenFileName(self, 'Video/image', open_fold, "图像或视频文件(*.mp4 *.mkv *.avi *.flv "
+        name, _ = QFileDialog.getOpenFileName(self, 'Video/image', open_fold, "video/image file(*.mp4 *.mkv *.avi *.flv"
                                                                               "*.jpg *.png)")
         if name:
-            self.det_thread.source = name
+            if name.lower().endswith(('.png', '.jpg', '.jpeg')):
+                if self.video is not None:
+                    self.videotimer.stop()
+                    self.video.release()
+                    self.video = None
+                pixmap = QPixmap(name)
+                self.label_previous.setPixmap(pixmap.scaled(self.label_previous.size(), Qt.KeepAspectRatio))
+            else:
+                self.show_video(name)
             self.bottom_msg('Loaded file：{}'.format(os.path.basename(name)))
             config['Default_path'] = os.path.dirname(name)
             config_json = json.dumps(config, ensure_ascii=False, indent=2)
             with open(config_file, 'w', encoding='utf-8') as f:
                 f.write(config_json)
-            self.stop()
 
-    # def toggle_camera(self):
-    #     if self.cameraButton.isChecked():
-    #         self.start_camera()
-    #     else:
-    #         self.stop_camera()
-    #
-    # def start_camera(self):
-    #     if self.capture is None:
-    #         self.capture = cv2.VideoCapture(0)  # 打开默认摄像头（索引为0）
-    #     self.timer.start(20)  # 设置更新画面的时间间隔
-    #
-    # def stop_camera(self):
-    #     self.timer.stop()
-    #     if self.capture is not None:
-    #         self.capture.release()  # 释放摄像头
-    #         self.capture = None  # 将 self.capture 设为 None
-    #     self.label_previous.clear()
-    #
-    # def update_frame(self):
-    #     ret, frame = self.capture.read()  # 读取摄像头画面
-    #
-    #     if ret:
-    #         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # 将图像格式从 OpenCV 格式转换为 RGB 格式
-    #         h, w, ch = frame.shape
-    #         bytes_per_line = ch * w
-    #         convert_to_Qt_format = QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888)
-    #         pixmap = QPixmap.fromImage(convert_to_Qt_format)
-    #         self.label_previous.setPixmap(pixmap.scaled(self.label_previous.size()))  # 在 QLabel 中显示画面
-    #
-    # def closeEvent(self, event):
-    #     if self.capture is not None:
-    #         self.capture.release()  # 释放摄像头
-    #     event.accept()
+    def show_video(self, file_path):
+        self.video = cv2.VideoCapture(file_path)
+        self.total_frames = int(self.video.get(cv2.CAP_PROP_FRAME_COUNT))  # 获取视频总帧数
+        self.videotimer.start(20)  # 设置计时器，根据视频帧率调整时间间隔
+        self.current_frame = 0
+
+    def show_next_frame(self):
+        if self.video and self.video.isOpened():
+            ret, frame = self.video.read()
+            if ret:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                h, w, ch = frame.shape
+                bytes_per_line = ch * w
+                q_img = QPixmap.fromImage(QImage(frame.data, w, h, bytes_per_line, QImage.Format_RGB888))
+                self.label_previous.setPixmap(q_img.scaled(self.label_previous.size(), Qt.KeepAspectRatio))
+
+                self.current_frame += 1
+                progress_value = int((self.current_frame / self.total_frames) * 100)
+                self.progressBar.setValue(progress_value)
+
+                QApplication.processEvents()
+            else:
+                self.videotimer.stop()
+                self.video.release()
+                self.video = None
+
+    def toggle_video_play(self):
+        if self.runButton.isChecked():
+            if not self.video:
+                return
+            else:
+                self.videotimer.start(20)
+        else:
+            self.videotimer.stop()
 
     def change_val(self, x, flag):
         if flag == 'confSpinBox':
@@ -180,7 +198,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             camera_index = int(self.cam)  # 获取选择的摄像头索引
             if camera_index >= 0:
                 self.capture = cv2.VideoCapture(camera_index)  # 打开选择的摄像头
-                self.timer.start(20)  # 设置更新画面的时间间隔
+                self.captimer.start(20)  # 设置更新画面的时间间隔
 
     def stop_camera(self):
         self.timer.stop()

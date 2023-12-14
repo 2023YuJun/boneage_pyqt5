@@ -6,7 +6,7 @@ import torch
 import torch.backends.cudnn as cudnn
 import os
 import time
-import cv2
+import cv2 
 
 from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal,QSize
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMenu, QAction, QLabel, QVBoxLayout, QWidget,QSplitter,QSizePolicy
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
         """ 
         TODO 
-        1.最大化窗口后，分割器的宽高也要跟着变化
+        1.最大化窗口后，分割器的宽高也要跟着变化,同时两个显示的组件的宽高也要跟着变化
         2.图片/视频自适应窗口大小
         """
         # 创建分割器实例
@@ -77,8 +77,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.splitter.resize(899,426)
         self.splitter.setHandleWidth(10)
         self.splitter.setStyleSheet("QSplitter::handle { background-color: red; }")#设置分隔条的样式
-        # 分割器添加组件
+        # 创建组件label_current
         self.label_current=QLabel()
+        #  TEST 测试图片
         # pic1=QPixmap("./pic/b939.jpg")
         # self.label_current.setPixmap(pic1)
         self.label_current.setAlignment(Qt.AlignCenter)
@@ -90,8 +91,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_current.setSizePolicy(sizePolicy)
         self.label_current.setMinimumSize(QSize(200, 0))
         self.label_current.setCursor(QCursor(Qt.ArrowCursor))
-        
+
+        # TEST 测试OpenCV打开的图片
+        self.cvimg=cv2.imread("./pic/F0UyYDUWAAAuQux.png")
+        # OpenCV图片转为QImage 再转为QPixmap
+        height,width,depth=self.cvimg.shape
+        img=QImage(self.cvimg.data,width,height,width*depth,QImage.Format_BGR888)
+        self.label_current.setPixmap(QPixmap.fromImage(img))
+
+        # TEST 测试打开摄像头(只是打开了摄像头，只有一帧的画面)
+        flag,self.image = cv2.VideoCapture(0).read()
+        show = cv2.resize(self.image,(480,320))
+        show = cv2.cvtColor(show, cv2.COLOR_BGR2RGB)
+        showImage = QImage(show.data, show.shape[1],show.shape[0],QImage.Format_RGB888)
+        self.label_current.setPixmap(QPixmap.fromImage(showImage))
+
+
+        # 创建组件label_previous
         self.label_previous=QLabel()
+        # TEST 
         # pic2=QPixmap("./pic/F0UyYDUWAAAuQux.png")
         # self.label_previous.setPixmap(pic2)
         self.label_previous.setAlignment(Qt.AlignCenter)
@@ -100,7 +118,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_previous.setMinimumSize(QSize(200, 0))
         self.label_previous.setCursor(QCursor(Qt.ArrowCursor))
 
-        # 添加组件
+        # TEST 测试OpenCV打开的图片
+        self.cvimg1=cv2.imread("./pic/b939.jpg")
+        # OpenCV图片转为QImage 再转为QPixmap
+        height,width,depth=self.cvimg1.shape
+        img=QImage(self.cvimg1.data,width,height,width*depth,QImage.Format_BGR888)
+        self.label_previous.setPixmap(QPixmap.fromImage(img))
+
+        # 分割器添加组件
         self.splitter.addWidget(self.label_current)
         self.splitter.addWidget(self.label_previous)
 

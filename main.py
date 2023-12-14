@@ -8,9 +8,9 @@ import os
 import time
 import cv2
 
-from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMenu, QAction, QLabel, QVBoxLayout, QWidget
-from PyQt5.QtGui import QImage, QPixmap, QPainter, QIcon
+from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal,QSize
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMenu, QAction, QLabel, QVBoxLayout, QWidget,QSplitter,QSizePolicy
+from PyQt5.QtGui import QImage, QPixmap, QPainter, QIcon,QCursor
 from PyQt5 import uic
 from mainUI.mainUI import Ui_MainWindow
 from toolUI.TipsMessageBox import TipsMessageBox
@@ -64,6 +64,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.iouSlider.valueChanged.connect(lambda x: self.change_val(x, 'iouSlider'))
         self.rateSpinBox.valueChanged.connect(lambda x: self.change_val(x, 'rateSpinBox'))
         self.rateSlider.valueChanged.connect(lambda x: self.change_val(x, 'rateSlider'))
+
+        
+        """ 
+        TODO 
+        1.最大化窗口后，分割器的宽高也要跟着变化
+        2.图片/视频自适应窗口大小
+        """
+        # 创建分割器实例
+        self.splitter=QSplitter(Qt.Horizontal,self.groupBox_8)
+        self.splitter.setEnabled(True)
+        self.splitter.resize(899,426)
+        self.splitter.setHandleWidth(10)
+        self.splitter.setStyleSheet("QSplitter::handle { background-color: red; }")#设置分隔条的样式
+        # 分割器添加组件
+        self.label_current=QLabel()
+        # pic1=QPixmap("./pic/b939.jpg")
+        # self.label_current.setPixmap(pic1)
+        self.label_current.setAlignment(Qt.AlignCenter)
+        self.label_current.setScaledContents(True)
+        sizePolicy = QSizePolicy(QSizePolicy.Ignored,QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_current.sizePolicy().hasHeightForWidth())
+        self.label_current.setSizePolicy(sizePolicy)
+        self.label_current.setMinimumSize(QSize(200, 0))
+        self.label_current.setCursor(QCursor(Qt.ArrowCursor))
+        
+        self.label_previous=QLabel()
+        # pic2=QPixmap("./pic/F0UyYDUWAAAuQux.png")
+        # self.label_previous.setPixmap(pic2)
+        self.label_previous.setAlignment(Qt.AlignCenter)
+        sizePolicy.setHeightForWidth(self.label_previous.sizePolicy().hasHeightForWidth())
+        self.label_previous.setSizePolicy(sizePolicy)
+        self.label_previous.setMinimumSize(QSize(200, 0))
+        self.label_previous.setCursor(QCursor(Qt.ArrowCursor))
+
+        # 添加组件
+        self.splitter.addWidget(self.label_current)
+        self.splitter.addWidget(self.label_previous)
+
+
 
     def max_or_restore(self):
         if self.maxButton.isChecked():

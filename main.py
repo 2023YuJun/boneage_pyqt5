@@ -102,6 +102,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.videotimer.start(20)  # 设置计时器，根据视频帧率调整时间间隔
         self.current_frame = 0
 
+        # 触发一次 runButton 的点击
+        self.runButton.click()
+
     def show_next_frame(self):
         if self.video and self.video.isOpened():
             ret, frame = self.video.read()

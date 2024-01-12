@@ -1389,7 +1389,7 @@ border:none;
             <property name="title">
              <string/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1410,7 +1410,7 @@ border:none;
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>41</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -1420,8 +1420,12 @@ border:none;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgba(200, 200, 200,0);
-border:none;</string>
+                <string notr="true">#groupBox_7{
+background-color:#8b8b8b;
+border:none;
+border-bottom:1px solid #bababa;
+border-radius:0px;
+}</string>
                </property>
                <property name="title">
                 <string/>
@@ -1469,52 +1473,29 @@ border:none;</string>
               </widget>
              </item>
              <item>
-              <widget class="QGroupBox" name="groupBox_8">
+              <widget class="QSplitter" name="splitter">
                <property name="styleSheet">
-                <string notr="true">background-color: rgba(200, 200, 200,0);
-border-left:none;
-border-right:none;</string>
+                <string notr="true">QSplitter::handle {
+    background-color: rgba(200, 200, 200, 0);
+    border: none;
+	border-radius:0px;
+	width: 1px;
+}
+
+
+QSplitter::handle:horizontal {
+    border-left:1px solid #bababa; 
+}</string>
                </property>
-               <property name="title">
-                <string/>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <property name="spacing">
+               <widget class="QLabel" name="label_previous">
+                <property name="indent">
                  <number>0</number>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="label_previous">
-                  <property name="styleSheet">
-                   <string notr="true">border-right:1px solid #bababa;</string>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_current">
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               </widget>
+               <widget class="QLabel" name="label_current"/>
               </widget>
              </item>
              <item>
@@ -1526,8 +1507,13 @@ border-right:none;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgba(200, 200, 200,0);
-border:none;</string>
+                <string notr="true">#groupBox_9{
+background-color: rgba(200, 200, 200,0);
+border:none
+;border-top:1px solid #bababa;
+border-radius:0px;
+}
+</string>
                </property>
                <property name="title">
                 <string/>
@@ -1549,7 +1535,12 @@ border:none;</string>
                  <number>10</number>
                 </property>
                 <item>
-                 <widget class="QTextEdit" name="textEdit"/>
+                 <widget class="QTextEdit" name="textEdit">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgba(200, 200, 200,0);
+border:none;</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>

@@ -384,7 +384,7 @@ border-top:1px solid #bababa;
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -399,7 +399,7 @@ border-top:1px solid #bababa;
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>16777215</width>
+                    <width>80</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -407,7 +407,7 @@ border-top:1px solid #bababa;
                    <string notr="true">font-size:18px;</string>
                   </property>
                   <property name="text">
-                   <string>模型</string>
+                   <string>模式选择</string>
                   </property>
                   <property name="indent">
                    <number>0</number>
@@ -415,20 +415,13 @@ border-top:1px solid #bababa;
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
+                 <widget class="QComboBox" name="comboBox_task">
+                  <property name="maximumSize">
                    <size>
-                    <width>40</width>
-                    <height>20</height>
+                    <width>100</width>
+                    <height>16777215</height>
                    </size>
                   </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="comboBox_task">
                   <property name="styleSheet">
                    <string notr="true">QComboBox{
 font-family: &quot;Microsoft YaHei&quot;;
@@ -498,7 +491,7 @@ border:none;
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -1468,6 +1461,30 @@ border-radius:0px;
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="fps_label">
+                  <property name="minimumSize">
+                   <size>
+                    <width>44</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Microsoft YaHei</family>
+                    <pointsize>-1</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font-size:22px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>

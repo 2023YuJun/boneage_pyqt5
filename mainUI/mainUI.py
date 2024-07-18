@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1250, 700)
+        MainWindow.resize(1254, 707)
         MainWindow.setStyleSheet("#mainWindow{\n"
                                  "border:none;\n"
                                  "}\n"
@@ -55,19 +55,49 @@ class Ui_MainWindow(object):
                                  "}\n"
                                  "\n"
                                  "QLabel{\n"
-                                 "font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
+                                 "    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
                                  "    font-weight: bold;  /* 字体粗细 */\n"
                                  "    color: white;  /* 文本颜色 */\n"
                                  "    text-align: center center;  /* 文本居中对齐 */\n"
                                  "    indent:0;\n"
                                  "}\n"
-                                 "")
+                                 "\n"
+                                 "QTabWidget::pane {\n"
+                                 "    border: none;\n"
+                                 "}\n"
+                                 "\n"
+                                 "QTabBar::tab {\n"
+                                 "    background-color:#8b8b8b;\n"
+                                 "    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
+                                 "    font-weight: bold;  /* 字体粗细 */\n"
+                                 "    color: white;  /* 文本颜色 */\n"
+                                 "    text-align: center center;  /* 文本居中对齐 */\n"
+                                 "    font: 14px;\n"
+                                 "    indent:0;\n"
+                                 "    width: 60px;\n"
+                                 "    height: 20px;\n"
+                                 "    margin: 0px;\n"
+                                 "    border-right:1px solid #bababa;\n"
+                                 "    border-top-left-radius: 5px;    /*设置tab的边框的圆角（左上圆角）*/\n"
+                                 "    border-top-right-radius: 5px;    /*设置tab的边框的圆角（右上圆角）*/\n"
+                                 "\n"
+                                 "}\n"
+                                 "\n"
+                                 "\n"
+                                 "/*设置TabWidget中鼠标悬浮在QTabBar的tab上，但未选中该Tab的样式*/\n"
+                                 "QTabBar::tab:hover:!selected {\n"
+                                 "    background-color: rgb(165, 165, 165);\n"
+                                 "}\n"
+                                 "\n"
+                                 "QTabBar::tab:selected {\n"
+                                 "        color: #757575;\n"
+                                 "}")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_46 = QtWidgets.QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_46.setSpacing(0)
+        self.horizontalLayout_46.setObjectName("horizontalLayout_46")
         self.groupBox_body = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_body.setStyleSheet("")
         self.groupBox_body.setTitle("")
@@ -85,7 +115,8 @@ class Ui_MainWindow(object):
         self.groupBox_top.setTitle("")
         self.groupBox_top.setObjectName("groupBox_top")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.groupBox_top)
-        self.horizontalLayout_2.setContentsMargins(10, 0, 5, 0)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label = QtWidgets.QLabel(self.groupBox_top)
         self.label.setStyleSheet("font-size:26px;")
@@ -125,8 +156,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addWidget(self.closeButton)
         self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
         self.verticalLayout_4.addWidget(self.groupBox_top)
-        self.groupBox_fill = QtWidgets.QGroupBox(self.groupBox_body)
-        self.groupBox_fill.setStyleSheet("")
+        self.tabWidget = QtWidgets.QTabWidget(self.groupBox_body)
+        self.tabWidget.setStyleSheet("")
+        self.tabWidget.setObjectName("tabWidget")
+        self.detect_tab = QtWidgets.QWidget()
+        self.detect_tab.setObjectName("detect_tab")
+        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.detect_tab)
+        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.groupBox_fill = QtWidgets.QGroupBox(self.detect_tab)
+        self.groupBox_fill.setStyleSheet("#groupBox_fill{\n"
+                                         "border-left:none;\n"
+                                         "border-right:none;\n"
+                                         "}")
         self.groupBox_fill.setTitle("")
         self.groupBox_fill.setObjectName("groupBox_fill")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.groupBox_fill)
@@ -558,30 +601,51 @@ class Ui_MainWindow(object):
         self.runButton.setIcon(icon6)
         self.runButton.setObjectName("runButton")
         self.horizontalLayout_15.addWidget(self.runButton)
-        self.progressBar = QtWidgets.QProgressBar(self.groupBox_10)
-        self.progressBar.setMaximumSize(QtCore.QSize(16777215, 12))
-        self.progressBar.setStyleSheet("QProgressBar{ \n"
-                                       "color: rgb(255, 255, 255); \n"
-                                       "font:10px; \n"
-                                       "border-radius:5px; \n"
-                                       "text-align:center; \n"
-                                       "border:none; \n"
-                                       "background-color: rgba(215, 215, 215,100);\n"
-                                       "} \n"
-                                       "QProgressBar:chunk{ \n"
-                                       "border-radius:5px; \n"
-                                       "background: rgba(55, 55, 55, 200);\n"
-                                       "}")
-        self.progressBar.setProperty("value", 0)
-        self.progressBar.setObjectName("progressBar")
-        self.horizontalLayout_15.addWidget(self.progressBar)
-        self.stopButton = QtWidgets.QPushButton(self.groupBox_10)
-        self.stopButton.setText("")
+        self.ProgressSlider = QtWidgets.QSlider(self.groupBox_10)
+        self.ProgressSlider.setStyleSheet("QSlider{\n"
+                                          "color: rgb(255, 255, 255); \n"
+                                          "font:10px; \n"
+                                          "border-radius:5px; \n"
+                                          "text-align:center; \n"
+                                          "border:none; \n"
+                                          "background-color: rgba(215, 215, 215,100);\n"
+                                          "height: 15px;\n"
+                                          "}\n"
+                                          "QSlider::groove:horizontal {                                \n"
+                                          "     border-radius:5px;     \n"
+                                          "     border: 1px;                             \n"
+                                          "     height: 8px;                                           \n"
+                                          "     margin: 0px;                                         \n"
+                                          "     left: 5px; right: 5px; \n"
+                                          " }\n"
+                                          "QSlider::handle:horizontal {                               \n"
+                                          "     border: 0px ; \n"
+                                          "     width:15px;\n"
+                                          "     margin: -7px -7px -7px -7px;                  \n"
+                                          "} \n"
+                                          "QSlider::add-page:horizontal{\n"
+                                          "background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(215, 215, 215,100), stop:0.25 rgba(215, 215, 215,100), stop:0.5 rgba(215, 215, 215,100), stop:1 rgba(215, 215, 215,100)); \n"
+                                          "border-radius:5px;\n"
+                                          "\n"
+                                          "}\n"
+                                          "QSlider::sub-page:horizontal{                               \n"
+                                          "background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(55, 55, 55, 200), stop:0.25 rgba(55, 55, 55, 200), stop:0.5 rgba(55, 55, 55, 200), stop:1 rgba(55, 55, 55, 200));  \n"
+                                          "border-radius:5px;\n"
+                                          "                  \n"
+                                          "}")
+        self.ProgressSlider.setMaximum(100)
+        self.ProgressSlider.setSingleStep(1)
+        self.ProgressSlider.setProperty("value", 0)
+        self.ProgressSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.ProgressSlider.setObjectName("ProgressSlider")
+        self.horizontalLayout_15.addWidget(self.ProgressSlider)
+        self.detectButton = QtWidgets.QPushButton(self.groupBox_10)
+        self.detectButton.setText("")
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap(":/images/icon/终止.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.stopButton.setIcon(icon7)
-        self.stopButton.setObjectName("stopButton")
-        self.horizontalLayout_15.addWidget(self.stopButton)
+        self.detectButton.setIcon(icon7)
+        self.detectButton.setObjectName("detectButton")
+        self.horizontalLayout_15.addWidget(self.detectButton)
         self.verticalLayout_3.addWidget(self.groupBox_10)
         self.groupBox_11 = QtWidgets.QGroupBox(self.groupBox_sidebar)
         self.groupBox_11.setMinimumSize(QtCore.QSize(0, 40))
@@ -670,18 +734,15 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setContentsMargins(10, 0, 10, 0)
         self.verticalLayout_9.setSpacing(0)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
-        self.listWidget = QtWidgets.QListWidget(self.groupBox_13)
-        self.listWidget.setStyleSheet("QListWidget{\n"
-                                      "background-color: rgba(12, 28, 77, 0);\n"
-                                      "\n"
-                                      "border-radius:0px;\n"
-                                      "font-family: \"Microsoft YaHei\";\n"
-                                      "font-size: 16px;\n"
-                                      "color: rgb(218, 218, 218);\n"
-                                      "}\n"
-                                      "")
-        self.listWidget.setObjectName("listWidget")
-        self.verticalLayout_9.addWidget(self.listWidget)
+        self.detection_info = QtWidgets.QTextEdit(self.groupBox_13)
+        self.detection_info.setStyleSheet("background-color: rgba(12, 28, 77, 0);\n"
+                                          "\n"
+                                          "border-radius:0px;\n"
+                                          "font-family: \"Microsoft YaHei\";\n"
+                                          "font-size: 16px;\n"
+                                          "color: rgb(218, 218, 218);")
+        self.detection_info.setObjectName("detection_info")
+        self.verticalLayout_9.addWidget(self.detection_info)
         self.verticalLayout_3.addWidget(self.groupBox_13)
         self.horizontalLayout.addWidget(self.groupBox_sidebar)
         self.groupBox_view = QtWidgets.QGroupBox(self.groupBox_fill)
@@ -764,14 +825,190 @@ class Ui_MainWindow(object):
         self.verticalLayout_10.setContentsMargins(10, 10, 10, 10)
         self.verticalLayout_10.setSpacing(5)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
-        self.textEdit = QtWidgets.QTextEdit(self.groupBox_9)
-        self.textEdit.setStyleSheet("background-color: rgba(200, 200, 200,0);\n"
-                                    "border:none;")
-        self.textEdit.setObjectName("textEdit")
-        self.verticalLayout_10.addWidget(self.textEdit)
+        self.report_info = QtWidgets.QTextEdit(self.groupBox_9)
+        self.report_info.setStyleSheet("background-color: rgba(200, 200, 200,0);\n"
+                                       "border:none;")
+        self.report_info.setObjectName("report_info")
+        self.verticalLayout_10.addWidget(self.report_info)
         self.verticalLayout_2.addWidget(self.groupBox_9)
         self.horizontalLayout.addWidget(self.groupBox_view)
-        self.verticalLayout_4.addWidget(self.groupBox_fill)
+        self.horizontalLayout_5.addWidget(self.groupBox_fill)
+        self.tabWidget.addTab(self.detect_tab, "")
+        self.report_tab = QtWidgets.QWidget()
+        self.report_tab.setObjectName("report_tab")
+        self.horizontalLayout_47 = QtWidgets.QHBoxLayout(self.report_tab)
+        self.horizontalLayout_47.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_47.setSpacing(0)
+        self.horizontalLayout_47.setObjectName("horizontalLayout_47")
+        self.groupBox_fill_2 = QtWidgets.QGroupBox(self.report_tab)
+        self.groupBox_fill_2.setStyleSheet("#groupBox_fill_2{\n"
+                                           "border-left:none;\n"
+                                           "border-right:none;\n"
+                                           "}")
+        self.groupBox_fill_2.setTitle("")
+        self.groupBox_fill_2.setObjectName("groupBox_fill_2")
+        self.horizontalLayout_33 = QtWidgets.QHBoxLayout(self.groupBox_fill_2)
+        self.horizontalLayout_33.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_33.setSpacing(0)
+        self.horizontalLayout_33.setObjectName("horizontalLayout_33")
+        self.groupBox_sidebar_3 = QtWidgets.QGroupBox(self.groupBox_fill_2)
+        self.groupBox_sidebar_3.setMaximumSize(QtCore.QSize(326, 16777215))
+        self.groupBox_sidebar_3.setStyleSheet("#groupBox_sidebar_3{\n"
+                                              "border:none;\n"
+                                              "border-right:1px solid #bababa;\n"
+                                              "}")
+        self.groupBox_sidebar_3.setTitle("")
+        self.groupBox_sidebar_3.setObjectName("groupBox_sidebar_3")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.groupBox_sidebar_3)
+        self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_17.setSpacing(0)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.groupBox_25 = QtWidgets.QGroupBox(self.groupBox_sidebar_3)
+        self.groupBox_25.setMinimumSize(QtCore.QSize(0, 40))
+        self.groupBox_25.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.groupBox_25.setStyleSheet("border:none;")
+        self.groupBox_25.setTitle("")
+        self.groupBox_25.setObjectName("groupBox_25")
+        self.horizontalLayout_34 = QtWidgets.QHBoxLayout(self.groupBox_25)
+        self.horizontalLayout_34.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_34.setSpacing(0)
+        self.horizontalLayout_34.setObjectName("horizontalLayout_34")
+        self.label_5 = QtWidgets.QLabel(self.groupBox_25)
+        self.label_5.setStyleSheet("font-size:22px;")
+        self.label_5.setIndent(0)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_34.addWidget(self.label_5)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_34.addItem(spacerItem6)
+        self.verticalLayout_17.addWidget(self.groupBox_25)
+        self.groupBox_26 = QtWidgets.QGroupBox(self.groupBox_sidebar_3)
+        self.groupBox_26.setMinimumSize(QtCore.QSize(0, 30))
+        self.groupBox_26.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.groupBox_26.setStyleSheet("#groupBox_26{\n"
+                                       "border:none;\n"
+                                       "border-top:1px solid #bababa;\n"
+                                       "}\n"
+                                       "")
+        self.groupBox_26.setTitle("")
+        self.groupBox_26.setObjectName("groupBox_26")
+        self.horizontalLayout_35 = QtWidgets.QHBoxLayout(self.groupBox_26)
+        self.horizontalLayout_35.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_35.setSpacing(0)
+        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
+        self.label_20 = QtWidgets.QLabel(self.groupBox_26)
+        self.label_20.setMinimumSize(QtCore.QSize(0, 0))
+        self.label_20.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.label_20.setStyleSheet("font-size:18px;")
+        self.label_20.setIndent(0)
+        self.label_20.setObjectName("label_20")
+        self.horizontalLayout_35.addWidget(self.label_20)
+        self.comboBox_task_3 = QtWidgets.QComboBox(self.groupBox_26)
+        self.comboBox_task_3.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.comboBox_task_3.setStyleSheet("QComboBox{\n"
+                                           "font-family: \"Microsoft YaHei\";\n"
+                                           "font-size: 16px;\n"
+                                           "color: rgb(218, 218, 218);\n"
+                                           "border-width:0px;\n"
+                                           "border-color:white;\n"
+                                           "border-style:solid;\n"
+                                           "background-color: rgba(200, 200, 200,0);}\n"
+                                           "\n"
+                                           "")
+        self.comboBox_task_3.setObjectName("comboBox_task_3")
+        self.horizontalLayout_35.addWidget(self.comboBox_task_3)
+        self.comboBox_model_3 = QtWidgets.QComboBox(self.groupBox_26)
+        self.comboBox_model_3.setStyleSheet("QComboBox{\n"
+                                            "font-family: \"Microsoft YaHei\";\n"
+                                            "font-size: 16px;\n"
+                                            "color: rgb(218, 218, 218);\n"
+                                            "border-width:0px;\n"
+                                            "border-color:white;\n"
+                                            "border-style:solid;\n"
+                                            "background-color: rgba(200, 200, 200,0);}\n"
+                                            "\n"
+                                            "")
+        self.comboBox_model_3.setObjectName("comboBox_model_3")
+        self.horizontalLayout_35.addWidget(self.comboBox_model_3)
+        self.comboBox = QtWidgets.QComboBox(self.groupBox_26)
+        self.comboBox.setStyleSheet("QComboBox{\n"
+                                    "font-family: \"Microsoft YaHei\";\n"
+                                    "font-size: 16px;\n"
+                                    "color: rgb(218, 218, 218);\n"
+                                    "border-width:0px;\n"
+                                    "border-color:white;\n"
+                                    "border-style:solid;\n"
+                                    "background-color: rgba(200, 200, 200,0);}\n"
+                                    "\n"
+                                    "")
+        self.comboBox.setObjectName("comboBox")
+        self.horizontalLayout_35.addWidget(self.comboBox)
+        self.verticalLayout_17.addWidget(self.groupBox_26)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_17.addItem(spacerItem7)
+        self.groupBox_27 = QtWidgets.QGroupBox(self.groupBox_sidebar_3)
+        self.groupBox_27.setMinimumSize(QtCore.QSize(0, 30))
+        self.groupBox_27.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.groupBox_27.setStyleSheet("#groupBox_27{\n"
+                                       "border:none;\n"
+                                       "}")
+        self.groupBox_27.setTitle("")
+        self.groupBox_27.setObjectName("groupBox_27")
+        self.horizontalLayout_36 = QtWidgets.QHBoxLayout(self.groupBox_27)
+        self.horizontalLayout_36.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_36.setSpacing(0)
+        self.horizontalLayout_36.setObjectName("horizontalLayout_36")
+        self.groupBox_input_3 = QtWidgets.QGroupBox(self.groupBox_27)
+        self.groupBox_input_3.setStyleSheet("#groupBox_input_3{\n"
+                                            "border:none;\n"
+                                            "}")
+        self.groupBox_input_3.setTitle("")
+        self.groupBox_input_3.setObjectName("groupBox_input_3")
+        self.horizontalLayout_37 = QtWidgets.QHBoxLayout(self.groupBox_input_3)
+        self.horizontalLayout_37.setContentsMargins(5, 0, 5, 0)
+        self.horizontalLayout_37.setSpacing(5)
+        self.horizontalLayout_37.setObjectName("horizontalLayout_37")
+        self.saveButton_3 = QtWidgets.QPushButton(self.groupBox_input_3)
+        self.saveButton_3.setText("")
+        self.saveButton_3.setIcon(icon3)
+        self.saveButton_3.setObjectName("saveButton_3")
+        self.horizontalLayout_37.addWidget(self.saveButton_3)
+        self.printButton = QtWidgets.QPushButton(self.groupBox_input_3)
+        self.printButton.setText("")
+        self.printButton.setIcon(icon4)
+        self.printButton.setObjectName("printButton")
+        self.horizontalLayout_37.addWidget(self.printButton)
+        self.horizontalLayout_36.addWidget(self.groupBox_input_3)
+        self.verticalLayout_17.addWidget(self.groupBox_27)
+        self.horizontalLayout_33.addWidget(self.groupBox_sidebar_3)
+        self.report_view = QtWidgets.QGroupBox(self.groupBox_fill_2)
+        self.report_view.setStyleSheet("#report_view{\n"
+                                       "background-color:#8b8b8b;\n"
+                                       "border:none;\n"
+                                       "}")
+        self.report_view.setTitle("")
+        self.report_view.setObjectName("report_view")
+        self.horizontalLayout_49 = QtWidgets.QHBoxLayout(self.report_view)
+        self.horizontalLayout_49.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_49.setSpacing(0)
+        self.horizontalLayout_49.setObjectName("horizontalLayout_49")
+        self.textEdit = QtWidgets.QTextEdit(self.report_view)
+        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.textEdit.setObjectName("textEdit")
+        self.horizontalLayout_49.addWidget(self.textEdit)
+        self.horizontalLayout_33.addWidget(self.report_view)
+        self.horizontalLayout_47.addWidget(self.groupBox_fill_2)
+        self.tabWidget.addTab(self.report_tab, "")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
+        self.horizontalLayout_48 = QtWidgets.QHBoxLayout(self.tab)
+        self.horizontalLayout_48.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_48.setSpacing(0)
+        self.horizontalLayout_48.setObjectName("horizontalLayout_48")
+        self.groupBox_35 = QtWidgets.QGroupBox(self.tab)
+        self.groupBox_35.setObjectName("groupBox_35")
+        self.horizontalLayout_48.addWidget(self.groupBox_35)
+        self.tabWidget.addTab(self.tab, "")
+        self.verticalLayout_4.addWidget(self.tabWidget)
         self.groupBox_bottom = QtWidgets.QGroupBox(self.groupBox_body)
         self.groupBox_bottom.setMaximumSize(QtCore.QSize(16777215, 30))
         self.groupBox_bottom.setStyleSheet("#groupBox_bottom{\n"
@@ -780,7 +1017,7 @@ class Ui_MainWindow(object):
         self.groupBox_bottom.setTitle("")
         self.groupBox_bottom.setObjectName("groupBox_bottom")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.groupBox_bottom)
-        self.horizontalLayout_4.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_bottom = QtWidgets.QLabel(self.groupBox_bottom)
@@ -789,11 +1026,13 @@ class Ui_MainWindow(object):
         self.label_bottom.setObjectName("label_bottom")
         self.horizontalLayout_4.addWidget(self.label_bottom)
         self.verticalLayout_4.addWidget(self.groupBox_bottom)
-        self.verticalLayout.addWidget(self.groupBox_body)
+        self.horizontalLayout_46.addWidget(self.groupBox_body)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
+        self.tabWidget.setCurrentIndex(0)
         self.comboBox_task.setCurrentIndex(-1)
+        self.comboBox_task_3.setCurrentIndex(-1)
         self.closeButton.clicked.connect(MainWindow.close)  # type: ignore
         self.minButton.clicked.connect(MainWindow.showMinimized)  # type: ignore
         self.maxButton.clicked.connect(MainWindow.showMaximized)  # type: ignore
@@ -813,8 +1052,14 @@ class Ui_MainWindow(object):
         self.checkBox_autosave.setText(_translate("MainWindow", "自动保存"))
         self.pathButton.setText(_translate("MainWindow", "选择保存路径"))
         self.saveButton.setText(_translate("MainWindow", "保存"))
-        self.label_12.setText(_translate("MainWindow", "检测情况"))
+        self.label_12.setText(_translate("MainWindow", "预测情况"))
         self.label_9.setText(_translate("MainWindow", "视图"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.detect_tab), _translate("MainWindow", "推理区"))
+        self.label_5.setText(_translate("MainWindow", "设置"))
+        self.label_20.setText(_translate("MainWindow", "字体选择"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.report_tab), _translate("MainWindow", "报告区"))
+        self.groupBox_35.setTitle(_translate("MainWindow", "GroupBox"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "其他"))
 
 
 import UIqrc_rc

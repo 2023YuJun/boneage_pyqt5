@@ -1,0 +1,14 @@
+现在这个模块我还想重用process_image方法，增加两个输入参数为iou和conf来控制绘制的检测框，这个方法不需要进行判断或者限制检测框也不需要去掉标签中的置信度数字
+模型不需要在该模块中加载，而是直接传入已加载的模型，因为需要在其他地方预热
+传入的图像数据不仅仅只是图像数据，传入视频，摄像头拍摄的实时画面也需要检测
+需要将固定的配置变量以及输出字符串集成到config文件中，然后进行调用使用
+
+现在进行下一阶段，我需要写一个yolo_classify.py文件代码，先帮我编写一个方法，该方法可以获取yolo_detection模块中process方法返回的processed_frames, left_hand，并将检测框内的图像分割出来按照类别存储到变量中
+
+GPU的使用
+
+Ulna_1,Ulna_2,Ulna_3,Ulna_4,Ulna_5,Ulna_6,Ulna_7,Ulna_8,Ulna_9,Ulna_10,Ulna_11,Ulna_12,Ulna_13,Ulna_14
+
+没有boxes？
+
+你好像搞错了一点，就是comboBox_task和comboBox_model是我界面原本就有的组件，不需要重新创建，我已经有一个自己通过qtdesigner设计的界面了，后面的问答也是。还有能不能将CheckableComboBox这个类独立出去作为一个模块。

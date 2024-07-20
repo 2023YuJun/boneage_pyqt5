@@ -167,7 +167,7 @@ def crop_limited_boxes(frame, sorted_boxes, left_hand):
     return cropped_images
 
 
-def process(model, data, only_detect=True, iou=0.2, conf=0.5, stream=False, verbose=False):
+def process(model, data, iou=0.2, conf=0.5, only_detect=True, stream=False, verbose=False):
     """
     处理输入数据，进行对象检测并绘制检测框或裁剪图像。
 
@@ -207,4 +207,4 @@ def process(model, data, only_detect=True, iou=0.2, conf=0.5, stream=False, verb
         processed_frame = draw_boxes(frame, sorted_boxes, left_hand, restrict_draw=not only_detect)
         processed_frames.append(processed_frame)
 
-    return processed_frames, left_hand, cropped_images
+    return processed_frames, cropped_images

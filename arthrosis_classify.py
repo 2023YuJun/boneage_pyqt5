@@ -1,7 +1,8 @@
 import math
-
+import cv2
+import numpy as np
+from common import SCORE, classify_info, CATEGORY_MAPPING, REPORT_TEMPLATE, REPORT
 import common
-from common import SCORE, classify_info, CATEGORY_MAPPING, REPORT_TEMPLATE
 
 
 def classify_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=False):
@@ -35,8 +36,9 @@ def classify_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=Fals
             info_str = f"{i}: {image.shape[1]}x{image.shape[0]} "
             class_probs = {}
             for j, prob in enumerate(probs.data):  # 使用 probs.data 以获取概率值
-                class_name = model.names[j]
-                class_probs[class_name] = prob
+                if prob >= conf:
+                    class_name = model.names[j]
+                    class_probs[class_name] = prob
             info_str += ', '.join([f"{name} {prob:.2f}" for name, prob in class_probs.items()])
             info_str += f", {result.speed['inference']:.2f}ms"
         info.append(info_str)
@@ -52,51 +54,90 @@ def classify_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=Fals
     return results
 
 
+def draw_label(image, box, label, color, conf):
+    """
+    在图像上绘制标签。
+
+    参数：
+        image: 输入的图像。
+        box: 标签的边框。
+        label: 标签的文本。
+        color: 标签的颜色。
+        conf: 置信度。
+    """
+    x1, y1, x2, y2 = box
+    cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+    text = f"{label}: {conf:.2f}"
+    (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+    cv2.rectangle(image, (x1, y1 - text_height - baseline), (x1 + text_width, y1), color, -1)
+    cv2.putText(image, text, (x1, y1 - baseline), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+
+
 def process_images(model, cropped_images, iou=0.2, conf=0.5, stream=False, verbose=False):
     """
     处理裁剪后的图像，对每个图像进行分类。
 
     参数：
         model: 进行对象分类的模型。
-        cropped_images: 裁剪后的图像字典。
+        cropped_images: 裁剪后的图像字典或直接的图像资源。
         iou (float): IOU阈值，默认为0.2。
         conf (float): 置信度阈值，默认为0.5。
         stream (bool): 是否启用流模式，默认为False。
         verbose (bool): 是否打印详细信息，默认为False。
 
     返回：
-        arthrosis_level: 每个类别的分类结果字典。
+        arthrosis_level: 每个类别的分类结果字典，或者标注了类别的图像。
     """
-    if not cropped_images.get("valid"):
-        return {}
+    if isinstance(cropped_images, dict):
+        if not cropped_images.get("valid"):
+            return {}
 
-    arthrosis_level = {}
+        arthrosis_level = {}
 
-    for class_name, images in cropped_images.items():
-        if class_name == "valid":
-            continue
+        for class_name, images in cropped_images.items():
+            if class_name == "valid":
+                continue
 
-        img = images[0]
-        results = classify_objects(model, img, iou=iou, conf=conf, stream=stream, verbose=verbose)
+            img = images[0]
+            results = classify_objects(model, img, iou=iou, conf=conf, stream=stream, verbose=verbose)
+            if results:
+                best_prob = -1
+                best_level = None
+                for result in results:
+                    if result.probs is None:
+                        continue
+                    for j, prob in enumerate(result.probs.data):  # 使用 probs.data 以获取概率值
+                        class_result = model.names[j]
+                        category, level = class_result.split('_')
+                        mapped_categories = CATEGORY_MAPPING.get(class_name, [class_name])
+
+                        if category in mapped_categories and prob > best_prob:
+                            best_prob = prob
+                            best_level = level
+
+                if best_level is not None:
+                    arthrosis_level[class_name] = best_level
+
+        return arthrosis_level
+
+    else:
+        # 处理直接传入的图像资源
+        image = cropped_images
+        results = classify_objects(model, image, iou=iou, conf=conf, stream=stream, verbose=verbose)
         if results:
-            best_prob = -1
-            best_level = None
             for result in results:
                 if result.probs is None:
                     continue
                 for j, prob in enumerate(result.probs.data):  # 使用 probs.data 以获取概率值
-                    class_result = model.names[j]
-                    category, level = class_result.split('_')
-                    mapped_categories = CATEGORY_MAPPING.get(class_name, [class_name])
-
-                    if category in mapped_categories and prob > best_prob:
-                        best_prob = prob
-                        best_level = level
-
-            if best_level is not None:
-                arthrosis_level[class_name] = best_level
-
-    return arthrosis_level
+                    if prob > conf:
+                        class_result = model.names[j]
+                        category, level = class_result.split('_')
+                        box = result.boxes[j].xyxy[0].tolist()  # 获取检测框坐标
+                        box = list(map(int, box))
+                        color = (0, 255, 0)  # 绿色边框
+                        draw_label(image, box, f"{category}_{level}", color, prob)
+            return image
+        return None
 
 
 def cal_boneage(sex, arthrosis_level):
@@ -110,6 +151,10 @@ def cal_boneage(sex, arthrosis_level):
     返回：
         boneage (float): 计算出的骨龄，或者None如果性别无效。
     """
+    if not arthrosis_level:
+        print("Error: The arthrosis level data doesn't exist")
+        return None
+
     score = 0
     for class_name, level in arthrosis_level.items():
         level_index = int(level) - 1  # level减一对应索引

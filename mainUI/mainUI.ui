@@ -138,7 +138,7 @@ QTabBar::tab:selected {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>40</height>
+           <height>35</height>
           </size>
          </property>
          <property name="maximumSize">
@@ -201,6 +201,12 @@ border:none;
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="spacing">
              <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>2</number>
+            </property>
+            <property name="rightMargin">
+             <number>2</number>
             </property>
             <item>
              <widget class="QPushButton" name="minButton">
@@ -463,7 +469,7 @@ border-top:1px solid #bababa;
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>80</width>
+                        <width>75</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -482,7 +488,7 @@ border-top:1px solid #bababa;
                      <widget class="QComboBox" name="comboBox_task">
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>120</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -637,6 +643,9 @@ border:none;
                            <activeon>:/images/icon/摄像头关.png</activeon>
                            <selectedon>:/images/icon/摄像头关.png</selectedon>:/images/icon/摄像头开.png</iconset>
                          </property>
+                         <property name="checkable">
+                          <bool>true</bool>
+                         </property>
                         </widget>
                        </item>
                        <item>
@@ -750,7 +759,7 @@ border-image: url(:/images/icon/箭头_列表收起.png);}
                          <double>0.010000000000000</double>
                         </property>
                         <property name="value">
-                         <double>0.400000000000000</double>
+                         <double>0.200000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -770,7 +779,7 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {                               
      border: 0px ; 
      border-image:url(:/images/icon/圆.png);
-	 width:15px;
+	 width:16px;
      margin: -7px -7px -7px -7px;                  
 } 
 QSlider::add-page:horizontal{
@@ -785,7 +794,7 @@ QSlider::sub-page:horizontal{
                          <number>100</number>
                         </property>
                         <property name="value">
-                         <number>40</number>
+                         <number>20</number>
                         </property>
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
@@ -882,7 +891,7 @@ border-image: url(:/images/icon/箭头_列表收起.png);}
                          <double>0.010000000000000</double>
                         </property>
                         <property name="value">
-                         <double>0.200000000000000</double>
+                         <double>0.500000000000000</double>
                         </property>
                        </widget>
                       </item>
@@ -902,7 +911,7 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {                               
      border: 0px ; 
      border-image:url(:/images/icon/圆.png);
-	 width:15px;
+	 width:16px;
      margin: -7px -7px -7px -7px;                  
 } 
 QSlider::add-page:horizontal{
@@ -917,7 +926,7 @@ QSlider::sub-page:horizontal{
                          <number>100</number>
                         </property>
                         <property name="value">
-                         <number>20</number>
+                         <number>50</number>
                         </property>
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
@@ -1064,7 +1073,7 @@ border-image: url(:/images/icon/箭头_列表收起.png);}
                          <number>1</number>
                         </property>
                         <property name="maximum">
-                         <number>20</number>
+                         <number>30</number>
                         </property>
                        </widget>
                       </item>
@@ -1084,7 +1093,7 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {                               
      border: 0px ; 
      border-image:url(:/images/icon/圆.png);
-	 width:15px;
+	 width:16px;
      margin: -7px -7px -7px -7px;                  
 } 
 QSlider::add-page:horizontal{
@@ -1095,8 +1104,11 @@ QSlider::sub-page:horizontal{
  background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #373737, stop:0.25 #373737, stop:0.5 #373737, stop:1 #373737);                     
 }</string>
                         </property>
+                        <property name="minimum">
+                         <number>1</number>
+                        </property>
                         <property name="maximum">
-                         <number>20</number>
+                         <number>30</number>
                         </property>
                         <property name="pageStep">
                          <number>1</number>
@@ -1163,6 +1175,9 @@ border:none;
                         <activeon>:/images/icon/暂停.png</activeon>
                         <selectedon>:/images/icon/暂停.png</selectedon>:/images/icon/运行.png</iconset>
                       </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
                      </widget>
                     </item>
                     <item>
@@ -1221,7 +1236,15 @@ border-radius:5px;
                       </property>
                       <property name="icon">
                        <iconset resource="../UIqrc.qrc">
-                        <normaloff>:/images/icon/终止.png</normaloff>:/images/icon/终止.png</iconset>
+                        <normaloff>:/images/icon/focus (2).png</normaloff>
+                        <activeon>:/images/icon/focus.png</activeon>
+                        <selectedon>:/images/icon/focus.png</selectedon>:/images/icon/focus (2).png</iconset>
+                      </property>
+                      <property name="checkable">
+                       <bool>true</bool>
+                      </property>
+                      <property name="checked">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
@@ -1251,23 +1274,40 @@ border:none;
                     <string/>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_16">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <property name="leftMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>5</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>10</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>5</number>
-                    </property>
                     <item>
-                     <widget class="QCheckBox" name="checkBox_autosave">
+                     <widget class="QLabel" name="label_13">
+                      <property name="maximumSize">
+                       <size>
+                        <width>80</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">font-size:18px;</string>
+                      </property>
+                      <property name="text">
+                       <string>性别</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>166</width>
+                        <height>19</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QCheckBox" name="checkBox_male">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
                       <property name="styleSheet">
                        <string notr="true">
 QCheckBox
@@ -1293,53 +1333,46 @@ QCheckBox::indicator:checked {
 </string>
                       </property>
                       <property name="text">
-                       <string>自动保存</string>
+                       <string>男</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                      <property name="tristate">
+                       <bool>false</bool>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer_7">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
+                     <widget class="QCheckBox" name="checkBox_female">
+                      <property name="styleSheet">
+                       <string notr="true">
+QCheckBox
+{font-size: 16px;
+	font-family: &quot;Microsoft YaHei&quot;;
+	font-weight: bold;
+ 		border-radius:9px;
+		background:rgba(66, 195, 255, 0);
+color: rgb(218, 218, 218);;}
+
+QCheckBox::indicator {
+	width: 20px;
+	height: 20px;
+}
+QCheckBox::indicator:unchecked {
+    image: url(:/images/icon/button-off.png);
+}
+
+QCheckBox::indicator:checked {
+    
+    image: url(:/images/icon/button-on.png);
+}
+</string>
                       </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
+                      <property name="text">
+                       <string>女</string>
                       </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_18">
-                      <property name="spacing">
-                       <number>5</number>
-                      </property>
-                      <item>
-                       <widget class="QPushButton" name="pathButton">
-                        <property name="styleSheet">
-                         <string notr="true">#pathButton{
-border:1px solid #bababa;
-}</string>
-                        </property>
-                        <property name="text">
-                         <string>选择保存路径</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="saveButton">
-                        <property name="styleSheet">
-                         <string notr="true">#saveButton{
-border:1px solid #bababa;
-}</string>
-                        </property>
-                        <property name="text">
-                         <string>保存</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -1443,7 +1476,7 @@ border:none;
 
 border-radius:0px;
 font-family: &quot;Microsoft YaHei&quot;;
-font-size: 16px;
+font-size: 12px;
 color: rgb(218, 218, 218);</string>
                       </property>
                      </widget>
@@ -1517,7 +1550,7 @@ border-radius:0px;
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>0</number>
+                     <number>5</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -1562,7 +1595,7 @@ border-radius:0px;
                        </font>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">font-size:22px;</string>
+                       <string notr="true">font-size:16px;</string>
                       </property>
                       <property name="text">
                        <string/>
@@ -1638,7 +1671,10 @@ border-radius:0px;
                      <widget class="QTextEdit" name="report_info">
                       <property name="styleSheet">
                        <string notr="true">background-color: rgba(200, 200, 200,0);
-border:none;</string>
+border:none;
+font-family: &quot;Microsoft YaHei&quot;;
+font-size: 14px;
+color: rgb(218, 218, 218);</string>
                       </property>
                      </widget>
                     </item>
@@ -2007,7 +2043,13 @@ border:none;
                          </property>
                          <property name="icon">
                           <iconset resource="../UIqrc.qrc">
-                           <normaloff>:/images/icon/打开.png</normaloff>:/images/icon/打开.png</iconset>
+                           <normaloff>:/images/icon/floppy-disks (2).png</normaloff>
+                           <normalon>:/images/icon/floppy-disks.png</normalon>
+                           <activeon>:/images/icon/floppy-disks.png</activeon>
+                           <selectedon>:/images/icon/floppy-disks.png</selectedon>:/images/icon/floppy-disks (2).png</iconset>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>
@@ -2018,9 +2060,13 @@ border:none;
                          </property>
                          <property name="icon">
                           <iconset resource="../UIqrc.qrc">
-                           <normaloff>:/images/icon/摄像头开.png</normaloff>
-                           <activeon>:/images/icon/摄像头关.png</activeon>
-                           <selectedon>:/images/icon/摄像头关.png</selectedon>:/images/icon/摄像头开.png</iconset>
+                           <normaloff>:/images/icon/print (2).png</normaloff>
+                           <normalon>:/images/icon/print.png</normalon>
+                           <activeon>:/images/icon/print.png</activeon>
+                           <selectedon>:/images/icon/print.png</selectedon>:/images/icon/print (2).png</iconset>
+                         </property>
+                         <property name="checkable">
+                          <bool>true</bool>
                          </property>
                         </widget>
                        </item>

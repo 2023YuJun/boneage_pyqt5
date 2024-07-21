@@ -3,6 +3,6 @@
   "conf": 0.5,
   "rate": 1,
   "check": 0,
-  "male_checked": false,
-  "female_checked": true
+  "male_checked": true,
+  "female_checked": false
 }

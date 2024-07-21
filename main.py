@@ -5,7 +5,7 @@ import os
 import time
 import cv2
 
-from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QPoint, QTimer, QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMenu, QAction
 from PyQt5.QtGui import QImage, QPixmap
 from mainUI.mainUI import Ui_MainWindow
@@ -27,7 +27,7 @@ class DetThread(QThread):
     progress_updated = pyqtSignal(int)
     update_fps = pyqtSignal(float)
     update_bottom_info = pyqtSignal(str)
-    update_report = pyqtSignal(str)
+    update_report_info = pyqtSignal(str)
     update_detection_info = pyqtSignal(str)
 
     def __init__(self):
@@ -98,10 +98,12 @@ class DetThread(QThread):
             self.cap.release()
 
     def process_frame(self, frame):
+        detection_model = None
+        classify_model = None
+        common.classify_info.clear()
+        common.detection_info.clear()
+        common.REPORT = ""
         if self.task == "骨龄评估":
-            detection_model = None
-            classify_model = None
-
             for model_path in self.model_paths:
                 if '-det.pt' in model_path:
                     detection_model = self.models[model_path]
@@ -119,8 +121,30 @@ class DetThread(QThread):
 
                 sex = 'boy' if self.is_male else 'girl'
                 bone_age = cal_boneage(sex, classify_results)
-                self.update_report.emit(common.REPORT)
-                self.update_bottom_info.emit(f"Bone Age: {bone_age} years")
+                self.update_report_info.emit(common.REPORT)
+
+        elif self.task == "检测":
+            for model_path in self.model_paths:
+                if '-det.pt' in model_path:
+                    detection_model = self.models[model_path]
+
+            if detection_model:
+                detection_results, _ = process(detection_model, [frame],
+                                               iou=self.iou, conf=self.conf, only_detect=True)
+                for processed_frame in detection_results:
+                    self.update_label_current.emit(processed_frame)
+                self.update_detection_info.emit('\n'.join(detection_info))
+
+        elif self.task == "分类":
+            for model_path in self.model_paths:
+                if '-cls.pt' in model_path:
+                    classify_model = self.models[model_path]
+
+            if classify_model:
+                classify_results = process_images(classify_model, [frame], iou=self.iou, conf=self.conf)
+                for processed_frame in classify_results:
+                    self.update_label_current.emit(processed_frame)
+                self.update_detection_info.emit('\n'.join(classify_info))
 
     def stop(self):
         self.running = False
@@ -154,7 +178,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.det_thread.progress_updated.connect(self.update_progress)
         self.det_thread.update_fps.connect(self.update_fps_label)
         self.det_thread.update_bottom_info.connect(self.bottom_msg)  # 连接新信号
-        self.det_thread.update_report.connect(self.report_info.setPlainText)  # 连接新信号
+        self.det_thread.update_report_info.connect(self.report_info.setPlainText)  # 连接新信号
         self.det_thread.update_detection_info.connect(self.detection_info.setPlainText)  # 连接新信号
 
         self.maxButton.setCheckable(True)
@@ -244,20 +268,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             open_fold = os.getcwd()
         name, _ = QFileDialog.getOpenFileName(self, 'Video/image', open_fold,
                                               "video/image file(*.mp4 *.mkv *.avi *.flv *.jpg *.png)")
-        if name:
-            self.det_thread.stop()
-            self.det_thread.wait()
-            self.label_previous.clear()
-            self.label_current.clear()
-            self.det_thread.source = name
-            self.ProgressSlider.setValue(0)
-            self.det_thread.start()
-            self.runButton.setChecked(True)
-            self.bottom_msg('Loaded file：{}'.format(os.path.basename(name)))
-            config['Default_path'] = os.path.dirname(name)
-            config_json = json.dumps(config, ensure_ascii=False, indent=2)
-            with open(config_file, 'w', encoding='utf-8') as f:
-                f.write(config_json)
+        try:
+            if name:
+                self.det_thread.stop()
+                self.det_thread.wait()
+                self.label_previous.clear()
+                self.label_current.clear()
+                self.det_thread.source = name
+                self.ProgressSlider.setValue(0)
+                self.det_thread.start()
+                self.runButton.setChecked(True)
+                self.bottom_msg('Loaded file：{}'.format(os.path.basename(name)))
+                config['Default_path'] = os.path.dirname(name)
+                config_json = json.dumps(config, ensure_ascii=False, indent=2)
+                with open(config_file, 'w', encoding='utf-8') as f:
+                    f.write(config_json)
+                # self.detectButton.click()  # 获得资源直接开始检测
+        except Exception as e:
+            self.bottom_msg('%s' % e)
 
     def chose_cam(self):
         if self.cameraButton.isChecked():
@@ -280,7 +308,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                             ''')
 
                 for cam in cams:
-                    action = QAction(cam, self)
+                    action = QAction(str(cam), self)
                     popMenu.addAction(action)
 
                 x = self.groupBox_input.mapToGlobal(self.cameraButton.pos()).x()
@@ -298,6 +326,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.det_thread.start()
                     self.runButton.setChecked(True)
                     self.bottom_msg('Loading camera：{}'.format(action.text()))
+                    # self.detectButton.click()  # 获得资源直接开始检测
             except Exception as e:
                 self.bottom_msg('%s' % e)
         else:
@@ -305,6 +334,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.det_thread.wait()
             self.label_previous.clear()
             self.label_current.clear()
+            self.detection_info.clear()
+            self.report_info.clear()
             self.show_tips('Camera closing')
 
     def change_val(self, x, flag):
@@ -350,6 +381,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.det_thread.pause()
 
     def detect(self):
+        self.detection_info.clear()
+        self.report_info.clear()
+        common.classify_info.clear()
+        common.detection_info.clear()
+
         self.det_thread.detect_button_status = self.detectButton.isChecked()
 
         selected_models = self.comboBox_model.selected_items
@@ -513,8 +549,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         sys.exit(0)
 
 
+# 自定义 stdout 重定向类
+class EmittingStream(QObject):
+    textWritten = pyqtSignal(str)
+
+    def write(self, text):
+        if text.strip():  # 确保不是空行
+            self.textWritten.emit(str(text))
+
+    def flush(self):
+        pass
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     myForm = MainWindow()
+
+    # 重定向 stdout 到 GUI
+    sys.stdout = EmittingStream()
+    sys.stdout.textWritten.connect(myForm.bottom_msg)
+
     myForm.show()
     app.exec()

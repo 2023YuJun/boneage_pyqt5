@@ -17,7 +17,11 @@ def detect_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=False)
     返回：
         results: 检测结果对象列表，或者None如果检测失败。
     """
-    results = model(image, iou=iou, conf=conf, stream=stream, verbose=verbose)
+    try:
+        results = model(image, iou=iou, conf=conf, stream=stream, verbose=verbose)
+    except Exception as e:
+        detection_info.append(f"Error: Model inference failed with error: {str(e)}")
+        return None
 
     if results is None:
         detection_info.append("Error: Model returned None")
@@ -199,10 +203,10 @@ def process(model, data, iou=0.2, conf=0.5, only_detect=True, stream=False, verb
         else:
             print(
                 f"21 detection boxes found and each category meets the requirements. Drawing boxes... (Left hand: {left_hand})")
+            if not only_detect:
+                cropped_images = crop_limited_boxes(frame, sorted_boxes, left_hand)
+                cropped_images["valid"] = True
         left_hand = determine_hand(sorted_boxes)
-        if not only_detect:
-            cropped_images = crop_limited_boxes(frame, sorted_boxes, left_hand)
-            cropped_images["valid"] = True
 
         processed_frame = draw_boxes(frame, sorted_boxes, left_hand, restrict_draw=not only_detect)
         processed_frames.append(processed_frame)

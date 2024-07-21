@@ -20,7 +20,11 @@ def classify_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=Fals
     返回：
         results: 分类结果对象列表，或者None如果分类失败。
     """
-    results = model(image, iou=iou, conf=conf, stream=stream, verbose=verbose)
+    try:
+        results = model(image, iou=iou, conf=conf, stream=stream, verbose=verbose)
+    except Exception as e:
+        classify_info.append(f"Error: Model inference failed with error: {str(e)}")
+        return None
 
     if results is None:
         classify_info.append("Error: Model returned None")
@@ -54,23 +58,23 @@ def classify_objects(model, image, iou=0.2, conf=0.5, stream=False, verbose=Fals
     return results
 
 
-def draw_label(image, box, label, color, conf):
+def draw_label(image, label, color, conf):
     """
-    在图像上绘制标签。
+    在图像的左下角绘制标签。
 
     参数：
         image: 输入的图像。
-        box: 标签的边框。
         label: 标签的文本。
-        color: 标签的颜色。
+        color: 标签文字的颜色。
         conf: 置信度。
     """
-    x1, y1, x2, y2 = box
-    cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+    height, width = image.shape[:2]
     text = f"{label}: {conf:.2f}"
     (text_width, text_height), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
-    cv2.rectangle(image, (x1, y1 - text_height - baseline), (x1 + text_width, y1), color, -1)
-    cv2.putText(image, text, (x1, y1 - baseline), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+    text_x = 10
+    text_y = height - 10
+    cv2.putText(image, text, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 1)
+    return image
 
 
 def process_images(model, cropped_images, iou=0.2, conf=0.5, stream=False, verbose=False):
@@ -122,22 +126,30 @@ def process_images(model, cropped_images, iou=0.2, conf=0.5, stream=False, verbo
 
     else:
         # 处理直接传入的图像资源
-        image = cropped_images
-        results = classify_objects(model, image, iou=iou, conf=conf, stream=stream, verbose=verbose)
-        if results:
-            for result in results:
-                if result.probs is None:
-                    continue
-                for j, prob in enumerate(result.probs.data):  # 使用 probs.data 以获取概率值
-                    if prob > conf:
-                        class_result = model.names[j]
-                        category, level = class_result.split('_')
-                        box = result.boxes[j].xyxy[0].tolist()  # 获取检测框坐标
-                        box = list(map(int, box))
-                        color = (0, 255, 0)  # 绿色边框
-                        draw_label(image, box, f"{category}_{level}", color, prob)
-            return image
-        return None
+        images = cropped_images
+        frames = []
+        for image in images:
+            results = classify_objects(model, image, iou, conf, stream, verbose)
+            if results:
+                for result in results:
+                    if result.probs is None:
+                        continue
+                    any_confidence_met = False
+                    for j, prob in enumerate(result.probs.data):  # 使用 probs.data 以获取概率值
+                        if prob > conf:
+                            class_result = model.names[j]
+                            category, level = class_result.split('_')
+                            color = (0, 255, 0)
+                            frame = draw_label(image, f"{category}_{level}", color, prob)
+                            frames.append(frame)
+                    if not any_confidence_met:
+                        print("Warning: Confidence is too high, drawing failed!")
+                    else:
+                        print("Classification success!")
+                return frames
+            else:
+                print("Error: Classification failure!")
+                return None
 
 
 def cal_boneage(sex, arthrosis_level):

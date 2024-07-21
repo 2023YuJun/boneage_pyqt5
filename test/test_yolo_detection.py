@@ -53,7 +53,7 @@ def main():
 
     # 处理图像
     image = cv2.imread(image_path)
-    processed_frames, left_hand, _ = process(model, [image], only_detect=False)
+    processed_frames, _ = process(model, [image], only_detect=False)
     for frame in processed_frames:
         cv2.imshow('Processed Image', frame)
         cv2.waitKey(0)

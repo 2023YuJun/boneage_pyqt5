@@ -13,7 +13,7 @@
 
 1. **克隆仓库**：
    ```bash
-   git clone <repository_url>
+   git clone <https://github.com/2023YuJun/boneage_pyqt5.git>
 
 2. **安装依赖**：
    ```bash

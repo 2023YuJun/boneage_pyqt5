@@ -95,10 +95,10 @@ def process_and_display(model, source):
 
 if __name__ == "__main__":
     # 加载模型，并指定使用GPU
-    model = YOLO('../model/atrs-n-cls.pt')  # 'cuda'表示使用GPU
+    model = YOLO('../model/atrs-n-cls.pt')
 
     # 输入源（图像路径或视频路径）
-    input_source = "images/PIP_1.png"  # 替换为实际的图像或视频路径
+    input_source = "images/PIP_1.png"
 
     if input_source.lower().endswith(('.png', '.jpg', '.jpeg')):
         process_and_display(model, input_source)

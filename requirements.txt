@@ -8,3 +8,5 @@ ultralytics~=8.0.217
 pyqt5~=5.15.9
 pyqt5-tools~=5.15.9.3.3
 torch~=2.3.1
+python-docx~=1.1.2
+docx2pdf~=0.1.8

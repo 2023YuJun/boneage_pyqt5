@@ -1,4 +1,10 @@
-# common.py
+import json
+import random
+import string
+
+import bcrypt
+import pymysql
+import yagmail
 
 # 全局变量用于存储检测输出信息
 detection_info = []
@@ -100,3 +106,71 @@ REPORT_TEMPLATE = """第一掌骨骺分级{}级，得{}分；第三掌骨骨骺�
 RUS-CHN分级计分法，受检儿CHN总得分：{}分，骨龄约为{}岁。
 """
 
+# 读取数据库配置
+def load_db_config():
+    with open('config/db_config.json', 'r') as file:
+        return json.load(file)
+
+
+db_config = load_db_config()
+
+
+# 连接数据库
+def connect_db():
+    connection = pymysql.connect(
+        host=db_config['host'],
+        user=db_config['user'],
+        password=db_config['password'],
+        database=db_config['database']
+    )
+    return connection
+
+
+# 通用哈希方法
+def hash_data(data):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(data.encode('utf-8'), salt)
+    return hashed.decode('utf-8')
+
+
+# 通用验证方法
+def verify_data(stored_data, provided_data):
+    return bcrypt.checkpw(provided_data.encode('utf-8'), stored_data.encode('utf-8'))
+
+
+# 生成验证码
+def generate_verification_code(length=6):
+    return ''.join(random.choice(string.digits) for _ in range(length))
+
+
+# 发送邮件
+def send_email(to_email, subject, content):
+    # 注意授权码时效为180天
+    yag = yagmail.SMTP(user="boneage2024@163.com", password="JYSBMGPAIWGEWMBT", host='smtp.163.com', port=465)
+    yag.send(to=to_email, subject=subject, contents=content)
+
+
+# 获取服务器时间
+def get_server_time():
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("SELECT NOW()")
+        result = cursor.fetchone()
+        return result[0]  # 返回服务器当前时间
+    except pymysql.MySQLError as e:
+        print(f"数据库错误: {e}")
+    finally:
+        cursor.close()
+        connection.close()
+
+
+# 检查密码安全性
+def is_password_strong(password):
+    if len(password) < 8:
+        return False
+    if sum([bool(c.isupper()) for c in password]) + sum([bool(c.islower()) for c in password]) + \
+            sum([bool(c.isdigit()) for c in password]) + sum([bool(c in string.punctuation) for c in password]) < 3:
+        return False
+    return True

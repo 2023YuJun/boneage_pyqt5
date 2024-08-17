@@ -45,7 +45,7 @@ class ImageTextEdit(QTextEdit):
             image = image.scaledToWidth(self.width())
         cursor = self.textCursor()
         image_format = QTextImageFormat()
-        image_format.setName(path)
+        image_format.setName(path if path else "")
         image_format.setWidth(image.width())
         image_format.setHeight(image.height())
         cursor.insertImage(image_format)

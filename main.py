@@ -1,18 +1,11 @@
 import sys
-
 from PyQt5.QtCore import pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication
 from mainwindow import MainWindow
+from loginwindow import LoginWindow
 
 
 class EmittingStream(QObject):
-    """
-    自定义 stdout 重定向类。
-
-    Attributes:
-        textWritten (pyqtSignal): 信号，用于发送重定向的文本。
-    """
-
     textWritten = pyqtSignal(str)
 
     def write(self, text):
@@ -25,11 +18,23 @@ class EmittingStream(QObject):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    myForm = MainWindow()
 
-    # 重定向 stdout 到 GUI
-    sys.stdout = EmittingStream()
-    sys.stdout.textWritten.connect(myForm.bottom_msg)
+    # 创建LoginForm实例
+    LoginForm = LoginWindow()
 
-    myForm.show()
-    app.exec()
+    def on_login_success():
+        # 登录成功后创建并显示主窗口
+        MainForm = MainWindow()
+        # 重定向 stdout 到 GUI
+        sys.stdout = EmittingStream()
+        sys.stdout.textWritten.connect(MainForm.bottom_msg)
+        MainForm.show()
+
+
+    # 连接登录成功信号与槽函数
+    LoginForm.login_successful.connect(on_login_success)
+
+    # 显示登录窗口
+    LoginForm.show()
+
+    sys.exit(app.exec_())

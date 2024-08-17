@@ -22,7 +22,6 @@ class TipsMessageBox(QMessageBox):
                                     color:white;}''')
 
         self.setWindowTitle(title)
-        self.setIconPixmap(QPixmap(":/images/icon/笑脸.png"))
 
         self.setStandardButtons(self.Close)  # 关闭按钮
         self.closeBtn = self.button(self.Close)  # 获取关闭按钮

@@ -15,7 +15,7 @@ from ultralytics import YOLO
 
 import common
 from det_thread import DetThread
-from mainUI.mainUI import Ui_MainWindow
+from UI.mainUI import Ui_MainWindow
 from toolUI.CheckableComboBox import replace_comboBox_with_checkable
 from toolUI.ImageTextEdit import replace_textedit_with_imagetextedit
 from toolUI.TipsMessageBox import TipsMessageBox
@@ -36,14 +36,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.m_flag = False
         self.textedit_image = {}
 
-        self.setWindowFlags(Qt.Window | Qt.FramelessWindowHint
-                            | Qt.WindowSystemMenuHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
+        # self.setWindowFlags(Qt.Window | Qt.FramelessWindowHint
+        #                     | Qt.WindowSystemMenuHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
+        self.setWindowFlags(Qt.FramelessWindowHint)
 
         self.det_thread = DetThread()
         self.connect_signals()
-        self.load_setting()
         self.detect_area_initUI()
         self.report_area_initUI()
+        self.load_setting()
+        self.preheat_models()
 
     def detect_area_initUI(self):
         """
@@ -85,8 +87,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ProgressSlider.sliderPressed.connect(self.on_slider_pressed)
         self.ProgressSlider.sliderReleased.connect(self.on_slider_released)
         self.ProgressSlider.sliderMoved.connect(self.on_slider_moved)
-
-        self.preheat_models()
 
     def report_area_initUI(self):
         """
@@ -149,7 +149,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for model_file in self.model_list:
             model_path = os.path.join('./model', model_file)
             self.models[model_file] = YOLO(model_path)
-        self.show_tips('Model preheating completed')
 
     def update_model_list(self):
         """
@@ -796,9 +795,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.confSpinBox.setValue(config['conf'])
         self.iouSpinBox.setValue(config['iou'])
         self.rateSpinBox.setValue(config['rate'])
-        self.confSlider.setValue(int(config['conf']*100))
-        self.iouSlider.setValue(int(config['iou']*100))
-        self.rateSlider.setValue(config['rate'])
         self.checkBox_enable.setCheckState(config['check'])
         self.checkBox_male.setChecked(config['male_checked'])
         self.checkBox_female.setChecked(config['female_checked'])
@@ -832,8 +828,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         self.m_Position = event.pos()
         if event.button() == Qt.LeftButton:
-            if 0 < self.m_Position.x() < self.groupBox.pos().x() + self.groupBox.width() and \
-                    0 < self.m_Position.y() < self.groupBox.pos().y() + self.groupBox.height():
+            if 0 < self.m_Position.x() < self.groupBox_body.pos().x() + self.groupBox_body.width() and \
+                    0 < self.m_Position.y() < self.groupBox_body.pos().y() + self.groupBox_body.height():
                 self.m_flag = True
 
     def mouseMoveEvent(self, QMouseEvent):

@@ -66,6 +66,7 @@
     <file>icon/new-folder (2).png</file>
   </qresource>
   <qresource prefix="global">
+    <file>icon/验证码.png</file>
     <file>icon/button-off.png</file>
     <file>icon/button-on.png</file>
     <file>icon/shape.png</file>

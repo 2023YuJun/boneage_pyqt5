@@ -132,6 +132,7 @@ class LoginWindow(QMainWindow, Ui_MainWindow):
         send_email(email, "验证码", f"您的验证码是: {self.verification_code}")
 
         self.resendButton.setDisabled(True)
+        self.resendButton.setToolTip("60秒后可重新发送")
         self.timer.start(60000)
 
     def enable_resend_button(self):

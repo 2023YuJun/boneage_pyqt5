@@ -145,10 +145,29 @@ def generate_verification_code(length=6):
 
 # 发送邮件
 def send_email(to_email, subject, content):
-    # 注意授权码时效为180天
-    yag = yagmail.SMTP(user="boneage2024@163.com", password="JYSBMGPAIWGEWMBT", host='smtp.163.com', port=465)
-    yag.send(to=to_email, subject=subject, contents=content)
+    connection = connect_db()
+    cursor = connection.cursor()
 
+    try:
+        cursor.execute("SELECT email, password, host, port FROM email_accounts LIMIT 1")
+        account = cursor.fetchone()
+
+        if not account:
+            raise Exception("未找到邮箱账号信息")
+
+        email, password, host, port = account
+        yag = yagmail.SMTP(user=email, password=password, host=host, port=port)
+        yag.send(to=to_email, subject=subject, contents=content)
+
+    except pymysql.MySQLError as e:
+        print(f"数据库错误: 发生错误: {e}")
+
+    except Exception as e:
+        print(f"发送邮件失败: {e}")
+
+    finally:
+        cursor.close()
+        connection.close()
 
 # 获取服务器时间
 def get_server_time():

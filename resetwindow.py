@@ -100,6 +100,7 @@ class ResetWindow(QMainWindow, Ui_MainWindow):
             send_email(email, "重置密码验证码", f"您的验证码是: {self.verification_code}")
 
             self.resendButton.setDisabled(True)
+            self.resendButton.setToolTip("60秒后可重新发送")
             self.timer.start(60000)
         except pymysql.MySQLError as e:
             self.show_tips(f"数据库错误: 发生错误: {e}")

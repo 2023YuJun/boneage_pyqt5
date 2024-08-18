@@ -1,10 +1,13 @@
 {
-  "iou": 0.22,
-  "conf": 0.61,
-  "rate": 7,
+  "iou": 0.2,
+  "conf": 0.5,
+  "rate": 1,
   "check": 0,
   "male_checked": true,
   "female_checked": false,
   "font-size": "12",
-  "font-family": "Agency FB"
+  "font-family": "Arial",
+  "autologin": true,
+  "username": "No1",
+  "password": "No123456"
 }

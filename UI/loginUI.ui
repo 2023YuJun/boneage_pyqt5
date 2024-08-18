@@ -112,6 +112,29 @@ QTabBar::tab:hover:!selected {
 QTabBar::tab:selected {
     color: white;
 }
+
+QCheckBox
+{
+	font-size: 14px;
+	font-family: &quot;Microsoft YaHei&quot;;
+	font-weight: bold;
+	background:rgba(66, 195, 255, 0);
+	color: rgb(218, 218, 218);
+}
+
+QCheckBox::indicator {
+	width: 17px;
+	height: 17px;
+	margin-right: -5px;
+}
+QCheckBox::indicator:unchecked {
+    image: url(:/global/icon/button-off.png);
+}
+
+QCheckBox::indicator:checked {   
+    image: url(:/global/icon/button-on.png);
+}
+
 </string>
   </property>
   <property name="iconSize">
@@ -368,7 +391,7 @@ border:none;
                   <number>10</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>5</number>
+                  <number>10</number>
                  </property>
                  <item>
                   <spacer name="verticalSpacer_2">
@@ -508,6 +531,45 @@ border:none;
                      </property>
                      <property name="echoMode">
                       <enum>QLineEdit::Password</enum>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_11">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <spacer name="horizontalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QCheckBox" name="autologin">
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>自动登录</string>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>14</width>
+                       <height>14</height>
+                      </size>
                      </property>
                     </widget>
                    </item>

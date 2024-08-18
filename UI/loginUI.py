@@ -113,6 +113,29 @@ class Ui_MainWindow(object):
 "QTabBar::tab:selected {\n"
 "    color: white;\n"
 "}\n"
+"\n"
+"QCheckBox\n"
+"{\n"
+"    font-size: 14px;\n"
+"    font-family: \"Microsoft YaHei\";\n"
+"    font-weight: bold;\n"
+"    background:rgba(66, 195, 255, 0);\n"
+"    color: rgb(218, 218, 218);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 17px;\n"
+"    height: 17px;\n"
+"    margin-right: -5px;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"    image: url(:/global/icon/button-off.png);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {   \n"
+"    image: url(:/global/icon/button-on.png);\n"
+"}\n"
+"\n"
 "")
         MainWindow.setIconSize(QtCore.QSize(0, 0))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -197,7 +220,7 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.groupBox)
-        self.verticalLayout_4.setContentsMargins(10, 0, 10, 5)
+        self.verticalLayout_4.setContentsMargins(10, 0, 10, 10)
         self.verticalLayout_4.setSpacing(5)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -252,8 +275,19 @@ class Ui_MainWindow(object):
         self.password_login_in.setObjectName("password_login_in")
         self.horizontalLayout_5.addWidget(self.password_login_in)
         self.verticalLayout_4.addLayout(self.horizontalLayout_5)
-        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem4)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setSpacing(0)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_11.addItem(spacerItem4)
+        self.autologin = QtWidgets.QCheckBox(self.groupBox)
+        self.autologin.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.autologin.setIconSize(QtCore.QSize(14, 14))
+        self.autologin.setObjectName("autologin")
+        self.horizontalLayout_11.addWidget(self.autologin)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_11)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem5)
         self.loginButton = QtWidgets.QPushButton(self.groupBox)
         self.loginButton.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
@@ -293,8 +327,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(10, 0, 10, 25)
         self.verticalLayout_5.setSpacing(5)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem5)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem6)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setSpacing(0)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
@@ -311,8 +345,8 @@ class Ui_MainWindow(object):
 "}")
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_6.addWidget(self.label_3)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_6.addItem(spacerItem6)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem7)
         self.username_sign_up = QtWidgets.QLineEdit(self.groupBox_2)
         self.username_sign_up.setMinimumSize(QtCore.QSize(160, 0))
         self.username_sign_up.setMaximumSize(QtCore.QSize(160, 16777215))
@@ -335,8 +369,8 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_7.addWidget(self.label_4)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem7)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_7.addItem(spacerItem8)
         self.password_sign_up = QtWidgets.QLineEdit(self.groupBox_2)
         self.password_sign_up.setMinimumSize(QtCore.QSize(160, 0))
         self.password_sign_up.setMaximumSize(QtCore.QSize(160, 16777215))
@@ -360,8 +394,8 @@ class Ui_MainWindow(object):
         self.label_5.setFont(font)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_9.addWidget(self.label_5)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_9.addItem(spacerItem8)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_9.addItem(spacerItem9)
         self.bindemail = QtWidgets.QLineEdit(self.groupBox_2)
         self.bindemail.setMinimumSize(QtCore.QSize(160, 0))
         self.bindemail.setMaximumSize(QtCore.QSize(160, 16777215))
@@ -384,10 +418,10 @@ class Ui_MainWindow(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_10.addWidget(self.label_6)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem9)
         spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_10.addItem(spacerItem10)
+        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem11)
         self.CAPTCHA = QtWidgets.QLineEdit(self.groupBox_2)
         self.CAPTCHA.setMinimumSize(QtCore.QSize(0, 0))
         self.CAPTCHA.setMaximumSize(QtCore.QSize(100, 16777215))
@@ -396,8 +430,8 @@ class Ui_MainWindow(object):
         self.CAPTCHA.setFont(font)
         self.CAPTCHA.setObjectName("CAPTCHA")
         self.horizontalLayout_10.addWidget(self.CAPTCHA)
-        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem11)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem12)
         self.resendButton = QtWidgets.QPushButton(self.groupBox_2)
         self.resendButton.setMaximumSize(QtCore.QSize(30, 30))
         font = QtGui.QFont()
@@ -416,8 +450,8 @@ class Ui_MainWindow(object):
         self.resendButton.setObjectName("resendButton")
         self.horizontalLayout_10.addWidget(self.resendButton)
         self.verticalLayout_5.addLayout(self.horizontalLayout_10)
-        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem12)
+        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem13)
         self.signButton = QtWidgets.QPushButton(self.groupBox_2)
         self.signButton.setMaximumSize(QtCore.QSize(16777215, 16777215))
         font = QtGui.QFont()
@@ -446,6 +480,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "用户名"))
         self.label_2.setText(_translate("MainWindow", "密码"))
+        self.autologin.setText(_translate("MainWindow", "自动登录"))
         self.loginButton.setText(_translate("MainWindow", "登录"))
         self.loginButton.setShortcut(_translate("MainWindow", "Return"))
         self.foggotButton.setText(_translate("MainWindow", "忘记密码？"))

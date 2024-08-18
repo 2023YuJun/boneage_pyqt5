@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
@@ -20,6 +21,8 @@ class LoginWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
 
         self.setWindowFlags(Qt.FramelessWindowHint)
+
+        self.load_settings()
 
         self.loginButton.clicked.connect(self.login_user)
         self.signButton.clicked.connect(self.sign_user)
@@ -54,6 +57,8 @@ class LoginWindow(QMainWindow, Ui_MainWindow):
                 password_result = cursor.fetchone()
                 if password_result and verify_data(password_result[0], password):
                     self.show_tips("登录成功！")
+                    if self.autologin.isChecked():
+                        self.save_settings()
                     self.login_successful.emit()
                     self.close()
                     return
@@ -154,6 +159,30 @@ class LoginWindow(QMainWindow, Ui_MainWindow):
         self.bindemail.clear()
         self.CAPTCHA.clear()
         self.reset_window = None
+
+    def load_settings(self):
+        """加载配置文件并设置界面控件"""
+        if os.path.exists("config/setting.json"):
+            with open("config/setting.json", "r") as file:
+                settings = json.load(file)
+                self.autologin.setChecked(settings.get("autologin", False))
+                if self.autologin.isChecked():
+                    self.username_login_in.setText(settings.get("username", ""))
+                    self.password_login_in.setText(settings.get("password", ""))
+
+    def save_settings(self):
+        """保存当前用户名、密码及自动登录状态"""
+        if os.path.exists("config/setting.json"):
+            with open("config/setting.json", 'r') as file:
+                settings = json.load(file)
+        else:
+            settings = {}
+        settings['username'] = self.username_login_in.text()
+        settings['password'] = self.password_login_in.text()
+        settings['autologin'] = self.autologin.isChecked()
+
+        with open("config/setting.json", 'w') as file:
+            json.dump(settings, file, indent=4)
 
     def show_tips(self, text):
         """

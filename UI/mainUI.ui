@@ -80,7 +80,7 @@ QTabBar::tab {
 	background-color:#8b8b8b;
 	font-family: &quot;Microsoft YaHei&quot;;  /* 字体族 */
     font-weight: bold;  /* 字体粗细 */
-    color: white;  /* 文本颜色 */
+    color: #686868;  /* 文本颜色 */
     text-align: center center;  /* 文本居中对齐 */
     font: 14px;
 	indent:0;
@@ -97,10 +97,11 @@ QTabBar::tab {
 /*设置TabWidget中鼠标悬浮在QTabBar的tab上，但未选中该Tab的样式*/
 QTabBar::tab:hover:!selected {
     background-color: rgb(165, 165, 165);
+	color: white;
 }
 
 QTabBar::tab:selected {
-        color: #757575;
+	color: white;
 }
 
 QComboBox{
@@ -187,10 +188,58 @@ QSplitter::handle {
 QSplitter::handle:horizontal {
     border-left:1px solid #bababa; 
 }
+
+QDoubleSpinBox{
+background:rgba(200, 200, 200,50);
+color:white;
+font-size: 14px;
+font-family: &quot;Microsoft YaHei UI&quot;;
+border-style: solid;
+border-width: 1px;
+border-color: rgba(200, 200, 200,100);
+border-radius: 3px;}
+
+QDoubleSpinBox::down-button{
+background:rgba(200, 200, 200,0);
+border-image: url(:/global/icon/箭头_列表展开.png);}
+QDoubleSpinBox::down-button::hover{
+background:rgba(200, 200, 200,100);
+border-image: url(:/global/icon/箭头_列表展开.png);}
+
+QDoubleSpinBox::up-button{
+background:rgba(200, 200, 200,0);
+border-image: url(:/global/icon/箭头_列表收起.png);}
+QDoubleSpinBox::up-button::hover{
+background:rgba(200, 200, 200,100);
+border-image: url(:/global/icon/箭头_列表收起.png);}
+
+QSpinBox{
+background:rgba(200, 200, 200,50);
+color:white;
+font-size: 14px;
+font-family: &quot;Microsoft YaHei UI&quot;;
+border-style: solid;
+border-width: 1px;
+border-color: rgba(200, 200, 200,100);
+border-radius: 3px;}
+
+QSpinBox::down-button{
+background:rgba(200, 200, 200,0);
+border-image: url(:/global/icon/箭头_列表展开.png);}
+QDoubleSpinBox::down-button::hover{
+background:rgba(200, 200, 200,100);
+border-image: url(:/global/icon/箭头_列表展开.png);}
+
+QSpinBox::up-button{
+background:rgba(200, 200, 200,0);
+border-image: url(:/global/icon/箭头_列表收起.png);}
+QSpinBox::up-button::hover{
+background:rgba(200, 200, 200,100);
+border-image: url(:/global/icon/箭头_列表收起.png);}
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_46">
+   <layout class="QVBoxLayout" name="verticalLayout_13">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -840,30 +889,7 @@ border:none;
                        <item>
                         <widget class="QDoubleSpinBox" name="iouSpinBox">
                          <property name="styleSheet">
-                          <string notr="true">QDoubleSpinBox{
-background:rgba(200, 200, 200,50);
-color:white;
-font-size: 14px;
-font-family: &quot;Microsoft YaHei UI&quot;;
-border-style: solid;
-border-width: 1px;
-border-color: rgba(200, 200, 200,100);
-border-radius: 3px;}
-
-QDoubleSpinBox::down-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-QDoubleSpinBox::down-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-
-QDoubleSpinBox::up-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-QDoubleSpinBox::up-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-</string>
+                          <string notr="true"/>
                          </property>
                          <property name="maximum">
                           <double>1.000000000000000</double>
@@ -953,30 +979,7 @@ border:none;
                        <item>
                         <widget class="QDoubleSpinBox" name="confSpinBox">
                          <property name="styleSheet">
-                          <string notr="true">QDoubleSpinBox{
-background:rgba(200, 200, 200,50);
-color:white;
-font-size: 14px;
-font-family: &quot;Microsoft YaHei UI&quot;;
-border-style: solid;
-border-width: 1px;
-border-color: rgba(200, 200, 200,100);
-border-radius: 3px;}
-
-QDoubleSpinBox::down-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-QDoubleSpinBox::down-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-
-QDoubleSpinBox::up-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-QDoubleSpinBox::up-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-</string>
+                          <string notr="true"/>
                          </property>
                          <property name="maximum">
                           <double>1.000000000000000</double>
@@ -1098,30 +1101,7 @@ border:none;
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">QSpinBox{
-background:rgba(200, 200, 200,50);
-color:white;
-font-size: 14px;
-font-family: &quot;Microsoft YaHei UI&quot;;
-border-style: solid;
-border-width: 1px;
-border-color: rgba(200, 200, 200,100);
-border-radius: 3px;}
-
-QSpinBox::down-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-QDoubleSpinBox::down-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表展开.png);}
-
-QSpinBox::up-button{
-background:rgba(200, 200, 200,0);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-QSpinBox::up-button::hover{
-background:rgba(200, 200, 200,100);
-border-image: url(:/images/icon/箭头_列表收起.png);}
-</string>
+                          <string notr="true"/>
                          </property>
                          <property name="minimum">
                           <number>1</number>
@@ -1329,6 +1309,21 @@ border:none;
                      <string/>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_16">
+                     <property name="spacing">
+                      <number>5</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
                      <item>
                       <widget class="QLabel" name="label_13">
                        <property name="maximumSize">
@@ -1696,6 +1691,981 @@ color: rgb(218, 218, 218);</string>
                       </widget>
                      </item>
                     </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="repaint_tab">
+          <attribute name="title">
+           <string>重绘区</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_48">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QGroupBox" name="groupBox_repaint_fill">
+             <layout class="QHBoxLayout" name="horizontalLayout_28">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QSplitter" name="splitter_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <widget class="QGroupBox" name="groupBox_repaint_sidebar">
+                 <property name="minimumSize">
+                  <size>
+                   <width>245</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>300</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none;</string>
+                 </property>
+                 <property name="title">
+                  <string/>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_11">
+                  <property name="spacing">
+                   <number>5</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_17">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">#groupBox_17{
+border-bottom:1px solid #bababa;
+}
+</string>
+                    </property>
+                    <property name="title">
+                     <string/>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_39">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_5">
+                       <property name="styleSheet">
+                        <string notr="true">font-size:22px;</string>
+                       </property>
+                       <property name="text">
+                        <string>设置</string>
+                       </property>
+                       <property name="indent">
+                        <number>0</number>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <spacer name="horizontalSpacer_14">
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>40</width>
+                         <height>20</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QTabWidget" name="tabWidget_repaint">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QTabWidget::tab-bar {
+	alignment: center;
+}
+QTabBar::tab {
+	indent:0;
+    width: 120%;
+    height: 20px;
+	border:none;
+	border-top-left-radius: 0px;    /*设置tab的边框的圆角（左上圆角）*/
+	border-top-right-radius: 0px;
+}</string>
+                    </property>
+                    <property name="tabPosition">
+                     <enum>QTabWidget::North</enum>
+                    </property>
+                    <property name="currentIndex">
+                     <number>0</number>
+                    </property>
+                    <widget class="QWidget" name="tab_2">
+                     <attribute name="title">
+                      <string>关节等级标注</string>
+                     </attribute>
+                     <layout class="QVBoxLayout" name="verticalLayout_14">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QGroupBox" name="groupBox_repaint_cls">
+                        <property name="styleSheet">
+                         <string notr="true">#groupBox_16{
+border-bottom:1px solid #bababa;
+}</string>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_17">
+                         <property name="spacing">
+                          <number>5</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_35">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_DIPFirst">
+                             <property name="toolTip">
+                              <string>第一手指远节指骨</string>
+                             </property>
+                             <property name="text">
+                              <string>DIPFirst</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_20">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="DIPFirst_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_36">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_DIP">
+                             <property name="toolTip">
+                              <string>远节指骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>DIP</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_21">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="DIP_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_32">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MIP">
+                             <property name="toolTip">
+                              <string>中节指骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>MIP</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_17">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="MIP_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_30">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_PIPFirst">
+                             <property name="toolTip">
+                              <string>第一手指近节指骨</string>
+                             </property>
+                             <property name="text">
+                              <string>PIPFirst</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_15">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="PIPFirst_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="cursor">
+                              <cursorShape>ArrowCursor</cursorShape>
+                             </property>
+                             <property name="buttonSymbols">
+                              <enum>QAbstractSpinBox::UpDownArrows</enum>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_31">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_PIP">
+                             <property name="toolTip">
+                              <string>近节指骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>PIP</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_16">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="PIP_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_33">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MCPFirst_2">
+                             <property name="toolTip">
+                              <string>第一手指掌骨</string>
+                             </property>
+                             <property name="text">
+                              <string>MCPFirst</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_18">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="MCPFirst_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_34">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MCP_2">
+                             <property name="toolTip">
+                              <string>掌骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>MCP</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_19">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="MCP_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_37">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_Radius_classify">
+                             <property name="toolTip">
+                              <string>桡骨</string>
+                             </property>
+                             <property name="text">
+                              <string>Radius</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_22">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="Radius_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_38">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_Ulna_classify">
+                             <property name="toolTip">
+                              <string>尺骨</string>
+                             </property>
+                             <property name="text">
+                              <string>Ulna</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <spacer name="horizontalSpacer_23">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
+                           <item>
+                            <widget class="QSpinBox" name="Ulna_level">
+                             <property name="minimumSize">
+                              <size>
+                               <width>60</width>
+                               <height>0</height>
+                              </size>
+                             </property>
+                             <property name="minimum">
+                              <number>1</number>
+                             </property>
+                             <property name="maximum">
+                              <number>14</number>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <spacer name="verticalSpacer_3">
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>20</width>
+                             <height>40</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="openimageButton">
+                           <property name="text">
+                            <string>打开图像文件</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_40">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QPushButton" name="clearButton">
+                             <property name="text">
+                              <string>清除当前类标注框</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QPushButton" name="clearallButton">
+                             <property name="text">
+                              <string>清除所有类标注框</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="saveclassifyButton">
+                           <property name="text">
+                            <string>保存关节等级分类图像</string>
+                           </property>
+                           <property name="checkable">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="reportButton">
+                           <property name="text">
+                            <string>重新生成报告</string>
+                           </property>
+                           <property name="checkable">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                    <widget class="QWidget" name="tab">
+                     <attribute name="title">
+                      <string>关节检测标注</string>
+                     </attribute>
+                     <layout class="QVBoxLayout" name="verticalLayout_12">
+                      <property name="spacing">
+                       <number>0</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QGroupBox" name="groupBox_repaint_det">
+                        <property name="styleSheet">
+                         <string notr="true">#groupBox_14{
+border-bottom:1px solid #bababa;
+}</string>
+                        </property>
+                        <property name="title">
+                         <string/>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_15">
+                         <property name="spacing">
+                          <number>5</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>10</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_52">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_DistalPhalanx">
+                             <property name="toolTip">
+                              <string>远节指骨</string>
+                             </property>
+                             <property name="text">
+                              <string>DistalPhalanx</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_55">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MiddlePhalanx">
+                             <property name="toolTip">
+                              <string>中节指骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>MiddlePhalanx</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_56">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_ProximalPhalanx">
+                             <property name="toolTip">
+                              <string>近节指骨</string>
+                             </property>
+                             <property name="text">
+                              <string>ProximalPhalanx</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_54">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MCPFirst">
+                             <property name="toolTip">
+                              <string>第一手指掌骨</string>
+                             </property>
+                             <property name="text">
+                              <string>MCPFirst</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_53">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_MCP">
+                             <property name="toolTip">
+                              <string>掌骨（除了拇指剩下四只手指）</string>
+                             </property>
+                             <property name="text">
+                              <string>MCP</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_57">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_Radius_detect">
+                             <property name="toolTip">
+                              <string>桡骨</string>
+                             </property>
+                             <property name="text">
+                              <string>Radius</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_58">
+                           <item>
+                            <widget class="QCheckBox" name="checkBox_Ulna_detect">
+                             <property name="toolTip">
+                              <string>尺骨</string>
+                             </property>
+                             <property name="text">
+                              <string>Ulna</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <spacer name="verticalSpacer_2">
+                           <property name="orientation">
+                            <enum>Qt::Vertical</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>20</width>
+                             <height>40</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="openimageButton_2">
+                           <property name="text">
+                            <string>打开图像文件</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <layout class="QHBoxLayout" name="horizontalLayout_41">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QPushButton" name="clearButton_2">
+                             <property name="text">
+                              <string>清除当前类标注框</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QPushButton" name="clearallButton_2">
+                             <property name="text">
+                              <string>清除所有类标注框</string>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="savedetectButton">
+                           <property name="text">
+                            <string>保存关节检测标注文件</string>
+                           </property>
+                           <property name="checkable">
+                            <bool>true</bool>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_position">
+                    <property name="styleSheet">
+                     <string notr="true">#groupBox_position{
+	border-top:1px solid #bababa;
+}</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_16">
+                     <property name="spacing">
+                      <number>5</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>10</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>5</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="mouse_position_label">
+                       <property name="text">
+                        <string>鼠标位置: </string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="start_position_label">
+                       <property name="text">
+                        <string>标注框起始位置: </string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="end_position_label">
+                       <property name="text">
+                        <string>标注框终止位置: </string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="box_size_label">
+                       <property name="text">
+                        <string>标注框大小: </string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QGroupBox" name="repaint_view">
+                 <property name="styleSheet">
+                  <string notr="true">#repaint_view{
+border:none;
+background-color:#8b8b8b;
+}</string>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_29">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>20</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>20</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>20</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>20</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="repaint_label">
+                    <property name="minimumSize">
+                     <size>
+                      <width>800</width>
+                      <height>400</height>
+                     </size>
+                    </property>
                    </widget>
                   </item>
                  </layout>
@@ -3075,35 +4045,6 @@ border:none;
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tab">
-          <attribute name="title">
-           <string>其他</string>
-          </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_48">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QGroupBox" name="groupBox_35">
-             <property name="title">
-              <string>GroupBox</string>
-             </property>
             </widget>
            </item>
           </layout>

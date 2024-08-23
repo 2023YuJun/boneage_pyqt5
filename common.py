@@ -15,6 +15,10 @@ classify_info = []
 # 最终报告
 REPORT = ""
 
+# 定义类别
+CLASSIFY = ["DIPFirst", "DIP", "MIP", "PIPFirst", "PIP", "MCPFirst", "MCP", "Radius", "Ulna"]
+DETECT = ["DistalPhalanx", "MiddlePhalanx", "ProximalPhalanx", "MCPFirst", "MCP", "Radius", "Ulna"]
+
 # 定义类别映射
 CATEGORY_MAPPING = {
     "MCPFirst": ["MCPFirst"],
@@ -60,7 +64,8 @@ CROP_CATEGORY_MAPPING = {
 }
 
 # 定义颜色列表，每个类别使用不同的颜色
-COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255)]
+COLORS = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255), (139, 0, 0), (0, 100, 0),
+          (0, 0, 139)]
 
 # 等级对应的标准分
 SCORE = {
@@ -105,6 +110,7 @@ REPORT_TEMPLATE = """第一掌骨骺分级{}级，得{}分；第三掌骨骨骺�
 
 RUS-CHN分级计分法，受检儿CHN总得分：{}分，骨龄约为{}岁。
 """
+
 
 # 读取数据库配置
 def load_db_config():
@@ -168,6 +174,7 @@ def send_email(to_email, subject, content):
     finally:
         cursor.close()
         connection.close()
+
 
 # 获取服务器时间
 def get_server_time():

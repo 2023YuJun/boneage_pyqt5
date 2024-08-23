@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'UI.ui'
+# Form implementation generated from reading ui file 'mainUI.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -16,185 +16,234 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1254, 707)
         MainWindow.setStyleSheet("#mainWindow{\n"
-                                 "border:none;\n"
-                                 "}\n"
-                                 "\n"
-                                 "QGroupBox{\n"
-                                 "border:1px solid #bababa;  /*边框样式*/\n"
-                                 "background-color:#6e6e6e;    /*背景色*/\n"
-                                 "}\n"
-                                 "\n"
-                                 "QToolTip{\n"
-                                 "font-size: 12px;\n"
-                                 "font-family: \"Microsoft YaHei UI\";\n"
-                                 "font-weight: light;\n"
-                                 "color:white;\n"
-                                 "border-style: solid;\n"
-                                 "border-width: 0px;\n"
-                                 "border-color: rgba(255, 255, 255, 255);\n"
-                                 "background-color: rgba(200, 200, 200,50);\n"
-                                 "}\n"
-                                 "\n"
-                                 "QPushButton{\n"
-                                 "font-family: \"Microsoft YaHei\";\n"
-                                 "font-size: 14px;\n"
-                                 "font-weight: bold;\n"
-                                 "color:white;\n"
-                                 "text-align: center center;\n"
-                                 "padding-left: 5px;\n"
-                                 "padding-right: 5px;\n"
-                                 "padding-top: 4px;\n"
-                                 "padding-bottom: 4px;\n"
-                                 "border-style: solid;\n"
-                                 "border-width: 0px;\n"
-                                 "border-color: rgba(255, 255, 255, 255);\n"
-                                 "border-radius: 3px;\n"
-                                 "background-color: rgba(200, 200, 200,0);\n"
-                                 "}\n"
-                                 "\n"
-                                 "/* QPushButton 获得焦点时的样式 */\n"
-                                 "QPushButton:focus {\n"
-                                 "    outline: none;  /* 去除获得焦点时的默认轮廓线 */\n"
-                                 "}\n"
-                                 "\n"
-                                 "/* QPushButton 鼠标悬停时的样式 */\n"
-                                 "QPushButton::hover {\n"
-                                 "    border-style: solid;  /* 边框样式 */\n"
-                                 "    border-width: 0px;  /* 边框宽度 */\n"
-                                 "    border-radius: 0px;  /* 边框圆角 */\n"
-                                 "    background-color: rgb(165, 165, 165);  /* 鼠标悬停时的背景色 */\n"
-                                 "}\n"
-                                 "\n"
-                                 "QLabel{\n"
-                                 "    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
-                                 "    font-weight: bold;  /* 字体粗细 */\n"
-                                 "    color: white;  /* 文本颜色 */\n"
-                                 "    text-align: center center;  /* 文本居中对齐 */\n"
-                                 "    indent:0;\n"
-                                 "}\n"
-                                 "\n"
-                                 "QTabWidget::pane {\n"
-                                 "    border: none;\n"
-                                 "}\n"
-                                 "\n"
-                                 "QTabBar::tab {\n"
-                                 "    background-color:#8b8b8b;\n"
-                                 "    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
-                                 "    font-weight: bold;  /* 字体粗细 */\n"
-                                 "    color: white;  /* 文本颜色 */\n"
-                                 "    text-align: center center;  /* 文本居中对齐 */\n"
-                                 "    font: 14px;\n"
-                                 "    indent:0;\n"
-                                 "    width: 60px;\n"
-                                 "    height: 20px;\n"
-                                 "    margin: 0px;\n"
-                                 "    border-right:1px solid #bababa;\n"
-                                 "    border-top-left-radius: 5px;    /*设置tab的边框的圆角（左上圆角）*/\n"
-                                 "    border-top-right-radius: 5px;    /*设置tab的边框的圆角（右上圆角）*/\n"
-                                 "\n"
-                                 "}\n"
-                                 "\n"
-                                 "\n"
-                                 "/*设置TabWidget中鼠标悬浮在QTabBar的tab上，但未选中该Tab的样式*/\n"
-                                 "QTabBar::tab:hover:!selected {\n"
-                                 "    background-color: rgb(165, 165, 165);\n"
-                                 "}\n"
-                                 "\n"
-                                 "QTabBar::tab:selected {\n"
-                                 "        color: #757575;\n"
-                                 "}\n"
-                                 "\n"
-                                 "QComboBox{\n"
-                                 "font-family: \"Microsoft YaHei\";\n"
-                                 "font-size: 14px;\n"
-                                 "color: rgb(218, 218, 218);\n"
-                                 "border-width:0px;\n"
-                                 "border-color:white;\n"
-                                 "border-style:solid;\n"
-                                 "background-color: rgba(200, 200, 200,0);\n"
-                                 "}\n"
-                                 "QComboBox::editable {\n"
-                                 "    font-size: 14px;\n"
-                                 "    background-color: rgba(200, 200, 200,0);\n"
-                                 "}\n"
-                                 "QComboBox QAbstractItemView {            \n"
-                                 "    scrollbar-width: none; \n"
-                                 "    -ms-overflow-style: none; \n"
-                                 "}\n"
-                                 "QComboBox QAbstractItemView::scrollbar:vertical {\n"
-                                 "    width: 0px; /* 隐藏垂直滑动条 */\n"
-                                 "    border:none;\n"
-                                 "}\n"
-                                 "QComboBox QAbstractItemView::scrollbar:horizontal {\n"
-                                 "    height: 0px; /* 隐藏水平滑动条 */\n"
-                                 "    border:none;\n"
-                                 "}\n"
-                                 "\n"
-                                 "\n"
-                                 "QSlider{\n"
-                                 "border-color: #bcbcbc;\n"
-                                 "color:#d9d9d9;\n"
-                                 "}\n"
-                                 "QSlider::groove:horizontal {                                \n"
-                                 "     border: 1px solid #999999;                             \n"
-                                 "     height: 3px;                                           \n"
-                                 "    margin: 0px 0;                                         \n"
-                                 "     left: 5px; right: 5px; \n"
-                                 " }\n"
-                                 "QSlider::handle:horizontal {                               \n"
-                                 "     border: 0px ; \n"
-                                 "     border-image:url(:/global/icon/圆.png);\n"
-                                 "     width:16px;\n"
-                                 "     margin: -7px -7px -7px -7px;                  \n"
-                                 "} \n"
-                                 "QSlider::add-page:horizontal{\n"
-                                 "background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #d9d9d9, stop:0.25 #d9d9d9, stop:0.5 #d9d9d9, stop:1 #d9d9d9); \n"
-                                 "\n"
-                                 "}\n"
-                                 "QSlider::sub-page:horizontal{                               \n"
-                                 " background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #373737, stop:0.25 #373737, stop:0.5 #373737, stop:1 #373737);                     \n"
-                                 "}\n"
-                                 "\n"
-                                 "\n"
-                                 "QCheckBox\n"
-                                 "{font-size: 16px;\n"
-                                 "    font-family: \"Microsoft YaHei\";\n"
-                                 "    font-weight: bold;\n"
-                                 "         border-radius:9px;\n"
-                                 "        background:rgba(66, 195, 255, 0);\n"
-                                 "color: rgb(218, 218, 218);;}\n"
-                                 "\n"
-                                 "QCheckBox::indicator {\n"
-                                 "    width: 20px;\n"
-                                 "    height: 20px;\n"
-                                 "}\n"
-                                 "QCheckBox::indicator:unchecked {\n"
-                                 "    image: url(:/global/icon/button-off.png);\n"
-                                 "}\n"
-                                 "\n"
-                                 "QCheckBox::indicator:checked {\n"
-                                 "    \n"
-                                 "    image: url(:/global/icon/button-on.png);\n"
-                                 "}\n"
-                                 "\n"
-                                 "QSplitter::handle {\n"
-                                 "    background-color: rgba(200, 200, 200, 0);\n"
-                                 "    border: none;\n"
-                                 "    border-radius:0px;\n"
-                                 "    width: 1px;\n"
-                                 "}\n"
-                                 "\n"
-                                 "\n"
-                                 "QSplitter::handle:horizontal {\n"
-                                 "    border-left:1px solid #bababa; \n"
-                                 "}\n"
-                                 "")
+"border:none;\n"
+"}\n"
+"\n"
+"QGroupBox{\n"
+"border:1px solid #bababa;  /*边框样式*/\n"
+"background-color:#6e6e6e;    /*背景色*/\n"
+"}\n"
+"\n"
+"QToolTip{\n"
+"font-size: 12px;\n"
+"font-family: \"Microsoft YaHei UI\";\n"
+"font-weight: light;\n"
+"color:white;\n"
+"border-style: solid;\n"
+"border-width: 0px;\n"
+"border-color: rgba(255, 255, 255, 255);\n"
+"background-color: rgba(200, 200, 200,50);\n"
+"}\n"
+"\n"
+"QPushButton{\n"
+"font-family: \"Microsoft YaHei\";\n"
+"font-size: 14px;\n"
+"font-weight: bold;\n"
+"color:white;\n"
+"text-align: center center;\n"
+"padding-left: 5px;\n"
+"padding-right: 5px;\n"
+"padding-top: 4px;\n"
+"padding-bottom: 4px;\n"
+"border-style: solid;\n"
+"border-width: 0px;\n"
+"border-color: rgba(255, 255, 255, 255);\n"
+"border-radius: 3px;\n"
+"background-color: rgba(200, 200, 200,0);\n"
+"}\n"
+"\n"
+"/* QPushButton 获得焦点时的样式 */\n"
+"QPushButton:focus {\n"
+"    outline: none;  /* 去除获得焦点时的默认轮廓线 */\n"
+"}\n"
+"\n"
+"/* QPushButton 鼠标悬停时的样式 */\n"
+"QPushButton::hover {\n"
+"    border-style: solid;  /* 边框样式 */\n"
+"    border-width: 0px;  /* 边框宽度 */\n"
+"    border-radius: 0px;  /* 边框圆角 */\n"
+"    background-color: rgb(165, 165, 165);  /* 鼠标悬停时的背景色 */\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
+"    font-weight: bold;  /* 字体粗细 */\n"
+"    color: white;  /* 文本颜色 */\n"
+"    text-align: center center;  /* 文本居中对齐 */\n"
+"    indent:0;\n"
+"}\n"
+"\n"
+"QTabWidget::pane {\n"
+"    border: none;\n"
+"}\n"
+"\n"
+"QTabBar::tab {\n"
+"    background-color:#8b8b8b;\n"
+"    font-family: \"Microsoft YaHei\";  /* 字体族 */\n"
+"    font-weight: bold;  /* 字体粗细 */\n"
+"    color: #686868;  /* 文本颜色 */\n"
+"    text-align: center center;  /* 文本居中对齐 */\n"
+"    font: 14px;\n"
+"    indent:0;\n"
+"    width: 60px;\n"
+"    height: 20px;\n"
+"    margin: 0px;\n"
+"    border-right:1px solid #bababa;\n"
+"    border-top-left-radius: 5px;    /*设置tab的边框的圆角（左上圆角）*/\n"
+"    border-top-right-radius: 5px;    /*设置tab的边框的圆角（右上圆角）*/\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"/*设置TabWidget中鼠标悬浮在QTabBar的tab上，但未选中该Tab的样式*/\n"
+"QTabBar::tab:hover:!selected {\n"
+"    background-color: rgb(165, 165, 165);\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QTabBar::tab:selected {\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QComboBox{\n"
+"font-family: \"Microsoft YaHei\";\n"
+"font-size: 14px;\n"
+"color: rgb(218, 218, 218);\n"
+"border-width:0px;\n"
+"border-color:white;\n"
+"border-style:solid;\n"
+"background-color: rgba(200, 200, 200,0);\n"
+"}\n"
+"QComboBox::editable {\n"
+"    font-size: 14px;\n"
+"    background-color: rgba(200, 200, 200,0);\n"
+"}\n"
+"QComboBox QAbstractItemView {            \n"
+"    scrollbar-width: none; \n"
+"    -ms-overflow-style: none; \n"
+"}\n"
+"QComboBox QAbstractItemView::scrollbar:vertical {\n"
+"    width: 0px; /* 隐藏垂直滑动条 */\n"
+"    border:none;\n"
+"}\n"
+"QComboBox QAbstractItemView::scrollbar:horizontal {\n"
+"    height: 0px; /* 隐藏水平滑动条 */\n"
+"    border:none;\n"
+"}\n"
+"\n"
+"\n"
+"QSlider{\n"
+"border-color: #bcbcbc;\n"
+"color:#d9d9d9;\n"
+"}\n"
+"QSlider::groove:horizontal {                                \n"
+"     border: 1px solid #999999;                             \n"
+"     height: 3px;                                           \n"
+"    margin: 0px 0;                                         \n"
+"     left: 5px; right: 5px; \n"
+" }\n"
+"QSlider::handle:horizontal {                               \n"
+"     border: 0px ; \n"
+"     border-image:url(:/global/icon/圆.png);\n"
+"     width:16px;\n"
+"     margin: -7px -7px -7px -7px;                  \n"
+"} \n"
+"QSlider::add-page:horizontal{\n"
+"background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #d9d9d9, stop:0.25 #d9d9d9, stop:0.5 #d9d9d9, stop:1 #d9d9d9); \n"
+"\n"
+"}\n"
+"QSlider::sub-page:horizontal{                               \n"
+" background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #373737, stop:0.25 #373737, stop:0.5 #373737, stop:1 #373737);                     \n"
+"}\n"
+"\n"
+"\n"
+"QCheckBox\n"
+"{font-size: 16px;\n"
+"    font-family: \"Microsoft YaHei\";\n"
+"    font-weight: bold;\n"
+"         border-radius:9px;\n"
+"        background:rgba(66, 195, 255, 0);\n"
+"color: rgb(218, 218, 218);;}\n"
+"\n"
+"QCheckBox::indicator {\n"
+"    width: 20px;\n"
+"    height: 20px;\n"
+"}\n"
+"QCheckBox::indicator:unchecked {\n"
+"    image: url(:/global/icon/button-off.png);\n"
+"}\n"
+"\n"
+"QCheckBox::indicator:checked {\n"
+"    \n"
+"    image: url(:/global/icon/button-on.png);\n"
+"}\n"
+"\n"
+"QSplitter::handle {\n"
+"    background-color: rgba(200, 200, 200, 0);\n"
+"    border: none;\n"
+"    border-radius:0px;\n"
+"    width: 1px;\n"
+"}\n"
+"\n"
+"\n"
+"QSplitter::handle:horizontal {\n"
+"    border-left:1px solid #bababa; \n"
+"}\n"
+"\n"
+"QDoubleSpinBox{\n"
+"background:rgba(200, 200, 200,50);\n"
+"color:white;\n"
+"font-size: 14px;\n"
+"font-family: \"Microsoft YaHei UI\";\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-color: rgba(200, 200, 200,100);\n"
+"border-radius: 3px;}\n"
+"\n"
+"QDoubleSpinBox::down-button{\n"
+"background:rgba(200, 200, 200,0);\n"
+"border-image: url(:/global/icon/箭头_列表展开.png);}\n"
+"QDoubleSpinBox::down-button::hover{\n"
+"background:rgba(200, 200, 200,100);\n"
+"border-image: url(:/global/icon/箭头_列表展开.png);}\n"
+"\n"
+"QDoubleSpinBox::up-button{\n"
+"background:rgba(200, 200, 200,0);\n"
+"border-image: url(:/global/icon/箭头_列表收起.png);}\n"
+"QDoubleSpinBox::up-button::hover{\n"
+"background:rgba(200, 200, 200,100);\n"
+"border-image: url(:/global/icon/箭头_列表收起.png);}\n"
+"\n"
+"QSpinBox{\n"
+"background:rgba(200, 200, 200,50);\n"
+"color:white;\n"
+"font-size: 14px;\n"
+"font-family: \"Microsoft YaHei UI\";\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-color: rgba(200, 200, 200,100);\n"
+"border-radius: 3px;}\n"
+"\n"
+"QSpinBox::down-button{\n"
+"background:rgba(200, 200, 200,0);\n"
+"border-image: url(:/global/icon/箭头_列表展开.png);}\n"
+"QDoubleSpinBox::down-button::hover{\n"
+"background:rgba(200, 200, 200,100);\n"
+"border-image: url(:/global/icon/箭头_列表展开.png);}\n"
+"\n"
+"QSpinBox::up-button{\n"
+"background:rgba(200, 200, 200,0);\n"
+"border-image: url(:/global/icon/箭头_列表收起.png);}\n"
+"QSpinBox::up-button::hover{\n"
+"background:rgba(200, 200, 200,100);\n"
+"border-image: url(:/global/icon/箭头_列表收起.png);}\n"
+"")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayout_46 = QtWidgets.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_46.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_46.setSpacing(0)
-        self.horizontalLayout_46.setObjectName("horizontalLayout_46")
+        self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.groupBox_body = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox_body.setStyleSheet("")
         self.groupBox_body.setTitle("")
@@ -207,8 +256,8 @@ class Ui_MainWindow(object):
         self.groupBox_top.setMinimumSize(QtCore.QSize(0, 35))
         self.groupBox_top.setMaximumSize(QtCore.QSize(16777215, 40))
         self.groupBox_top.setStyleSheet("#groupBox_top{\n"
-                                        "border:none;\n"
-                                        "}")
+"border:none;\n"
+"}")
         self.groupBox_top.setTitle("")
         self.groupBox_top.setObjectName("groupBox_top")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.groupBox_top)
@@ -267,9 +316,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.groupBox_fill = QtWidgets.QGroupBox(self.detect_tab)
         self.groupBox_fill.setStyleSheet("#groupBox_fill{\n"
-                                         "border-left:none;\n"
-                                         "border-right:none;\n"
-                                         "}")
+"border-left:none;\n"
+"border-right:none;\n"
+"}")
         self.groupBox_fill.setTitle("")
         self.groupBox_fill.setObjectName("groupBox_fill")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.groupBox_fill)
@@ -284,8 +333,8 @@ class Ui_MainWindow(object):
         self.groupBox_sidebar.setMinimumSize(QtCore.QSize(250, 0))
         self.groupBox_sidebar.setMaximumSize(QtCore.QSize(300, 16777215))
         self.groupBox_sidebar.setStyleSheet("#groupBox_sidebar{\n"
-                                            "border:none;\n"
-                                            "}")
+"border:none;\n"
+"}")
         self.groupBox_sidebar.setTitle("")
         self.groupBox_sidebar.setObjectName("groupBox_sidebar")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.groupBox_sidebar)
@@ -314,10 +363,10 @@ class Ui_MainWindow(object):
         self.groupBox_2.setMinimumSize(QtCore.QSize(0, 30))
         self.groupBox_2.setMaximumSize(QtCore.QSize(16777215, 30))
         self.groupBox_2.setStyleSheet("#groupBox_2{\n"
-                                      "border:none;\n"
-                                      "border-top:1px solid #bababa;\n"
-                                      "}\n"
-                                      "")
+"border:none;\n"
+"border-top:1px solid #bababa;\n"
+"}\n"
+"")
         self.groupBox_2.setTitle("")
         self.groupBox_2.setObjectName("groupBox_2")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.groupBox_2)
@@ -345,8 +394,8 @@ class Ui_MainWindow(object):
         self.groupBox_3.setMinimumSize(QtCore.QSize(0, 30))
         self.groupBox_3.setMaximumSize(QtCore.QSize(16777215, 30))
         self.groupBox_3.setStyleSheet("#groupBox_3{\n"
-                                      "border:none;\n"
-                                      "}")
+"border:none;\n"
+"}")
         self.groupBox_3.setTitle("")
         self.groupBox_3.setObjectName("groupBox_3")
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.groupBox_3)
@@ -362,8 +411,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addItem(spacerItem2)
         self.groupBox_input = QtWidgets.QGroupBox(self.groupBox_3)
         self.groupBox_input.setStyleSheet("#groupBox_input{\n"
-                                          "border:none;\n"
-                                          "}")
+"border:none;\n"
+"}")
         self.groupBox_input.setTitle("")
         self.groupBox_input.setObjectName("groupBox_input")
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.groupBox_input)
@@ -395,8 +444,8 @@ class Ui_MainWindow(object):
         self.groupBox_4.setMinimumSize(QtCore.QSize(0, 60))
         self.groupBox_4.setMaximumSize(QtCore.QSize(16777215, 60))
         self.groupBox_4.setStyleSheet("#groupBox_4{\n"
-                                      "border:none;\n"
-                                      "}")
+"border:none;\n"
+"}")
         self.groupBox_4.setTitle("")
         self.groupBox_4.setObjectName("groupBox_4")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.groupBox_4)
@@ -412,30 +461,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setSpacing(5)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
         self.iouSpinBox = QtWidgets.QDoubleSpinBox(self.groupBox_4)
-        self.iouSpinBox.setStyleSheet("QDoubleSpinBox{\n"
-                                      "background:rgba(200, 200, 200,50);\n"
-                                      "color:white;\n"
-                                      "font-size: 14px;\n"
-                                      "font-family: \"Microsoft YaHei UI\";\n"
-                                      "border-style: solid;\n"
-                                      "border-width: 1px;\n"
-                                      "border-color: rgba(200, 200, 200,100);\n"
-                                      "border-radius: 3px;}\n"
-                                      "\n"
-                                      "QDoubleSpinBox::down-button{\n"
-                                      "background:rgba(200, 200, 200,0);\n"
-                                      "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                      "QDoubleSpinBox::down-button::hover{\n"
-                                      "background:rgba(200, 200, 200,100);\n"
-                                      "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                      "\n"
-                                      "QDoubleSpinBox::up-button{\n"
-                                      "background:rgba(200, 200, 200,0);\n"
-                                      "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                      "QDoubleSpinBox::up-button::hover{\n"
-                                      "background:rgba(200, 200, 200,100);\n"
-                                      "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                      "")
+        self.iouSpinBox.setStyleSheet("")
         self.iouSpinBox.setMaximum(1.0)
         self.iouSpinBox.setSingleStep(0.01)
         self.iouSpinBox.setProperty("value", 0.2)
@@ -454,8 +480,8 @@ class Ui_MainWindow(object):
         self.groupBox_5.setMinimumSize(QtCore.QSize(0, 60))
         self.groupBox_5.setMaximumSize(QtCore.QSize(16777215, 60))
         self.groupBox_5.setStyleSheet("#groupBox_5{\n"
-                                      "border:none;\n"
-                                      "}")
+"border:none;\n"
+"}")
         self.groupBox_5.setTitle("")
         self.groupBox_5.setObjectName("groupBox_5")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.groupBox_5)
@@ -470,30 +496,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_12.setSpacing(5)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
         self.confSpinBox = QtWidgets.QDoubleSpinBox(self.groupBox_5)
-        self.confSpinBox.setStyleSheet("QDoubleSpinBox{\n"
-                                       "background:rgba(200, 200, 200,50);\n"
-                                       "color:white;\n"
-                                       "font-size: 14px;\n"
-                                       "font-family: \"Microsoft YaHei UI\";\n"
-                                       "border-style: solid;\n"
-                                       "border-width: 1px;\n"
-                                       "border-color: rgba(200, 200, 200,100);\n"
-                                       "border-radius: 3px;}\n"
-                                       "\n"
-                                       "QDoubleSpinBox::down-button{\n"
-                                       "background:rgba(200, 200, 200,0);\n"
-                                       "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                       "QDoubleSpinBox::down-button::hover{\n"
-                                       "background:rgba(200, 200, 200,100);\n"
-                                       "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                       "\n"
-                                       "QDoubleSpinBox::up-button{\n"
-                                       "background:rgba(200, 200, 200,0);\n"
-                                       "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                       "QDoubleSpinBox::up-button::hover{\n"
-                                       "background:rgba(200, 200, 200,100);\n"
-                                       "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                       "")
+        self.confSpinBox.setStyleSheet("")
         self.confSpinBox.setMaximum(1.0)
         self.confSpinBox.setSingleStep(0.01)
         self.confSpinBox.setProperty("value", 0.5)
@@ -512,8 +515,8 @@ class Ui_MainWindow(object):
         self.groupBox_6.setMinimumSize(QtCore.QSize(0, 60))
         self.groupBox_6.setMaximumSize(QtCore.QSize(16777215, 60))
         self.groupBox_6.setStyleSheet("#groupBox_6{\n"
-                                      "border:none;\n"
-                                      "}")
+"border:none;\n"
+"}")
         self.groupBox_6.setTitle("")
         self.groupBox_6.setObjectName("groupBox_6")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.groupBox_6)
@@ -539,30 +542,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
         self.rateSpinBox = QtWidgets.QSpinBox(self.groupBox_6)
         self.rateSpinBox.setMinimumSize(QtCore.QSize(51, 0))
-        self.rateSpinBox.setStyleSheet("QSpinBox{\n"
-                                       "background:rgba(200, 200, 200,50);\n"
-                                       "color:white;\n"
-                                       "font-size: 14px;\n"
-                                       "font-family: \"Microsoft YaHei UI\";\n"
-                                       "border-style: solid;\n"
-                                       "border-width: 1px;\n"
-                                       "border-color: rgba(200, 200, 200,100);\n"
-                                       "border-radius: 3px;}\n"
-                                       "\n"
-                                       "QSpinBox::down-button{\n"
-                                       "background:rgba(200, 200, 200,0);\n"
-                                       "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                       "QDoubleSpinBox::down-button::hover{\n"
-                                       "background:rgba(200, 200, 200,100);\n"
-                                       "border-image: url(:/images/icon/箭头_列表展开.png);}\n"
-                                       "\n"
-                                       "QSpinBox::up-button{\n"
-                                       "background:rgba(200, 200, 200,0);\n"
-                                       "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                       "QSpinBox::up-button::hover{\n"
-                                       "background:rgba(200, 200, 200,100);\n"
-                                       "border-image: url(:/images/icon/箭头_列表收起.png);}\n"
-                                       "")
+        self.rateSpinBox.setStyleSheet("")
         self.rateSpinBox.setMinimum(1)
         self.rateSpinBox.setMaximum(30)
         self.rateSpinBox.setObjectName("rateSpinBox")
@@ -582,8 +562,8 @@ class Ui_MainWindow(object):
         self.groupBox_10.setMinimumSize(QtCore.QSize(0, 30))
         self.groupBox_10.setMaximumSize(QtCore.QSize(16777215, 30))
         self.groupBox_10.setStyleSheet("#groupBox_10{\n"
-                                       "border:none;\n"
-                                       "}")
+"border:none;\n"
+"}")
         self.groupBox_10.setTitle("")
         self.groupBox_10.setObjectName("groupBox_10")
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout(self.groupBox_10)
@@ -603,38 +583,38 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.addWidget(self.runButton)
         self.ProgressSlider = QtWidgets.QSlider(self.groupBox_10)
         self.ProgressSlider.setStyleSheet("QSlider {\n"
-                                          "    color: rgb(255, 255, 255);\n"
-                                          "    font: 10px;\n"
-                                          "    border-radius: 5px;\n"
-                                          "    text-align: center;\n"
-                                          "    border: none;\n"
-                                          "    background-color: rgba(215, 215, 215, 100);\n"
-                                          "    height: 15px;\n"
-                                          "}\n"
-                                          "QSlider::groove:horizontal {\n"
-                                          "    border-radius: 5px;\n"
-                                          "    border: 1px;\n"
-                                          "    height: 8px;\n"
-                                          "    margin: 0px;\n"
-                                          "    left: 5px; \n"
-                                          "    right: 5px;\n"
-                                          "}\n"
-                                          "\n"
-                                          "QSlider::handle:horizontal {\n"
-                                          "    border: 0px;\n"
-                                          "    width: 15px;\n"
-                                          "    border-image:none;\n"
-                                          "    margin: -7px -7px -7px -7px;\n"
-                                          "}\n"
-                                          "QSlider::add-page:horizontal {\n"
-                                          "    background: qlineargradient(spread: pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(215, 215, 215, 100), stop: 0.25 rgba(215, 215, 215, 100), stop: 0.5 rgba(215, 215, 215, 100), stop: 1 rgba(215, 215, 215, 100));\n"
-                                          "    border-radius: 5px;\n"
-                                          "}\n"
-                                          "QSlider::sub-page:horizontal {\n"
-                                          "    background: qlineargradient(spread: pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(55, 55, 55, 200), stop: 0.25 rgba(55, 55, 55, 200), stop: 0.5 rgba(55, 55, 55, 200), stop: 1 rgba(55, 55, 55, 200));\n"
-                                          "    border-radius: 5px;\n"
-                                          "}\n"
-                                          "")
+"    color: rgb(255, 255, 255);\n"
+"    font: 10px;\n"
+"    border-radius: 5px;\n"
+"    text-align: center;\n"
+"    border: none;\n"
+"    background-color: rgba(215, 215, 215, 100);\n"
+"    height: 15px;\n"
+"}\n"
+"QSlider::groove:horizontal {\n"
+"    border-radius: 5px;\n"
+"    border: 1px;\n"
+"    height: 8px;\n"
+"    margin: 0px;\n"
+"    left: 5px; \n"
+"    right: 5px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"    border: 0px;\n"
+"    width: 15px;\n"
+"    border-image:none;\n"
+"    margin: -7px -7px -7px -7px;\n"
+"}\n"
+"QSlider::add-page:horizontal {\n"
+"    background: qlineargradient(spread: pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(215, 215, 215, 100), stop: 0.25 rgba(215, 215, 215, 100), stop: 0.5 rgba(215, 215, 215, 100), stop: 1 rgba(215, 215, 215, 100));\n"
+"    border-radius: 5px;\n"
+"}\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: qlineargradient(spread: pad, x1: 0, y1: 1, x2: 0, y2: 0, stop: 0 rgba(55, 55, 55, 200), stop: 0.25 rgba(55, 55, 55, 200), stop: 0.5 rgba(55, 55, 55, 200), stop: 1 rgba(55, 55, 55, 200));\n"
+"    border-radius: 5px;\n"
+"}\n"
+"")
         self.ProgressSlider.setMinimum(0)
         self.ProgressSlider.setMaximum(100)
         self.ProgressSlider.setSingleStep(1)
@@ -659,11 +639,13 @@ class Ui_MainWindow(object):
         self.groupBox_11.setMinimumSize(QtCore.QSize(0, 40))
         self.groupBox_11.setMaximumSize(QtCore.QSize(16777215, 40))
         self.groupBox_11.setStyleSheet("#groupBox_11{\n"
-                                       "border:none;\n"
-                                       "}")
+"border:none;\n"
+"}")
         self.groupBox_11.setTitle("")
         self.groupBox_11.setObjectName("groupBox_11")
         self.horizontalLayout_16 = QtWidgets.QHBoxLayout(self.groupBox_11)
+        self.horizontalLayout_16.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_16.setSpacing(5)
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
         self.label_13 = QtWidgets.QLabel(self.groupBox_11)
         self.label_13.setMaximumSize(QtCore.QSize(80, 16777215))
@@ -688,10 +670,10 @@ class Ui_MainWindow(object):
         self.groupBox_12.setMinimumSize(QtCore.QSize(0, 35))
         self.groupBox_12.setMaximumSize(QtCore.QSize(16777215, 35))
         self.groupBox_12.setStyleSheet("#groupBox_12{\n"
-                                       "border:none;\n"
-                                       "border-top:1px solid #bababa;\n"
-                                       "border-bottom:1px solid #bababa;\n"
-                                       "}")
+"border:none;\n"
+"border-top:1px solid #bababa;\n"
+"border-bottom:1px solid #bababa;\n"
+"}")
         self.groupBox_12.setTitle("")
         self.groupBox_12.setObjectName("groupBox_12")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.groupBox_12)
@@ -707,8 +689,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.groupBox_12)
         self.groupBox_13 = QtWidgets.QGroupBox(self.groupBox_sidebar)
         self.groupBox_13.setStyleSheet("#groupBox_13{\n"
-                                       "border:none;\n"
-                                       "}")
+"border:none;\n"
+"}")
         self.groupBox_13.setTitle("")
         self.groupBox_13.setObjectName("groupBox_13")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.groupBox_13)
@@ -717,20 +699,20 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.detection_info = QtWidgets.QTextEdit(self.groupBox_13)
         self.detection_info.setStyleSheet("background-color: rgba(12, 28, 77, 0);\n"
-                                          "\n"
-                                          "border-radius:0px;\n"
-                                          "font-family: \"Microsoft YaHei\";\n"
-                                          "font-size: 12px;\n"
-                                          "color: rgb(218, 218, 218);")
+"\n"
+"border-radius:0px;\n"
+"font-family: \"Microsoft YaHei\";\n"
+"font-size: 12px;\n"
+"color: rgb(218, 218, 218);")
         self.detection_info.setReadOnly(True)
         self.detection_info.setObjectName("detection_info")
         self.verticalLayout_9.addWidget(self.detection_info)
         self.verticalLayout_3.addWidget(self.groupBox_13)
         self.groupBox_view = QtWidgets.QGroupBox(self.splitter_2)
         self.groupBox_view.setStyleSheet("#groupBox_view{\n"
-                                         "background-color:#8b8b8b;\n"
-                                         "border:none;\n"
-                                         "}")
+"background-color:#8b8b8b;\n"
+"border:none;\n"
+"}")
         self.groupBox_view.setTitle("")
         self.groupBox_view.setObjectName("groupBox_view")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.groupBox_view)
@@ -741,11 +723,11 @@ class Ui_MainWindow(object):
         self.groupBox_7.setMinimumSize(QtCore.QSize(0, 41))
         self.groupBox_7.setMaximumSize(QtCore.QSize(16777215, 40))
         self.groupBox_7.setStyleSheet("#groupBox_7{\n"
-                                      "background-color:#8b8b8b;\n"
-                                      "border:none;\n"
-                                      "border-bottom:1px solid #bababa;\n"
-                                      "border-radius:0px;\n"
-                                      "}")
+"background-color:#8b8b8b;\n"
+"border:none;\n"
+"border-bottom:1px solid #bababa;\n"
+"border-radius:0px;\n"
+"}")
         self.groupBox_7.setTitle("")
         self.groupBox_7.setObjectName("groupBox_7")
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.groupBox_7)
@@ -773,7 +755,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.groupBox_7)
         self.groupBox_15 = QtWidgets.QGroupBox(self.groupBox_view)
         self.groupBox_15.setStyleSheet("border:none;\n"
-                                       "background-color: rgba(200, 200, 200,0)")
+"background-color: rgba(200, 200, 200,0)")
         self.groupBox_15.setTitle("")
         self.groupBox_15.setObjectName("groupBox_15")
         self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.groupBox_15)
@@ -792,22 +774,22 @@ class Ui_MainWindow(object):
         self.groupBox_9 = QtWidgets.QGroupBox(self.groupBox_view)
         self.groupBox_9.setMaximumSize(QtCore.QSize(16777215, 160))
         self.groupBox_9.setStyleSheet("#groupBox_9{\n"
-                                      "background-color: rgba(200, 200, 200,0);\n"
-                                      "border:none\n"
-                                      ";border-top:1px solid #bababa;\n"
-                                      "border-radius:0px;\n"
-                                      "}\n"
-                                      "")
+"background-color: rgba(200, 200, 200,0);\n"
+"border:none\n"
+";border-top:1px solid #bababa;\n"
+"border-radius:0px;\n"
+"}\n"
+"")
         self.groupBox_9.setTitle("")
         self.groupBox_9.setObjectName("groupBox_9")
         self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.groupBox_9)
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.report_info = QtWidgets.QTextEdit(self.groupBox_9)
         self.report_info.setStyleSheet("background-color: rgba(200, 200, 200,0);\n"
-                                       "border:none;\n"
-                                       "font-family: \"Microsoft YaHei\";\n"
-                                       "font-size: 14px;\n"
-                                       "color: rgb(218, 218, 218);")
+"border:none;\n"
+"font-family: \"Microsoft YaHei\";\n"
+"font-size: 14px;\n"
+"color: rgb(218, 218, 218);")
         self.report_info.setReadOnly(True)
         self.report_info.setObjectName("report_info")
         self.verticalLayout_10.addWidget(self.report_info)
@@ -815,6 +797,354 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.splitter_2)
         self.horizontalLayout_5.addWidget(self.groupBox_fill)
         self.tabWidget.addTab(self.detect_tab, "")
+        self.repaint_tab = QtWidgets.QWidget()
+        self.repaint_tab.setObjectName("repaint_tab")
+        self.horizontalLayout_48 = QtWidgets.QHBoxLayout(self.repaint_tab)
+        self.horizontalLayout_48.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_48.setSpacing(0)
+        self.horizontalLayout_48.setObjectName("horizontalLayout_48")
+        self.groupBox_repaint_fill = QtWidgets.QGroupBox(self.repaint_tab)
+        self.groupBox_repaint_fill.setObjectName("groupBox_repaint_fill")
+        self.horizontalLayout_28 = QtWidgets.QHBoxLayout(self.groupBox_repaint_fill)
+        self.horizontalLayout_28.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_28.setSpacing(0)
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.splitter_3 = QtWidgets.QSplitter(self.groupBox_repaint_fill)
+        self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
+        self.splitter_3.setObjectName("splitter_3")
+        self.groupBox_repaint_sidebar = QtWidgets.QGroupBox(self.splitter_3)
+        self.groupBox_repaint_sidebar.setMinimumSize(QtCore.QSize(245, 0))
+        self.groupBox_repaint_sidebar.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.groupBox_repaint_sidebar.setStyleSheet("border:none;")
+        self.groupBox_repaint_sidebar.setTitle("")
+        self.groupBox_repaint_sidebar.setObjectName("groupBox_repaint_sidebar")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.groupBox_repaint_sidebar)
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_11.setSpacing(5)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.groupBox_17 = QtWidgets.QGroupBox(self.groupBox_repaint_sidebar)
+        self.groupBox_17.setMinimumSize(QtCore.QSize(0, 40))
+        self.groupBox_17.setMaximumSize(QtCore.QSize(16777215, 40))
+        self.groupBox_17.setStyleSheet("#groupBox_17{\n"
+"border-bottom:1px solid #bababa;\n"
+"}\n"
+"")
+        self.groupBox_17.setTitle("")
+        self.groupBox_17.setObjectName("groupBox_17")
+        self.horizontalLayout_39 = QtWidgets.QHBoxLayout(self.groupBox_17)
+        self.horizontalLayout_39.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_39.setSpacing(0)
+        self.horizontalLayout_39.setObjectName("horizontalLayout_39")
+        self.label_5 = QtWidgets.QLabel(self.groupBox_17)
+        self.label_5.setStyleSheet("font-size:22px;")
+        self.label_5.setIndent(0)
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_39.addWidget(self.label_5)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_39.addItem(spacerItem6)
+        self.verticalLayout_11.addWidget(self.groupBox_17)
+        self.tabWidget_repaint = QtWidgets.QTabWidget(self.groupBox_repaint_sidebar)
+        self.tabWidget_repaint.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.tabWidget_repaint.setStyleSheet("QTabWidget::tab-bar {\n"
+"    alignment: center;\n"
+"}\n"
+"QTabBar::tab {\n"
+"    indent:0;\n"
+"    width: 120%;\n"
+"    height: 20px;\n"
+"    border:none;\n"
+"    border-top-left-radius: 0px;    /*设置tab的边框的圆角（左上圆角）*/\n"
+"    border-top-right-radius: 0px;\n"
+"}")
+        self.tabWidget_repaint.setTabPosition(QtWidgets.QTabWidget.North)
+        self.tabWidget_repaint.setObjectName("tabWidget_repaint")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.tab_2)
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_14.setSpacing(0)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.groupBox_repaint_cls = QtWidgets.QGroupBox(self.tab_2)
+        self.groupBox_repaint_cls.setStyleSheet("#groupBox_16{\n"
+"border-bottom:1px solid #bababa;\n"
+"}")
+        self.groupBox_repaint_cls.setObjectName("groupBox_repaint_cls")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.groupBox_repaint_cls)
+        self.verticalLayout_17.setContentsMargins(10, 10, 10, 0)
+        self.verticalLayout_17.setSpacing(5)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.horizontalLayout_35 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
+        self.checkBox_DIPFirst = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_DIPFirst.setObjectName("checkBox_DIPFirst")
+        self.horizontalLayout_35.addWidget(self.checkBox_DIPFirst)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_35.addItem(spacerItem7)
+        self.DIPFirst_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.DIPFirst_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.DIPFirst_level.setMinimum(1)
+        self.DIPFirst_level.setMaximum(14)
+        self.DIPFirst_level.setObjectName("DIPFirst_level")
+        self.horizontalLayout_35.addWidget(self.DIPFirst_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_35)
+        self.horizontalLayout_36 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_36.setObjectName("horizontalLayout_36")
+        self.checkBox_DIP = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_DIP.setObjectName("checkBox_DIP")
+        self.horizontalLayout_36.addWidget(self.checkBox_DIP)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_36.addItem(spacerItem8)
+        self.DIP_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.DIP_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.DIP_level.setMinimum(1)
+        self.DIP_level.setMaximum(14)
+        self.DIP_level.setObjectName("DIP_level")
+        self.horizontalLayout_36.addWidget(self.DIP_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_36)
+        self.horizontalLayout_32 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_32.setObjectName("horizontalLayout_32")
+        self.checkBox_MIP = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_MIP.setObjectName("checkBox_MIP")
+        self.horizontalLayout_32.addWidget(self.checkBox_MIP)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_32.addItem(spacerItem9)
+        self.MIP_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.MIP_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.MIP_level.setMinimum(1)
+        self.MIP_level.setMaximum(14)
+        self.MIP_level.setObjectName("MIP_level")
+        self.horizontalLayout_32.addWidget(self.MIP_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_32)
+        self.horizontalLayout_30 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.checkBox_PIPFirst = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_PIPFirst.setObjectName("checkBox_PIPFirst")
+        self.horizontalLayout_30.addWidget(self.checkBox_PIPFirst)
+        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_30.addItem(spacerItem10)
+        self.PIPFirst_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.PIPFirst_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.PIPFirst_level.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.PIPFirst_level.setButtonSymbols(QtWidgets.QAbstractSpinBox.UpDownArrows)
+        self.PIPFirst_level.setMinimum(1)
+        self.PIPFirst_level.setMaximum(14)
+        self.PIPFirst_level.setObjectName("PIPFirst_level")
+        self.horizontalLayout_30.addWidget(self.PIPFirst_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_30)
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.checkBox_PIP = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_PIP.setObjectName("checkBox_PIP")
+        self.horizontalLayout_31.addWidget(self.checkBox_PIP)
+        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_31.addItem(spacerItem11)
+        self.PIP_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.PIP_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.PIP_level.setMinimum(1)
+        self.PIP_level.setMaximum(14)
+        self.PIP_level.setObjectName("PIP_level")
+        self.horizontalLayout_31.addWidget(self.PIP_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_31)
+        self.horizontalLayout_33 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_33.setObjectName("horizontalLayout_33")
+        self.checkBox_MCPFirst_2 = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_MCPFirst_2.setObjectName("checkBox_MCPFirst_2")
+        self.horizontalLayout_33.addWidget(self.checkBox_MCPFirst_2)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_33.addItem(spacerItem12)
+        self.MCPFirst_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.MCPFirst_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.MCPFirst_level.setMinimum(1)
+        self.MCPFirst_level.setMaximum(14)
+        self.MCPFirst_level.setObjectName("MCPFirst_level")
+        self.horizontalLayout_33.addWidget(self.MCPFirst_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_33)
+        self.horizontalLayout_34 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_34.setObjectName("horizontalLayout_34")
+        self.checkBox_MCP_2 = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_MCP_2.setObjectName("checkBox_MCP_2")
+        self.horizontalLayout_34.addWidget(self.checkBox_MCP_2)
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_34.addItem(spacerItem13)
+        self.MCP_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.MCP_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.MCP_level.setMinimum(1)
+        self.MCP_level.setMaximum(14)
+        self.MCP_level.setObjectName("MCP_level")
+        self.horizontalLayout_34.addWidget(self.MCP_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_34)
+        self.horizontalLayout_37 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_37.setObjectName("horizontalLayout_37")
+        self.checkBox_Radius_classify = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_Radius_classify.setObjectName("checkBox_Radius_classify")
+        self.horizontalLayout_37.addWidget(self.checkBox_Radius_classify)
+        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_37.addItem(spacerItem14)
+        self.Radius_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.Radius_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.Radius_level.setMinimum(1)
+        self.Radius_level.setMaximum(14)
+        self.Radius_level.setObjectName("Radius_level")
+        self.horizontalLayout_37.addWidget(self.Radius_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_37)
+        self.horizontalLayout_38 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_38.setObjectName("horizontalLayout_38")
+        self.checkBox_Ulna_classify = QtWidgets.QCheckBox(self.groupBox_repaint_cls)
+        self.checkBox_Ulna_classify.setObjectName("checkBox_Ulna_classify")
+        self.horizontalLayout_38.addWidget(self.checkBox_Ulna_classify)
+        spacerItem15 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_38.addItem(spacerItem15)
+        self.Ulna_level = QtWidgets.QSpinBox(self.groupBox_repaint_cls)
+        self.Ulna_level.setMinimumSize(QtCore.QSize(60, 0))
+        self.Ulna_level.setMinimum(1)
+        self.Ulna_level.setMaximum(14)
+        self.Ulna_level.setObjectName("Ulna_level")
+        self.horizontalLayout_38.addWidget(self.Ulna_level)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_38)
+        spacerItem16 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_17.addItem(spacerItem16)
+        self.openimageButton = QtWidgets.QPushButton(self.groupBox_repaint_cls)
+        self.openimageButton.setObjectName("openimageButton")
+        self.verticalLayout_17.addWidget(self.openimageButton)
+        self.horizontalLayout_40 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_40.setSpacing(0)
+        self.horizontalLayout_40.setObjectName("horizontalLayout_40")
+        self.clearButton = QtWidgets.QPushButton(self.groupBox_repaint_cls)
+        self.clearButton.setObjectName("clearButton")
+        self.horizontalLayout_40.addWidget(self.clearButton)
+        self.clearallButton = QtWidgets.QPushButton(self.groupBox_repaint_cls)
+        self.clearallButton.setObjectName("clearallButton")
+        self.horizontalLayout_40.addWidget(self.clearallButton)
+        self.verticalLayout_17.addLayout(self.horizontalLayout_40)
+        self.saveclassifyButton = QtWidgets.QPushButton(self.groupBox_repaint_cls)
+        self.saveclassifyButton.setCheckable(True)
+        self.saveclassifyButton.setObjectName("saveclassifyButton")
+        self.verticalLayout_17.addWidget(self.saveclassifyButton)
+        self.reportButton = QtWidgets.QPushButton(self.groupBox_repaint_cls)
+        self.reportButton.setCheckable(True)
+        self.reportButton.setObjectName("reportButton")
+        self.verticalLayout_17.addWidget(self.reportButton)
+        self.verticalLayout_14.addWidget(self.groupBox_repaint_cls)
+        self.tabWidget_repaint.addTab(self.tab_2, "")
+        self.tab = QtWidgets.QWidget()
+        self.tab.setObjectName("tab")
+        self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.tab)
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_12.setSpacing(0)
+        self.verticalLayout_12.setObjectName("verticalLayout_12")
+        self.groupBox_repaint_det = QtWidgets.QGroupBox(self.tab)
+        self.groupBox_repaint_det.setStyleSheet("#groupBox_14{\n"
+"border-bottom:1px solid #bababa;\n"
+"}")
+        self.groupBox_repaint_det.setTitle("")
+        self.groupBox_repaint_det.setObjectName("groupBox_repaint_det")
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.groupBox_repaint_det)
+        self.verticalLayout_15.setContentsMargins(10, 10, 10, 0)
+        self.verticalLayout_15.setSpacing(5)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.horizontalLayout_52 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_52.setObjectName("horizontalLayout_52")
+        self.checkBox_DistalPhalanx = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_DistalPhalanx.setObjectName("checkBox_DistalPhalanx")
+        self.horizontalLayout_52.addWidget(self.checkBox_DistalPhalanx)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_52)
+        self.horizontalLayout_55 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_55.setObjectName("horizontalLayout_55")
+        self.checkBox_MiddlePhalanx = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_MiddlePhalanx.setObjectName("checkBox_MiddlePhalanx")
+        self.horizontalLayout_55.addWidget(self.checkBox_MiddlePhalanx)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_55)
+        self.horizontalLayout_56 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_56.setObjectName("horizontalLayout_56")
+        self.checkBox_ProximalPhalanx = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_ProximalPhalanx.setObjectName("checkBox_ProximalPhalanx")
+        self.horizontalLayout_56.addWidget(self.checkBox_ProximalPhalanx)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_56)
+        self.horizontalLayout_54 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_54.setObjectName("horizontalLayout_54")
+        self.checkBox_MCPFirst = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_MCPFirst.setObjectName("checkBox_MCPFirst")
+        self.horizontalLayout_54.addWidget(self.checkBox_MCPFirst)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_54)
+        self.horizontalLayout_53 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_53.setObjectName("horizontalLayout_53")
+        self.checkBox_MCP = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_MCP.setObjectName("checkBox_MCP")
+        self.horizontalLayout_53.addWidget(self.checkBox_MCP)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_53)
+        self.horizontalLayout_57 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_57.setObjectName("horizontalLayout_57")
+        self.checkBox_Radius_detect = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_Radius_detect.setObjectName("checkBox_Radius_detect")
+        self.horizontalLayout_57.addWidget(self.checkBox_Radius_detect)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_57)
+        self.horizontalLayout_58 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_58.setObjectName("horizontalLayout_58")
+        self.checkBox_Ulna_detect = QtWidgets.QCheckBox(self.groupBox_repaint_det)
+        self.checkBox_Ulna_detect.setObjectName("checkBox_Ulna_detect")
+        self.horizontalLayout_58.addWidget(self.checkBox_Ulna_detect)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_58)
+        spacerItem17 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_15.addItem(spacerItem17)
+        self.openimageButton_2 = QtWidgets.QPushButton(self.groupBox_repaint_det)
+        self.openimageButton_2.setObjectName("openimageButton_2")
+        self.verticalLayout_15.addWidget(self.openimageButton_2)
+        self.horizontalLayout_41 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_41.setSpacing(0)
+        self.horizontalLayout_41.setObjectName("horizontalLayout_41")
+        self.clearButton_2 = QtWidgets.QPushButton(self.groupBox_repaint_det)
+        self.clearButton_2.setObjectName("clearButton_2")
+        self.horizontalLayout_41.addWidget(self.clearButton_2)
+        self.clearallButton_2 = QtWidgets.QPushButton(self.groupBox_repaint_det)
+        self.clearallButton_2.setObjectName("clearallButton_2")
+        self.horizontalLayout_41.addWidget(self.clearallButton_2)
+        self.verticalLayout_15.addLayout(self.horizontalLayout_41)
+        self.savedetectButton = QtWidgets.QPushButton(self.groupBox_repaint_det)
+        self.savedetectButton.setCheckable(True)
+        self.savedetectButton.setObjectName("savedetectButton")
+        self.verticalLayout_15.addWidget(self.savedetectButton)
+        self.verticalLayout_12.addWidget(self.groupBox_repaint_det)
+        self.tabWidget_repaint.addTab(self.tab, "")
+        self.verticalLayout_11.addWidget(self.tabWidget_repaint)
+        self.groupBox_position = QtWidgets.QGroupBox(self.groupBox_repaint_sidebar)
+        self.groupBox_position.setStyleSheet("#groupBox_position{\n"
+"    border-top:1px solid #bababa;\n"
+"}")
+        self.groupBox_position.setObjectName("groupBox_position")
+        self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.groupBox_position)
+        self.verticalLayout_16.setContentsMargins(10, 0, 10, 5)
+        self.verticalLayout_16.setSpacing(5)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.mouse_position_label = QtWidgets.QLabel(self.groupBox_position)
+        self.mouse_position_label.setObjectName("mouse_position_label")
+        self.verticalLayout_16.addWidget(self.mouse_position_label)
+        self.start_position_label = QtWidgets.QLabel(self.groupBox_position)
+        self.start_position_label.setObjectName("start_position_label")
+        self.verticalLayout_16.addWidget(self.start_position_label)
+        self.end_position_label = QtWidgets.QLabel(self.groupBox_position)
+        self.end_position_label.setObjectName("end_position_label")
+        self.verticalLayout_16.addWidget(self.end_position_label)
+        self.box_size_label = QtWidgets.QLabel(self.groupBox_position)
+        self.box_size_label.setObjectName("box_size_label")
+        self.verticalLayout_16.addWidget(self.box_size_label)
+        self.verticalLayout_11.addWidget(self.groupBox_position)
+        self.repaint_view = QtWidgets.QGroupBox(self.splitter_3)
+        self.repaint_view.setStyleSheet("#repaint_view{\n"
+"border:none;\n"
+"background-color:#8b8b8b;\n"
+"}")
+        self.repaint_view.setObjectName("repaint_view")
+        self.horizontalLayout_29 = QtWidgets.QHBoxLayout(self.repaint_view)
+        self.horizontalLayout_29.setContentsMargins(20, 20, 20, 20)
+        self.horizontalLayout_29.setSpacing(0)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.repaint_label = QtWidgets.QLabel(self.repaint_view)
+        self.repaint_label.setMinimumSize(QtCore.QSize(800, 400))
+        self.repaint_label.setObjectName("repaint_label")
+        self.horizontalLayout_29.addWidget(self.repaint_label)
+        self.horizontalLayout_28.addWidget(self.splitter_3)
+        self.horizontalLayout_48.addWidget(self.groupBox_repaint_fill)
+        self.tabWidget.addTab(self.repaint_tab, "")
         self.report_tab = QtWidgets.QWidget()
         self.report_tab.setObjectName("report_tab")
         self.horizontalLayout_47 = QtWidgets.QHBoxLayout(self.report_tab)
@@ -823,9 +1153,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_47.setObjectName("horizontalLayout_47")
         self.groupBox_report_fill = QtWidgets.QGroupBox(self.report_tab)
         self.groupBox_report_fill.setStyleSheet("#groupBox_fill_2{\n"
-                                                "border-left:none;\n"
-                                                "border-right:none;\n"
-                                                "}")
+"border-left:none;\n"
+"border-right:none;\n"
+"}")
         self.groupBox_report_fill.setTitle("")
         self.groupBox_report_fill.setObjectName("groupBox_report_fill")
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout(self.groupBox_report_fill)
@@ -839,8 +1169,8 @@ class Ui_MainWindow(object):
         self.groupBox_report_sidebar.setMinimumSize(QtCore.QSize(250, 0))
         self.groupBox_report_sidebar.setMaximumSize(QtCore.QSize(300, 16777215))
         self.groupBox_report_sidebar.setStyleSheet("border:none;\n"
-                                                   "\n"
-                                                   "")
+"\n"
+"")
         self.groupBox_report_sidebar.setTitle("")
         self.groupBox_report_sidebar.setObjectName("groupBox_report_sidebar")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.groupBox_report_sidebar)
@@ -862,15 +1192,15 @@ class Ui_MainWindow(object):
         self.label_4.setIndent(0)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_19.addWidget(self.label_4)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_19.addItem(spacerItem6)
+        spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_19.addItem(spacerItem18)
         self.verticalLayout.addWidget(self.groupBox_8)
         self.groupBox_file = QtWidgets.QGroupBox(self.groupBox_report_sidebar)
         self.groupBox_file.setStyleSheet("#groupBox_file{\n"
-                                         "border:none;\n"
-                                         "border-top:1px solid #bababa;\n"
-                                         "}\n"
-                                         "")
+"border:none;\n"
+"border-top:1px solid #bababa;\n"
+"}\n"
+"")
         self.groupBox_file.setTitle("")
         self.groupBox_file.setObjectName("groupBox_file")
         self.horizontalLayout_20 = QtWidgets.QHBoxLayout(self.groupBox_file)
@@ -895,8 +1225,8 @@ class Ui_MainWindow(object):
         self.openButton.setIcon(icon8)
         self.openButton.setObjectName("openButton")
         self.horizontalLayout_20.addWidget(self.openButton)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_20.addItem(spacerItem7)
+        spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_20.addItem(spacerItem19)
         self.cutButton = QtWidgets.QPushButton(self.groupBox_file)
         self.cutButton.setMinimumSize(QtCore.QSize(0, 30))
         self.cutButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -928,9 +1258,9 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.groupBox_file)
         self.groupBox_file_2 = QtWidgets.QGroupBox(self.groupBox_report_sidebar)
         self.groupBox_file_2.setStyleSheet("#groupBox_file_2{\n"
-                                           "border:none;\n"
-                                           "border-bottom:1px solid #bababa;\n"
-                                           "}")
+"border:none;\n"
+"border-bottom:1px solid #bababa;\n"
+"}")
         self.groupBox_file_2.setTitle("")
         self.groupBox_file_2.setObjectName("groupBox_file_2")
         self.horizontalLayout_23 = QtWidgets.QHBoxLayout(self.groupBox_file_2)
@@ -965,8 +1295,8 @@ class Ui_MainWindow(object):
         self.printButton.setIcon(icon14)
         self.printButton.setObjectName("printButton")
         self.horizontalLayout_23.addWidget(self.printButton)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_23.addItem(spacerItem8)
+        spacerItem20 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_23.addItem(spacerItem20)
         self.undoButton = QtWidgets.QPushButton(self.groupBox_file_2)
         self.undoButton.setMinimumSize(QtCore.QSize(0, 30))
         self.undoButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -1007,8 +1337,8 @@ class Ui_MainWindow(object):
         self.comboBox_size.setEditable(True)
         self.comboBox_size.setObjectName("comboBox_size")
         self.horizontalLayout_21.addWidget(self.comboBox_size)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_21.addItem(spacerItem9)
+        spacerItem21 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_21.addItem(spacerItem21)
         self.colorButton = QtWidgets.QPushButton(self.groupBox_file_3)
         self.colorButton.setMinimumSize(QtCore.QSize(0, 30))
         self.colorButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -1069,8 +1399,8 @@ class Ui_MainWindow(object):
         self.alignjustifyButton.setIcon(icon21)
         self.alignjustifyButton.setObjectName("alignjustifyButton")
         self.horizontalLayout_24.addWidget(self.alignjustifyButton)
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_24.addItem(spacerItem10)
+        spacerItem22 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_24.addItem(spacerItem22)
         self.bulletlistButton = QtWidgets.QPushButton(self.groupBox_file_5)
         self.bulletlistButton.setMinimumSize(QtCore.QSize(0, 30))
         self.bulletlistButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -1130,8 +1460,8 @@ class Ui_MainWindow(object):
         self.underlineButton.setCheckable(True)
         self.underlineButton.setObjectName("underlineButton")
         self.horizontalLayout_26.addWidget(self.underlineButton)
-        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_26.addItem(spacerItem11)
+        spacerItem23 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_26.addItem(spacerItem23)
         self.fontzoominButton = QtWidgets.QPushButton(self.groupBox_file_5)
         self.fontzoominButton.setMinimumSize(QtCore.QSize(0, 30))
         self.fontzoominButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -1191,8 +1521,8 @@ class Ui_MainWindow(object):
         self.rotaterightButton.setIconSize(QtCore.QSize(14, 14))
         self.rotaterightButton.setObjectName("rotaterightButton")
         self.horizontalLayout_25.addWidget(self.rotaterightButton)
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_25.addItem(spacerItem12)
+        spacerItem24 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_25.addItem(spacerItem24)
         self.imageZoomInButton = QtWidgets.QPushButton(self.groupBox_file_5)
         self.imageZoomInButton.setMinimumSize(QtCore.QSize(0, 30))
         self.imageZoomInButton.setMaximumSize(QtCore.QSize(30, 16777215))
@@ -1217,13 +1547,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_25.addWidget(self.imageZoomOutButton)
         self.verticalLayout_5.addLayout(self.horizontalLayout_25)
         self.verticalLayout.addWidget(self.groupBox_file_5)
-        spacerItem13 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem13)
+        spacerItem25 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem25)
         self.report_view = QtWidgets.QGroupBox(self.splitter)
         self.report_view.setStyleSheet("#report_view{\n"
-                                       "background-color:#8b8b8b;\n"
-                                       "border:none;\n"
-                                       "}")
+"background-color:#8b8b8b;\n"
+"border:none;\n"
+"}")
         self.report_view.setTitle("")
         self.report_view.setObjectName("report_view")
         self.horizontalLayout_22 = QtWidgets.QHBoxLayout(self.report_view)
@@ -1240,22 +1570,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.addWidget(self.splitter)
         self.horizontalLayout_47.addWidget(self.groupBox_report_fill)
         self.tabWidget.addTab(self.report_tab, "")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.horizontalLayout_48 = QtWidgets.QHBoxLayout(self.tab)
-        self.horizontalLayout_48.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_48.setSpacing(0)
-        self.horizontalLayout_48.setObjectName("horizontalLayout_48")
-        self.groupBox_35 = QtWidgets.QGroupBox(self.tab)
-        self.groupBox_35.setObjectName("groupBox_35")
-        self.horizontalLayout_48.addWidget(self.groupBox_35)
-        self.tabWidget.addTab(self.tab, "")
         self.verticalLayout_4.addWidget(self.tabWidget)
         self.groupBox_bottom = QtWidgets.QGroupBox(self.groupBox_body)
         self.groupBox_bottom.setMaximumSize(QtCore.QSize(16777215, 30))
         self.groupBox_bottom.setStyleSheet("#groupBox_bottom{\n"
-                                           "border:none;\n"
-                                           "}")
+"border:none;\n"
+"}")
         self.groupBox_bottom.setTitle("")
         self.groupBox_bottom.setObjectName("groupBox_bottom")
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.groupBox_bottom)
@@ -1268,22 +1588,23 @@ class Ui_MainWindow(object):
         self.label_bottom.setObjectName("label_bottom")
         self.horizontalLayout_4.addWidget(self.label_bottom)
         self.verticalLayout_4.addWidget(self.groupBox_bottom)
-        self.horizontalLayout_46.addWidget(self.groupBox_body)
+        self.verticalLayout_13.addWidget(self.groupBox_body)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         self.comboBox_task.setCurrentIndex(-1)
-        self.closeButton.clicked.connect(MainWindow.close)  # type: ignore
-        self.minButton.clicked.connect(MainWindow.showMinimized)  # type: ignore
-        self.maxButton.clicked.connect(MainWindow.showMaximized)  # type: ignore
-        self.undoButton.clicked.connect(self.textEdit.undo)  # type: ignore
-        self.redoButton.clicked.connect(self.textEdit.redo)  # type: ignore
-        self.cutButton.clicked.connect(self.textEdit.cut)  # type: ignore
-        self.copyButton.clicked.connect(self.textEdit.copy)  # type: ignore
-        self.pasteButton.clicked.connect(self.textEdit.paste)  # type: ignore
-        self.fontzoominButton.clicked.connect(self.textEdit.zoomIn)  # type: ignore
-        self.fontzoomoutButton.clicked.connect(self.textEdit.zoomOut)  # type: ignore
+        self.tabWidget_repaint.setCurrentIndex(0)
+        self.closeButton.clicked.connect(MainWindow.close) # type: ignore
+        self.minButton.clicked.connect(MainWindow.showMinimized) # type: ignore
+        self.maxButton.clicked.connect(MainWindow.showMaximized) # type: ignore
+        self.undoButton.clicked.connect(self.textEdit.undo) # type: ignore
+        self.redoButton.clicked.connect(self.textEdit.redo) # type: ignore
+        self.cutButton.clicked.connect(self.textEdit.cut) # type: ignore
+        self.copyButton.clicked.connect(self.textEdit.copy) # type: ignore
+        self.pasteButton.clicked.connect(self.textEdit.paste) # type: ignore
+        self.fontzoominButton.clicked.connect(self.textEdit.zoomIn) # type: ignore
+        self.fontzoomoutButton.clicked.connect(self.textEdit.zoomOut) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1307,6 +1628,55 @@ class Ui_MainWindow(object):
         self.label_12.setText(_translate("MainWindow", "预测情况"))
         self.label_9.setText(_translate("MainWindow", "视图"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.detect_tab), _translate("MainWindow", "推理区"))
+        self.label_5.setText(_translate("MainWindow", "设置"))
+        self.checkBox_DIPFirst.setToolTip(_translate("MainWindow", "第一手指远节指骨"))
+        self.checkBox_DIPFirst.setText(_translate("MainWindow", "DIPFirst"))
+        self.checkBox_DIP.setToolTip(_translate("MainWindow", "远节指骨（除了拇指剩下四只手指）"))
+        self.checkBox_DIP.setText(_translate("MainWindow", "DIP"))
+        self.checkBox_MIP.setToolTip(_translate("MainWindow", "中节指骨（除了拇指剩下四只手指）"))
+        self.checkBox_MIP.setText(_translate("MainWindow", "MIP"))
+        self.checkBox_PIPFirst.setToolTip(_translate("MainWindow", "第一手指近节指骨"))
+        self.checkBox_PIPFirst.setText(_translate("MainWindow", "PIPFirst"))
+        self.checkBox_PIP.setToolTip(_translate("MainWindow", "近节指骨（除了拇指剩下四只手指）"))
+        self.checkBox_PIP.setText(_translate("MainWindow", "PIP"))
+        self.checkBox_MCPFirst_2.setToolTip(_translate("MainWindow", "第一手指掌骨"))
+        self.checkBox_MCPFirst_2.setText(_translate("MainWindow", "MCPFirst"))
+        self.checkBox_MCP_2.setToolTip(_translate("MainWindow", "掌骨（除了拇指剩下四只手指）"))
+        self.checkBox_MCP_2.setText(_translate("MainWindow", "MCP"))
+        self.checkBox_Radius_classify.setToolTip(_translate("MainWindow", "桡骨"))
+        self.checkBox_Radius_classify.setText(_translate("MainWindow", "Radius"))
+        self.checkBox_Ulna_classify.setToolTip(_translate("MainWindow", "尺骨"))
+        self.checkBox_Ulna_classify.setText(_translate("MainWindow", "Ulna"))
+        self.openimageButton.setText(_translate("MainWindow", "打开图像文件"))
+        self.clearButton.setText(_translate("MainWindow", "清除当前类标注框"))
+        self.clearallButton.setText(_translate("MainWindow", "清除所有类标注框"))
+        self.saveclassifyButton.setText(_translate("MainWindow", "保存关节等级分类图像"))
+        self.reportButton.setText(_translate("MainWindow", "重新生成报告"))
+        self.tabWidget_repaint.setTabText(self.tabWidget_repaint.indexOf(self.tab_2), _translate("MainWindow", "关节等级标注"))
+        self.checkBox_DistalPhalanx.setToolTip(_translate("MainWindow", "远节指骨"))
+        self.checkBox_DistalPhalanx.setText(_translate("MainWindow", "DistalPhalanx"))
+        self.checkBox_MiddlePhalanx.setToolTip(_translate("MainWindow", "中节指骨（除了拇指剩下四只手指）"))
+        self.checkBox_MiddlePhalanx.setText(_translate("MainWindow", "MiddlePhalanx"))
+        self.checkBox_ProximalPhalanx.setToolTip(_translate("MainWindow", "近节指骨"))
+        self.checkBox_ProximalPhalanx.setText(_translate("MainWindow", "ProximalPhalanx"))
+        self.checkBox_MCPFirst.setToolTip(_translate("MainWindow", "第一手指掌骨"))
+        self.checkBox_MCPFirst.setText(_translate("MainWindow", "MCPFirst"))
+        self.checkBox_MCP.setToolTip(_translate("MainWindow", "掌骨（除了拇指剩下四只手指）"))
+        self.checkBox_MCP.setText(_translate("MainWindow", "MCP"))
+        self.checkBox_Radius_detect.setToolTip(_translate("MainWindow", "桡骨"))
+        self.checkBox_Radius_detect.setText(_translate("MainWindow", "Radius"))
+        self.checkBox_Ulna_detect.setToolTip(_translate("MainWindow", "尺骨"))
+        self.checkBox_Ulna_detect.setText(_translate("MainWindow", "Ulna"))
+        self.openimageButton_2.setText(_translate("MainWindow", "打开图像文件"))
+        self.clearButton_2.setText(_translate("MainWindow", "清除当前类标注框"))
+        self.clearallButton_2.setText(_translate("MainWindow", "清除所有类标注框"))
+        self.savedetectButton.setText(_translate("MainWindow", "保存关节检测标注文件"))
+        self.tabWidget_repaint.setTabText(self.tabWidget_repaint.indexOf(self.tab), _translate("MainWindow", "关节检测标注"))
+        self.mouse_position_label.setText(_translate("MainWindow", "鼠标位置: "))
+        self.start_position_label.setText(_translate("MainWindow", "标注框起始位置: "))
+        self.end_position_label.setText(_translate("MainWindow", "标注框终止位置: "))
+        self.box_size_label.setText(_translate("MainWindow", "标注框大小: "))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.repaint_tab), _translate("MainWindow", "重绘区"))
         self.label_4.setText(_translate("MainWindow", "设置"))
         self.newButton.setToolTip(_translate("MainWindow", "新建"))
         self.newButton.setShortcut(_translate("MainWindow", "Ctrl+N"))
@@ -1357,8 +1727,4 @@ class Ui_MainWindow(object):
         self.imageZoomInButton.setToolTip(_translate("MainWindow", "右旋转"))
         self.imageZoomOutButton.setToolTip(_translate("MainWindow", "右旋转"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.report_tab), _translate("MainWindow", "报告区"))
-        self.groupBox_35.setTitle(_translate("MainWindow", "GroupBox"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "其他"))
-
-
 import UIqrc_rc

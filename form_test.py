@@ -1,6 +1,9 @@
+import os
+import json
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout, QFileDialog, QComboBox, QStatusBar
-from PyQt5.QtGui import QPixmap, QPainter, QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QHBoxLayout, \
+    QFileDialog, QComboBox, QStatusBar, QCheckBox, QMessageBox, QSpinBox, QTabWidget
+from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont
 from PyQt5.QtCore import Qt, QRectF, QPointF, QSizeF
 
 
@@ -23,7 +26,7 @@ class BoundingBox:
     bounding_boxes = []  # 存储所有BoundingBox实例
     selected_box = None  # 当前选中的BoundingBox实例
 
-    def __init__(self, start_point, end_point, category_color):
+    def __init__(self, start_point, end_point, category_name, category_color):
         """
         初始化BoundingBox实例。
 
@@ -34,6 +37,7 @@ class BoundingBox:
         """
         self.start_point = QPointF(start_point)
         self.end_point = QPointF(end_point)
+        self.category_name = category_name
         self.category_color = QColor(category_color)
         self.selected = False
         self.dragging_corner = None
@@ -60,6 +64,7 @@ class BoundingBox:
         painter.drawRect(rect)
 
         if self.selected:
+            self.draw_label(painter, rect)
             self.draw_corners(painter, scale_factor, offset)
 
     def draw_corners(self, painter, scale_factor, offset):
@@ -71,8 +76,8 @@ class BoundingBox:
             scale_factor (QPointF): 图像的缩放比例。
             offset (QPointF): 图像的偏移量。
         """
-        corner_size = 8
-        corner_color = QColor(self.category_color.red(), self.category_color.green(), self.category_color.blue(), 192)  # 75%不透明度
+        corner_color = QColor(self.category_color.red(), self.category_color.green(), self.category_color.blue(),
+                              192)  # 75%不透明度
 
         corners = self.get_corners(scale_factor, offset)
 
@@ -81,6 +86,16 @@ class BoundingBox:
 
         for corner_rect in corners.values():
             painter.drawRect(corner_rect)
+
+    def draw_label(self, painter, rect):
+        """在方框左上角显示类别名"""
+        corner_color = QColor(self.category_color.red(), self.category_color.green(), self.category_color.blue(),
+                              192)
+        font = QFont()
+        font.setPointSize(12)
+        painter.setFont(font)
+        painter.setPen(corner_color)
+        painter.drawText(rect.topLeft() + QPointF(5, -8), self.category_name)
 
     def get_corners(self, scale_factor, offset):
         """
@@ -100,10 +115,14 @@ class BoundingBox:
         bottom_right = QPointF(self.end_point.x() * scale_factor.x(), self.end_point.y() * scale_factor.y())
 
         corners = {
-            "top_left": QRectF(top_left + offset - QPointF(corner_size / 2, corner_size / 2), QSizeF(corner_size, corner_size)),
-            "top_right": QRectF(top_right + offset - QPointF(corner_size / 2, corner_size / 2), QSizeF(corner_size, corner_size)),
-            "bottom_left": QRectF(bottom_left + offset - QPointF(corner_size / 2, corner_size / 2), QSizeF(corner_size, corner_size)),
-            "bottom_right": QRectF(bottom_right + offset - QPointF(corner_size / 2, corner_size / 2), QSizeF(corner_size, corner_size)),
+            "top_left": QRectF(top_left + offset - QPointF(corner_size / 2, corner_size / 2),
+                               QSizeF(corner_size, corner_size)),
+            "top_right": QRectF(top_right + offset - QPointF(corner_size / 2, corner_size / 2),
+                                QSizeF(corner_size, corner_size)),
+            "bottom_left": QRectF(bottom_left + offset - QPointF(corner_size / 2, corner_size / 2),
+                                  QSizeF(corner_size, corner_size)),
+            "bottom_right": QRectF(bottom_right + offset - QPointF(corner_size / 2, corner_size / 2),
+                                   QSizeF(corner_size, corner_size)),
         }
 
         return corners
@@ -164,7 +183,8 @@ class BoundingBox:
             scale_factor (QPointF): 图像的缩放比例。
             offset (QPointF): 图像的偏移量。
         """
-        new_pos_scaled = QPointF((new_pos.x() - offset.x()) / scale_factor.x(), (new_pos.y() - offset.y()) / scale_factor.y())
+        new_pos_scaled = QPointF((new_pos.x() - offset.x()) / scale_factor.x(),
+                                 (new_pos.y() - offset.y()) / scale_factor.y())
 
         if corner == "top_left":
             self.start_point = new_pos_scaled
@@ -248,9 +268,6 @@ class ImageLabel(QLabel):
         self.image_offset = QPointF(0, 0)  # 图像在label中的偏移量
         self.image_scaled_size = QSizeF(0, 0)  # 缩放后的图像大小
 
-        # 为 QLabel 添加黑色边框
-        self.setStyleSheet("border: 2px solid black;")
-
     def setPixmap(self, pixmap):
         """
         设置要显示的图像。
@@ -309,72 +326,334 @@ class ImageLabel(QLabel):
             bool: 如果点在图像内，返回True；否则返回False。
         """
         return self.image_offset.x() <= pos.x() < self.image_offset.x() + self.image_scaled_size.width() and \
-               self.image_offset.y() <= pos.y() < self.image_offset.y() + self.image_scaled_size.height()
+            self.image_offset.y() <= pos.y() < self.image_offset.y() + self.image_scaled_size.height()
+
+
+def convert_to_imagelabel(qlabel):
+    """ 将Qlabel对象转换为ImageLabel对象 """
+    # 获取QLabel的父对象
+    parent = qlabel.parent()
+
+    # 获取QLabel的原始属性
+    original_geometry = qlabel.geometry()  # 保存位置和大小
+    original_style = qlabel.styleSheet()  # 保存样式
+    original_layout = qlabel.parent().layout()  # 获取QLabel的父布局
+    original_index = original_layout.indexOf(qlabel)  # 获取QLabel在布局中的索引
+
+    # 从布局中移除原QLabel
+    original_layout.removeWidget(qlabel)
+    qlabel.deleteLater()  # 删除原来的QLabel
+
+    # 创建新的ImageLabel
+    new_imagelabel = ImageLabel(parent)
+
+    # 恢复原QLabel的属性到新的ImageLabel
+    new_imagelabel.setGeometry(original_geometry)
+    new_imagelabel.setStyleSheet(original_style)
+
+    # 将新的ImageLabel添加回布局中
+    original_layout.insertWidget(original_index, new_imagelabel)
+
+    return new_imagelabel
 
 
 class MainWindow(QMainWindow):
-    """
-    MainWindow类继自QMainWindow，是图像标注工具的主窗口。
-    """
-
     def __init__(self):
         super().__init__()
         self.setWindowTitle("图像标注工具")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 1000, 600)  # 增加窗口初始宽度
+
+        self.config_file = "config.json"
+        self.save_path = self.load_save_path()
 
         # 初始化UI和状态栏
         self.init_ui()
         self.init_status_bar()
+        self.image_label = convert_to_imagelabel(self.image_label)
+        self.image_label.setFocusPolicy(Qt.StrongFocus)
+        self.image_label.mousePressEvent = self.on_mouse_press
+        self.image_label.mouseMoveEvent = self.on_mouse_move
+        self.image_label.mouseReleaseEvent = self.on_mouse_release
 
-        # 当前选择的类别和颜色
+        # 当前选择的类别和颜色，初始设为第一个类别
         self.current_category_color = QColor(Qt.red)
+        self.current_category_name = "类别1"
 
         # 管理多个标注框
         self.current_box = None
         self.dragging_box = None
         self.dragging_offset = None
 
+    def load_save_path(self):
+        """加载保存路径，如果存在则返回路径，否则返回None"""
+        if os.path.exists(self.config_file):
+            with open(self.config_file, "r") as f:
+                config = json.load(f)
+                return config.get("save_path", None)
+        return None
+
+    def save_save_path(self, path):
+        """保存路径到config.json文件"""
+        with open(self.config_file, "w") as f:
+            json.dump({"save_path": path}, f)
+
     def init_ui(self):
         """初始化主窗口UI控件"""
         # 创建图像显示区域
-        self.image_label = ImageLabel(self)
-        self.image_label.setFocusPolicy(Qt.StrongFocus)
-        self.image_label.mousePressEvent = self.on_mouse_press
-        self.image_label.mouseMoveEvent = self.on_mouse_move
-        self.image_label.mouseReleaseEvent = self.on_mouse_release
+        self.image_label = QLabel(self)
 
-        # 创建按钮和下拉框
+        # 创建TabWidget
+        self.tab_widget = QTabWidget()
+        self.tab_widget.setFixedWidth(200)  # 设置TabWidget的固定宽度
+        self.tab_widget.addTab(self.create_first_tab(), "9个类别")
+        self.tab_widget.addTab(self.create_second_tab(), "7个类别")
+
+        # 连接Tab切换信号到槽函数
+        self.tab_widget.currentChanged.connect(self.on_tab_change)
+
+        # 创建左边按钮布局
         buttons = [
             ("打开图像", self.open_image),
-            ("保存标注文件", self.save_annotations),
-            ("保存裁剪图像", self.save_cropped_images),
             ("清除当前类别方框", self.clear_current_category_boxes)
         ]
         button_layout = self.create_button_layout(buttons)
 
-        self.category_combo = QComboBox()
-        for category, color in [("类别1", Qt.red), ("类别2", Qt.green), ("类别3", Qt.blue)]:
-            self.category_combo.addItem(category, QColor(color))
-        self.category_combo.currentIndexChanged.connect(self.change_category)
-        button_layout.addWidget(self.category_combo)
+        # 设置主布局为水平布局，将TabWidget放在左边，ImageLabel放在右边
+        main_layout = QHBoxLayout()
+        left_layout = QVBoxLayout()
+        left_layout.addLayout(button_layout)
+        left_layout.addWidget(self.tab_widget)
 
-        # 设置布局
-        layout = QVBoxLayout()
-        layout.addLayout(button_layout)
-        layout.addWidget(self.image_label)
+        main_layout.addLayout(left_layout)
+        main_layout.addWidget(self.image_label)
 
         container = QWidget()
-        container.setLayout(layout)
+        container.setLayout(main_layout)
         self.setCentralWidget(container)
 
     def create_button_layout(self, buttons):
-        """创建包含按钮的水平布局"""
-        layout = QHBoxLayout()
+        """创建包含按钮的垂直布局"""
+        layout = QVBoxLayout()  # 将按钮竖直排列
         for label, callback in buttons:
             button = QPushButton(label)
             button.clicked.connect(callback)
             layout.addWidget(button)
         return layout
+
+    def create_first_tab(self):
+        """创建包含9个类别checkbox和SpinBox的选项卡"""
+        widget = QWidget()
+        layout = QVBoxLayout()
+
+        self.colors_9 = [Qt.red, Qt.green, Qt.blue, Qt.yellow, Qt.cyan, Qt.magenta, Qt.darkRed, Qt.darkGreen,
+                         Qt.darkBlue]
+        self.category_names_9 = ["类别1", "类别2", "类别3", "类别4", "类别5", "类别6", "类别7", "类别8", "类别9"]
+        self.checkboxes_9 = []
+
+        for i, (color, name) in enumerate(zip(self.colors_9, self.category_names_9), 1):
+            h_layout = QHBoxLayout()
+            checkbox = QCheckBox(name)
+            checkbox.setStyleSheet(f"color: {QColor(color).name()};")
+            checkbox.clicked.connect(self.on_checkbox_checked)
+            spinbox = QSpinBox()
+            spinbox.setMinimum(1)
+            spinbox.setMaximum(100)
+            h_layout.addWidget(checkbox)
+            h_layout.addWidget(spinbox)
+            layout.addLayout(h_layout)
+            self.checkboxes_9.append((checkbox, spinbox, color, name))
+
+        save_button = QPushButton("保存裁剪图像")
+        save_button.clicked.connect(self.save_cropped_images)
+        layout.addWidget(save_button)
+
+        clear_boxes_button = QPushButton("清除所有方框")
+        clear_boxes_button.clicked.connect(self.clear_all_boxes)
+        layout.addWidget(clear_boxes_button)
+
+        # 默认选中第一个类别
+        self.checkboxes_9[0][0].setChecked(True)
+
+        widget.setLayout(layout)
+        return widget
+
+    def create_second_tab(self):
+        """创建包含7个类别checkbox的选项卡"""
+        widget = QWidget()
+        layout = QVBoxLayout()
+
+        self.colors_7 = self.colors_9[:7]
+        self.category_names_7 = ["类别1", "类别2", "类别3", "类别4", "类别5", "类别6", "类别7"]
+        self.checkboxes_7 = []
+
+        for i, color in enumerate(self.colors_7, 1):
+            checkbox = QCheckBox(f"类别{i}")
+            checkbox.setStyleSheet(f"color: {QColor(color).name()};")
+            checkbox.clicked.connect(self.on_checkbox_checked)
+            layout.addWidget(checkbox)
+            self.checkboxes_7.append((checkbox, color, f"类别{i}"))
+
+        save_button = QPushButton("保存注释文件")
+        save_button.clicked.connect(self.save_annotations)
+        layout.addWidget(save_button)
+
+        clear_boxes_button = QPushButton("清除所有方框")
+        clear_boxes_button.clicked.connect(self.clear_all_boxes)
+        layout.addWidget(clear_boxes_button)
+
+        # 默认选中第一个类别
+        self.checkboxes_7[0][0].setChecked(True)
+
+        widget.setLayout(layout)
+        return widget
+
+    def on_tab_change(self):
+        """处理选项卡切换事件"""
+        reply = QMessageBox.question(
+            self,
+            "保存工作",
+            "你想在切换选项卡前保存注释文件和裁剪图像吗?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No
+        )
+
+        if reply == QMessageBox.Yes:
+            self.save_annotations()
+            self.save_cropped_images()
+
+        # 清除所有方框
+        BoundingBox.bounding_boxes.clear()
+        self.image_label.update()
+
+    def on_checkbox_checked(self):
+        """处理QCheckBox被点击时的逻辑，确保只有一个类别被选中"""
+        if self.tab_widget.currentIndex() == 0:  # 9个类别的选项卡
+            for checkbox, spinbox, color, name in self.checkboxes_9:
+                if checkbox.isChecked() and checkbox != self.sender():
+                    checkbox.setChecked(False)
+                elif checkbox.isChecked() and checkbox == self.sender():
+                    self.current_category_color = QColor(color)  # 设置当前类别颜色
+                    self.current_category_name = name  # 设置当前类别名称
+        else:  # 7个类别的选项卡
+            for checkbox, color, name in self.checkboxes_7:
+                if checkbox.isChecked() and checkbox != self.sender():
+                    checkbox.setChecked(False)
+                elif checkbox.isChecked() and checkbox == self.sender():
+                    self.current_category_color = QColor(color)  # 设置当前类别颜色
+                    self.current_category_name = name  # 设置当前类别名称
+
+    def open_image(self):
+        """打开图像文件并加载到标签中。"""
+        file_name, _ = QFileDialog.getOpenFileName(self, "打开图像文件", "", "Image Files (*.png *.jpg *.bmp)")
+        if file_name:
+            self.image_label.setPixmap(QPixmap(file_name))
+            self.current_image_path = file_name
+
+    def save_annotations(self):
+        """保存标注信息到文件。"""
+        if self.save_path:
+            selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径", self.save_path)
+        else:
+            selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径")
+
+        if selected_path:
+            self.save_path = selected_path
+            self.save_save_path(self.save_path)
+        else:
+            return
+
+        # 检查detect_datasets目录
+        detect_dir = os.path.join(self.save_path, "detect_datasets")
+        os.makedirs(detect_dir, exist_ok=True)
+
+        # 检查images和labels目录
+        images_dir = os.path.join(detect_dir, "images")
+        labels_dir = os.path.join(detect_dir, "labels")
+        os.makedirs(images_dir, exist_ok=True)
+        os.makedirs(labels_dir, exist_ok=True)
+
+        # 保存图像到images目录
+        image_name = os.path.basename(self.current_image_path)
+        image_save_path = os.path.join(images_dir, image_name)
+        self.image_label.pixmap.save(image_save_path)
+
+        # 保存注释到labels目录
+        label_save_path = os.path.join(labels_dir, os.path.splitext(image_name)[0] + ".txt")
+        scale_factor = QPointF(self.image_label.image_scaled_size.width() / self.image_label.pixmap.width(),
+                               self.image_label.image_scaled_size.height() / self.image_label.pixmap.height())
+
+        with open(label_save_path, "w") as file:
+            for box in BoundingBox.bounding_boxes:
+                start_point, end_point = box.to_image_coordinates(scale_factor)
+                x_center = (start_point.x() + end_point.x()) / 2 / self.image_label.pixmap.width()
+                y_center = (start_point.y() + end_point.y()) / 2 / self.image_label.pixmap.height()
+                width = abs(end_point.x() - start_point.x()) / self.image_label.pixmap.width()
+                height = abs(end_point.y() - start_point.y()) / self.image_label.pixmap.height()
+                category_index = self.get_category_names().index(box.category_name)
+                file.write(f"{category_index} {x_center} {y_center} {width} {height}\n")
+
+        # 生成data.yaml
+        data_yaml_path = os.path.join(detect_dir, "data.yaml")
+        with open(data_yaml_path, "w", encoding='utf-8') as yaml_file:
+            category_names = self.get_category_names()
+            yaml_file.write(f"nc: {len(category_names)}\n")
+            yaml_file.write(f"names: {category_names}\n")
+
+    def get_category_names(self):
+        """获取当前选项卡的类别名列表"""
+        if self.tab_widget.currentIndex() == 0:
+            return self.category_names_9
+        else:
+            return self.category_names_7
+
+    def save_cropped_images(self):
+        """保存每个类别的裁剪图像。"""
+        if self.save_path:
+            selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径", self.save_path)
+        else:
+            selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径")
+
+        if selected_path:
+            self.save_path = selected_path
+            self.save_save_path(self.save_path)
+        else:
+            return
+
+        # 检查classify_datasets目录
+        classify_dir = os.path.join(self.save_path, "classify_datasets")
+        os.makedirs(classify_dir, exist_ok=True)
+
+        # 遍历所有BoundingBox，按类别和等级保存裁剪图像
+        for box in BoundingBox.bounding_boxes:
+            # 遍历所有9个类别的checkbox和spinbox
+            for checkbox, spinbox, color, name in self.checkboxes_9:
+                if box.category_name == name:
+                    category_dir = os.path.join(classify_dir, name)
+                    os.makedirs(category_dir, exist_ok=True)
+
+                    # 检查SpinBox值目录
+                    value_dir = os.path.join(category_dir, str(spinbox.value()))
+                    os.makedirs(value_dir, exist_ok=True)
+
+                    # 保存裁剪图像
+                    rect = QRectF(box.start_point, box.end_point).normalized()
+                    cropped_pixmap = self.image_label.pixmap.copy(rect.toRect())
+
+                    # 确保文件名唯一
+                    image_count = len(os.listdir(value_dir))
+                    cropped_image_path = os.path.join(value_dir, f"{image_count + 1}.png")
+                    cropped_pixmap.save(cropped_image_path)
+
+    def clear_current_category_boxes(self):
+        """清除当前选择类别的所有方框。"""
+        BoundingBox.bounding_boxes = [box for box in BoundingBox.bounding_boxes if
+                                      box.category_color != self.current_category_color]
+        self.image_label.update()
+
+    def clear_all_boxes(self):
+        """清除所有方框。"""
+        BoundingBox.bounding_boxes.clear()
+        self.image_label.update()
 
     def init_status_bar(self):
         """初始化状态栏"""
@@ -387,41 +666,6 @@ class MainWindow(QMainWindow):
         for widget in [self.mouse_position_label, self.start_position_label, self.end_position_label,
                        self.box_size_label]:
             self.status_bar.addWidget(widget)
-
-    def open_image(self):
-        """打开图像文件并加载到标签中。"""
-        file_name, _ = QFileDialog.getOpenFileName(self, "打开图像文件", "", "Image Files (*.png *.jpg *.bmp)")
-        if file_name:
-            self.load_image(file_name)
-
-    def load_image(self, image_path):
-        """加载图像并在标签中显示。"""
-        self.image_label.setPixmap(QPixmap(image_path))
-
-    def save_annotations(self):
-        """保存标注信息到文件。"""
-        with open("annotations.txt", "w") as file:
-            for box in BoundingBox.bounding_boxes:
-                start_point, end_point = box.start_point, box.end_point
-                file.write(
-                    f"{int(start_point.x())},{int(start_point.y())},{int(end_point.x())},{int(end_point.y())},{box.category_color.name()}\n")
-
-    def save_cropped_images(self):
-        """保存每个类别的裁剪图像。"""
-        for i, box in enumerate(BoundingBox.bounding_boxes):
-            rect = QRectF(box.start_point, box.end_point).normalized()
-            cropped_pixmap = self.image_label.pixmap.copy(rect.toRect())
-            cropped_pixmap.save(f"cropped_image_{i}.png")
-
-    def clear_current_category_boxes(self):
-        """清除当前选择类别的所有方框。"""
-        BoundingBox.bounding_boxes = [box for box in BoundingBox.bounding_boxes if
-                                      box.category_color != self.current_category_color]
-        self.image_label.update()
-
-    def change_category(self):
-        """更改当前选择的类别颜色。"""
-        self.current_category_color = self.category_combo.currentData()
 
     def on_mouse_press(self, event):
         """鼠标按下事件处理。"""
@@ -453,7 +697,7 @@ class MainWindow(QMainWindow):
                     return
 
             BoundingBox.deselect_all()
-            self.current_box = BoundingBox(pos, pos, self.current_category_color)
+            self.current_box = BoundingBox(pos, pos, self.current_category_name, self.current_category_color)
             self.update_status_bar(self.current_box, event.pos())
 
     def on_mouse_move(self, event):

@@ -4,19 +4,21 @@ import sys
 
 import cv2
 import numpy as np
-from PyQt5.QtCore import Qt, QPoint, QTimer
+from PyQt5.QtCore import Qt, QPoint, QTimer, QPointF, QRectF
 from PyQt5.QtGui import QImage, QPixmap, QTextCharFormat, QFont, QTextCursor, QTransform, QTextImageFormat, \
-    QFontDatabase, QTextListFormat, QTextBlockFormat
+    QFontDatabase, QTextListFormat, QTextBlockFormat, QColor
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMenu, QAction, QColorDialog
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMenu, QAction, QColorDialog, QCheckBox, QSpinBox
 from docx import Document
 from docx2pdf import convert
 from ultralytics import YOLO
 
 import common
-from det_thread import DetThread
+from common import *
 from UI.mainUI import Ui_MainWindow
+from det_thread import DetThread
 from toolUI.CheckableComboBox import replace_comboBox_with_checkable
+from toolUI.ImageLabel import convert_to_imagelabel, BoundingBox
 from toolUI.ImageTextEdit import replace_textedit_with_imagetextedit
 from toolUI.TipsMessageBox import TipsMessageBox
 from toolUI.cameranums import Camera
@@ -44,6 +46,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect_signals()
         self.detect_area_initUI()
         self.report_area_initUI()
+        self.repaint_area_initUI()
         self.load_setting()
         self.preheat_models()
 
@@ -128,6 +131,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imageZoomOutButton.clicked.connect(lambda: self.process_Image(0.9))
 
         self.textEdit = replace_textedit_with_imagetextedit(self.textEdit)
+
+    def repaint_area_initUI(self):
+        """
+        重绘区信号槽链接
+        """
+        self.repaint_label = convert_to_imagelabel(self.repaint_label)
+        self.repaint_label.setFocusPolicy(Qt.StrongFocus)
+        self.repaint_label.mousePressEvent = self.on_mouse_press
+        self.repaint_label.mouseMoveEvent = self.on_mouse_move
+        self.repaint_label.mouseReleaseEvent = self.on_mouse_release
+
+        # 管理多个标注框
+        self.current_box = None
+        self.dragging_box = None
+        self.dragging_offset = None
+
+        self.tabWidget_repaint.currentChanged.connect(self.on_tab_change)
+        self.connect_checkbox_spinbox()
+        self.openimageButton.clicked.connect(self.open_image)
+        self.openimageButton_2.clicked.connect(self.open_image)
+        self.clearButton.clicked.connect(self.clear_current_category_boxes)
+        self.clearButton_2.clicked.connect(self.clear_current_category_boxes)
+        self.clearallButton.clicked.connect(self.clear_all_boxes)
+        self.clearallButton_2.clicked.connect(self.clear_all_boxes)
+        self.saveclassifyButton.clicked.connect(self.save_cropped_images)
+        self.savedetectButton.clicked.connect(self.save_annotations)
+        self.reportButton.clicked.connect(self.re_report)
 
     # detect_events
     def connect_signals(self):
@@ -215,6 +245,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 config_json = json.dumps(config, ensure_ascii=False, indent=2)
                 with open(config_file, 'w', encoding='utf-8') as f:
                     f.write(config_json)
+                if name.lower().endswith(('.jpg', '.png')):
+                    self.open_image(name)
         except Exception as e:
             self.bottom_msg(f'{e}')
 
@@ -444,6 +476,308 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         except Exception as e:
             print(repr(e))
 
+    # repaint_events
+    def on_tab_change(self):
+        """处理选项卡切换事件"""
+        # 清除所有方框
+        BoundingBox.bounding_boxes.clear()
+        self.repaint_label.update()
+
+    def connect_checkbox_spinbox(self):
+        self.checkboxes_9 = []
+        self.checkboxes_7 = []
+        checkboxes_9 = self.groupBox_repaint_cls.findChildren(QCheckBox)
+        spinboxes_9 = self.groupBox_repaint_cls.findChildren(QSpinBox)
+        checkboxes_7 = self.groupBox_repaint_det.findChildren(QCheckBox)
+        for i, (color, name) in enumerate(zip(COLORS, CLASSIFY), 1):
+            checkboxes_9[i - 1].clicked.connect(self.on_checkbox_checked)
+            spinboxes_9[i - 1].valueChanged.connect(self.on_spinbox_change)
+            self.checkboxes_9.append((checkboxes_9[i - 1], spinboxes_9[i - 1], color, name))
+        for i, (color, name) in enumerate(zip(COLORS, DETECT), 1):
+            checkboxes_7[i - 1].clicked.connect(self.on_checkbox_checked)
+            self.checkboxes_7.append((checkboxes_7[i - 1], color, name))
+
+    def on_checkbox_checked(self):
+        if self.tabWidget_repaint.currentIndex() == 0:  # 9个类别的选项卡
+            for checkbox, spinbox, color, name in self.checkboxes_9:
+                if checkbox.isChecked() and checkbox != self.sender():
+                    checkbox.setChecked(False)
+                elif checkbox.isChecked() and checkbox == self.sender():
+                    self.current_category_color = QColor(*color)  # 设置当前类别颜色
+                    self.current_category_name = f"{name}_{spinbox.value()}"  # 设置当前类别名称
+        else:  # 7个类别的选项卡
+            for checkbox, color, name in self.checkboxes_7:
+                if checkbox.isChecked() and checkbox != self.sender():
+                    checkbox.setChecked(False)
+                elif checkbox.isChecked() and checkbox == self.sender():
+                    self.current_category_color = QColor(*color)  # 设置当前类别颜色
+                    self.current_category_name = name  # 设置当前类别名称
+
+    def on_spinbox_change(self):
+        spinbox = self.sender()  # 获取触发信号的 QSpinBox 实例
+        if BoundingBox.selected_box and spinbox:
+            for checkbox, spinbox_item, color, name in self.checkboxes_9:
+                if spinbox_item == spinbox:
+                    self.current_category_name = f"{name}_{spinbox.value()}"
+                    BoundingBox.selected_box.category_name = self.current_category_name
+                    break
+
+    def open_image(self, filename):
+        """打开图像文件并加载到标签中。"""
+        file_name, _ = QFileDialog.getOpenFileName(self, "打开图像文件", "", "Image Files (*.png *.jpg)")
+        if file_name:
+            self.repaint_label.setPixmap(QPixmap(file_name))
+            self.current_image_path = file_name
+        elif filename:
+            self.repaint_label.setPixmap(QPixmap(filename))
+            self.current_image_path = filename
+
+    def clear_current_category_boxes(self):
+        """清除当前选择类别的所有方框。"""
+        BoundingBox.bounding_boxes = [box for box in BoundingBox.bounding_boxes if
+                                      box.category_color != self.current_category_color]
+        self.repaint_label.update()
+
+    def clear_all_boxes(self):
+        """清除所有方框。"""
+        BoundingBox.bounding_boxes.clear()
+        self.repaint_label.update()
+
+    def save_annotations(self):
+        """保存标注信息到文件。"""
+        config_file = 'config/file_default_path.json'
+
+        # 读取配置文件
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+        except FileNotFoundError:
+            config = {'repaint_default_path': os.getcwd()}
+
+        open_fold = config.get('repaint_default_path', os.getcwd())
+        if not os.path.exists(open_fold):
+            open_fold = os.getcwd()
+
+        selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径", open_fold)
+
+        # 检查用户是否选择了路径
+        if not selected_path:
+            return
+        try:
+            # 检查detect_datasets目录
+            detect_dir = os.path.join(selected_path, "detect_datasets")
+            os.makedirs(detect_dir, exist_ok=True)
+
+            # 检查images和labels目录
+            images_dir = os.path.join(detect_dir, "images")
+            labels_dir = os.path.join(detect_dir, "labels")
+            os.makedirs(images_dir, exist_ok=True)
+            os.makedirs(labels_dir, exist_ok=True)
+
+            # 保存图像到images目录
+            image_name = os.path.basename(self.current_image_path)
+            image_save_path = os.path.join(images_dir, image_name)
+            self.repaint_label.pixmap.save(image_save_path)
+
+            # 保存注释到labels目录
+            label_save_path = os.path.join(labels_dir, os.path.splitext(image_name)[0] + ".txt")
+            scale_factor = QPointF(self.repaint_label.image_scaled_size.width() / self.repaint_label.pixmap.width(),
+                                   self.repaint_label.image_scaled_size.height() / self.repaint_label.pixmap.height())
+
+            with open(label_save_path, "w") as file:
+                for box in BoundingBox.bounding_boxes:
+                    start_point, end_point = box.to_image_coordinates(scale_factor)
+                    x_center = (start_point.x() + end_point.x()) / 2 / self.repaint_label.pixmap.width()
+                    y_center = (start_point.y() + end_point.y()) / 2 / self.repaint_label.pixmap.height()
+                    width = abs(end_point.x() - start_point.x()) / self.repaint_label.pixmap.width()
+                    height = abs(end_point.y() - start_point.y()) / self.repaint_label.pixmap.height()
+                    category_index = DETECT.index(box.category_name)
+                    file.write(f"{category_index} {x_center} {y_center} {width} {height}\n")
+
+            # 生成data.yaml
+            data_yaml_path = os.path.join(detect_dir, "data.yaml")
+            with open(data_yaml_path, "w", encoding='utf-8') as yaml_file:
+                yaml_file.write(f"nc: {len(DETECT)}\n")
+                yaml_file.write(f"names: {DETECT}\n")
+
+            # 更新配置文件中的路径
+            config['repaint_default_path'] = selected_path
+            with open(config_file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+
+        except Exception as e:
+            self.bottom_msg(f"Error:Could not save file: {e}")
+
+    def save_cropped_images(self):
+        """保存每个类别的裁剪图像。"""
+        config_file = 'config/file_default_path.json'
+
+        # 读取配置文件
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+        except FileNotFoundError:
+            config = {'repaint_default_path': os.getcwd()}
+
+        open_fold = config.get('repaint_default_path', os.getcwd())
+        if not os.path.exists(open_fold):
+            open_fold = os.getcwd()
+
+        selected_path = QFileDialog.getExistingDirectory(self, "选择保存路径", open_fold)
+
+        # 检查用户是否选择了路径
+        if not selected_path:
+            return
+
+        try:
+            # 检查classify_datasets目录
+            classify_dir = os.path.join(selected_path, "classify_datasets")
+            os.makedirs(classify_dir, exist_ok=True)
+
+            # 遍历所有BoundingBox，按类别和等级保存裁剪图像
+            for box in BoundingBox.bounding_boxes:
+                # 确保 category_name 格式正确
+                if '_' not in box.category_name:
+                    continue
+
+                # 获取类别和等级
+                class_level = box.category_name.split('_', 1)
+
+                # 遍历所有9个类别的checkbox和spinbox
+                for checkbox, spinbox, color, name in self.checkboxes_9:
+                    if class_level[0] == name:
+                        category_dir = os.path.join(classify_dir, name)
+                        os.makedirs(category_dir, exist_ok=True)
+
+                        # 检查SpinBox值目录
+                        value_dir = os.path.join(category_dir, str(class_level[1]))
+                        os.makedirs(value_dir, exist_ok=True)
+
+                        # 保存裁剪图像
+                        rect = QRectF(box.start_point, box.end_point).normalized()
+                        cropped_pixmap = self.repaint_label.pixmap.copy(rect.toRect())
+
+                        # 确保文件名唯一
+                        image_count = len(os.listdir(value_dir))
+                        cropped_image_path = os.path.join(value_dir, f"{image_count + 1}.png")
+                        cropped_pixmap.save(cropped_image_path)
+
+            # 更新配置文件中的路径并保存
+            config['repaint_default_path'] = selected_path
+            with open(config_file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+
+        except Exception as e:
+            self.bottom_msg(f"Error: Could not save file: {e}")
+
+    def re_report(self):
+        """重新生成报告"""
+        pass
+
+    def on_mouse_press(self, event):
+        """鼠标按下事件处理。"""
+        if not self.repaint_label.is_inside_image(event.pos()):
+            return
+
+        pos = self.repaint_label.to_image_coordinates(event.pos())
+        scale_factor = QPointF(self.repaint_label.image_scaled_size.width() / self.repaint_label.pixmap.width(),
+                               self.repaint_label.image_scaled_size.height() / self.repaint_label.pixmap.height())
+
+        if event.button() == Qt.LeftButton:
+            for box in BoundingBox.bounding_boxes:
+                if box.selected:
+                    corner = box.get_corner(event.pos(), scale_factor, self.repaint_label.image_offset)
+                    if corner:
+                        box.dragging_corner = corner
+                        self.dragging_box = box
+                        return
+
+            for box in BoundingBox.bounding_boxes:
+                if box.contains(event.pos(), scale_factor, self.repaint_label.image_offset):
+                    BoundingBox.deselect_all()
+                    self.dragging_box = box
+                    box.selected = True
+                    self.dragging_offset = pos - box.start_point
+                    BoundingBox.selected_box = box
+                    if self.tabWidget_repaint.currentIndex() == 0:
+                        class_level = self.dragging_box.category_name.split('_', 1)
+                        for checkbox, spinbox, color, name in self.checkboxes_9:
+                            if class_level[0] == name:
+                                spinbox.setValue(int(class_level[1]))
+                    self.update_status_bar(box, event.pos())
+                    self.repaint_label.update()
+                    return
+
+            if self.repaint_label.is_inside_image(event.pos()) and not any(
+                    box.contains(event.pos(), scale_factor, self.repaint_label.image_offset) for box in
+                    BoundingBox.bounding_boxes):
+                BoundingBox.deselect_all()
+            self.current_box = BoundingBox(pos, pos, self.current_category_name, self.current_category_color)
+            self.update_status_bar(self.current_box, event.pos())
+
+    def on_mouse_move(self, event):
+        """鼠标移动事件处理。"""
+        if not self.repaint_label.is_inside_image(event.pos()):
+            return
+
+        pos = self.repaint_label.to_image_coordinates(event.pos())
+
+        if self.current_box:
+            self.current_box.end_point = pos
+            self.update_status_bar(self.current_box, event.pos())
+            self.repaint_label.update()
+        elif self.dragging_box:
+            scale_factor = QPointF(self.repaint_label.image_scaled_size.width() / self.repaint_label.pixmap.width(),
+                                   self.repaint_label.image_scaled_size.height() / self.repaint_label.pixmap.height())
+            if self.dragging_box.dragging_corner:
+                self.dragging_box.resize(self.dragging_box.dragging_corner, event.pos(), scale_factor,
+                                         self.repaint_label.image_offset)
+            else:
+                offset = pos - (self.dragging_box.start_point + self.dragging_offset)
+                self.dragging_box.move(offset)
+                self.dragging_offset = pos - self.dragging_box.start_point
+            self.update_status_bar(self.dragging_box, event.pos())
+            self.repaint_label.update()
+
+    def on_mouse_release(self, event):
+        """鼠标释放事件处理。"""
+        if self.current_box:
+            if self.current_box.width() < 2 or self.current_box.height() < 2:
+                BoundingBox.bounding_boxes.remove(self.current_box)
+            self.current_box = None
+        elif self.dragging_box:
+            self.dragging_box.dragging_corner = None
+            self.dragging_box = None
+            self.dragging_offset = None
+        self.repaint_label.update()
+
+    def keyPressEvent(self, event):
+        """键盘按下事件处理。"""
+        if event.key() in [Qt.Key_Delete, Qt.Key_Backspace]:
+            BoundingBox.remove_selected()
+            self.repaint_label.update()
+
+    def update_status_bar(self, box, mouse_pos=None):
+        """更新状态栏显示的方框信息及鼠标位置。"""
+        start_pos = box.start_point
+        end_pos = box.end_point
+
+        # 将坐标值精确到两位小数
+        start_x = f"{start_pos.x():.2f}"
+        start_y = f"{start_pos.y():.2f}"
+        end_x = f"{end_pos.x():.2f}"
+        end_y = f"{end_pos.y():.2f}"
+
+        self.start_position_label.setText(f"方框起始位置: ({start_x}, {start_y})")
+        self.end_position_label.setText(f"方框终止位置: ({end_x}, {end_y})")
+        self.box_size_label.setText(f"方框大小: {box.width():.2f} x {box.height():.2f}")
+
+        if mouse_pos:
+            image_coords = self.repaint_label.to_image_coordinates(mouse_pos)
+            mouse_x = f"{image_coords.x():.2f}"
+            mouse_y = f"{image_coords.y():.2f}"
+            self.mouse_position_label.setText(f"鼠标位置: ({mouse_x}, {mouse_y})")
+
     # report_events
     def newFile(self):
         """
@@ -469,7 +803,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 doc.save(fname)
 
                 # 更新配置文件中的路径
-                config = {'doc_default_path': os.path.dirname(fname)}
+                config = {'report_default_path': os.path.dirname(fname)}
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(config, f, ensure_ascii=False, indent=2)
 
@@ -487,9 +821,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with open(config_file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
         except FileNotFoundError:
-            config = {'doc_default_path': os.getcwd()}
+            config = {'report_default_path': os.getcwd()}
 
-        open_fold = config.get('doc_default_path', os.getcwd())
+        open_fold = config.get('report_default_path', os.getcwd())
         if not os.path.exists(open_fold):
             open_fold = os.getcwd()
 
@@ -508,7 +842,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             self.textEdit.append(para.text)
 
                 # 更新配置文件中的路径
-                config['doc_default_path'] = os.path.dirname(fname)
+                config['report_default_path'] = os.path.dirname(fname)
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(config, f, ensure_ascii=False, indent=2)
 
@@ -526,9 +860,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with open(config_file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
         except FileNotFoundError:
-            config = {'doc_default_path': os.getcwd()}
+            config = {'report_default_path': os.getcwd()}
 
-        current_file = config.get('doc_default_path', None)
+        current_file = config.get('report_default_path', None)
         if current_file:
             if not current_file.endswith('.docx'):
                 current_file = f"{current_file}.docx"
@@ -579,7 +913,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.bottom_msg("Warning:Unsupported file format.")
 
                 # 更新配置文件中的路径
-                config = {'doc_default_path': os.path.dirname(fname)}
+                config = {'report_default_path': os.path.dirname(fname)}
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(config, f, ensure_ascii=False, indent=2)
 

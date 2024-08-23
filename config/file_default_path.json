@@ -1,4 +1,5 @@
 {
   "detect_default_path": "E:/boneage_pyqt5/test/images",
-  "doc_default_path": "C:/Users/86198/Desktop"
+  "report_default_path": "C:/Users/86198/Desktop",
+  "repaint_default_path": "C:/Users/86198/Desktop"
 }

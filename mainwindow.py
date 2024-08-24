@@ -4,7 +4,7 @@ import sys
 
 import cv2
 import numpy as np
-from PyQt5.QtCore import Qt, QPoint, QTimer, QPointF, QRectF
+from PyQt5.QtCore import Qt, QPoint, QTimer, QPointF, QRectF, pyqtSignal
 from PyQt5.QtGui import QImage, QPixmap, QTextCharFormat, QFont, QTextCursor, QTransform, QTextImageFormat, \
     QFontDatabase, QTextListFormat, QTextBlockFormat, QColor
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -19,7 +19,7 @@ from UI.mainUI import Ui_MainWindow
 from det_thread import DetThread
 from toolUI.CheckableComboBox import replace_comboBox_with_checkable
 from toolUI.ImageLabel import convert_to_imagelabel, BoundingBox
-from toolUI.ImageTextEdit import replace_textedit_with_imagetextedit
+from toolUI.ImageTextEdit import replace_textedit_with_imagetextedit, ImageTextEdit
 from toolUI.TipsMessageBox import TipsMessageBox
 from toolUI.cameranums import Camera
 
@@ -31,6 +31,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     Attributes:
         det_thread (DetThread): 检测线程实例。
     """
+    texteditUpdated = pyqtSignal(ImageTextEdit)
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -131,6 +132,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.imageZoomOutButton.clicked.connect(lambda: self.process_Image(0.9))
 
         self.textEdit = replace_textedit_with_imagetextedit(self.textEdit)
+        self.texteditUpdated.connect(self.update_textedit_reference)
 
     def repaint_area_initUI(self):
         """
@@ -1060,6 +1062,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         image_format.setWidth(image.width())
         image_format.setHeight(image.height())
         cursor.insertImage(image_format)
+
+    def update_textedit_reference(self, new_textedit):
+        self.textEdit = new_textedit
 
     # global_events
     def load_setting(self):

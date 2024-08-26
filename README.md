@@ -1,4 +1,4 @@
-# 骨龄评估软件
+![image](https://github.com/user-attachments/assets/326282af-24c5-4b90-b66b-eb9a5b962751)# 骨龄评估软件
 
 本项目是一个使用 PyQt5 开发的骨龄评估软件，该软件旨在帮助医疗专业人员基于放射影像评估患者的骨龄。
 
@@ -31,11 +31,11 @@
 ### 主界面（推理区）
 ![1722328099746.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a42a6b342.png)
 
+### 主界面（重绘区）
+![1724671650718.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc66a6d991b.png)
+
 ### 主界面（报告区）
-
-
-### 主界面（其他）
-
+![1724671569345.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc66556cc2a.png)
 
 ### 骨龄评估示例界面（文件输入）
 ![1722328338862.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a51719e4f.png)
@@ -55,7 +55,12 @@
 ### 关节分类示例界面（摄像头输入）
 ![1722329605129.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8aa0890213.png)
 
+### 关节等级标注示例界面
+![1724671335321.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc656cc4223.png)
 
+### 关节检测标注示例界面
+
+### 
 ## 许可证
 此项目采用 MIT 许可证。
 

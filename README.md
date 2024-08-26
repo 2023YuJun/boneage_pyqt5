@@ -29,13 +29,13 @@
 ## 软件功能展示
 以下是软件界面的截图展示：
 ### 主界面（推理区）
-![1722328099746.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a42a6b342.png)
+![1724672295439.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc692cd4c31.png)
 
 ### 主界面（重绘区）
 ![1724671650718.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc66a6d991b.png)
 
 ### 主界面（报告区）
-![1724671569345.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc66556cc2a.png)
+![1724672194076.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc68d65757c.png)
 
 ### 骨龄评估示例界面（文件输入）
 ![1722328338862.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a51719e4f.png)

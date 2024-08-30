@@ -804,8 +804,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     doc.add_paragraph(block)
                 doc.save(fname)
 
+                # 记录文件路径
+                self.docfilename = fname
+
                 # 更新配置文件中的路径
-                config = {'report_default_path': os.path.dirname(fname)}
+                try:
+                    with open(config_file, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                except (FileNotFoundError, json.JSONDecodeError):
+                    config = {}
+
+                config['report_default_path'] = os.path.dirname(fname)
+
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(config, f, ensure_ascii=False, indent=2)
 
@@ -822,8 +832,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             with open(config_file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
-        except FileNotFoundError:
-            config = {'report_default_path': os.getcwd()}
+        except (FileNotFoundError, json.JSONDecodeError):
+            config = {}
 
         open_fold = config.get('report_default_path', os.getcwd())
         if not os.path.exists(open_fold):
@@ -843,6 +853,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         if para.text:
                             self.textEdit.append(para.text)
 
+                # 记录文件路径
+                self.docfilename = fname
+
                 # 更新配置文件中的路径
                 config['report_default_path'] = os.path.dirname(fname)
                 with open(config_file, 'w', encoding='utf-8') as f:
@@ -855,49 +868,96 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         默认保存当前内容为 .docx 文件。
         """
-        config_file = 'config/file_default_path.json'
-
-        # 读取配置文件
-        try:
-            with open(config_file, 'r', encoding='utf-8') as f:
-                config = json.load(f)
-        except FileNotFoundError:
-            config = {'report_default_path': os.getcwd()}
-
-        current_file = config.get('report_default_path', None)
-        if current_file:
-            if not current_file.endswith('.docx'):
-                current_file = f"{current_file}.docx"
-
-            try:
-                doc = Document()
-                doc._body.clear_content()  # 清除原有内容
-                for block in self.textEdit.toPlainText().split('\n'):
-                    doc.add_paragraph(block)
-                doc.save(current_file)
-
-            except Exception as e:
-                self.bottom_msg(f"Error:Could not save file: {e}")
+        if hasattr(self, 'docfilename') and self.docfilename:
+            current_file = self.docfilename
         else:
             self.saveAsFile()
+            return
+
+        try:
+            # 清理不必要的临时图片
+            self.textEdit.cleanup_temp_images()
+
+            doc = Document()
+            doc._body.clear_content()  # 清除原有内容
+
+            # 处理文本和图片
+            cursor = self.textEdit.textCursor()
+            cursor.movePosition(QTextCursor.Start)
+
+            while True:
+                char_format = cursor.charFormat()
+                if char_format.isImageFormat():
+                    image_format = char_format.toImageFormat()
+                    image_path = image_format.name()
+
+                    # 检查路径是否为相对路径并转换为绝对路径
+                    if not os.path.isabs(image_path):
+                        image_path = os.path.join(os.getcwd(), image_path)  # 转换为绝对路径
+
+                    if os.path.exists(image_path):
+                        doc.add_picture(image_path)
+                    else:
+                        self.bottom_msg(f"Warning: Image not found: {image_path}")
+                else:
+                    text = cursor.block().text()
+                    doc.add_paragraph(text)
+
+                # 移动到下一个块
+                if not cursor.movePosition(QTextCursor.NextBlock):
+                    break
+
+            doc.save(current_file)
+
+        except Exception as e:
+            self.bottom_msg(f"Error: Could not save file: {e}")
 
     def saveAsFile(self):
         """
-        保存当前内容为指定格式的文件。
+        保存当前内容为指定格式的新文件。
         """
         config_file = 'config/file_default_path.json'
+
+        # 打开文件对话框让用户选择新文件路径
         fname, _ = QFileDialog.getSaveFileName(self, 'Save file as', '',
-                                               'Word documents (*.doc *.docx);;Text files (*.txt);;PDF files ('
-                                               '*.pdf);;All files (*)')
-        if fname:
+                                               'Word documents (*.doc *.docx);;Text files (*.txt);;PDF files (*.pdf);;All files (*)')
+
+        if fname:  # 如果用户选择了文件路径
             try:
+                # 清理不必要的临时图片
+                self.textEdit.cleanup_temp_images()
+
                 # 根据文件扩展名选择保存格式
                 file_ext = os.path.splitext(fname)[1].lower()
                 if file_ext in ['.doc', '.docx']:
                     doc = Document()
                     doc._body.clear_content()  # 清除原有内容
-                    for block in self.textEdit.toPlainText().split('\n'):
-                        doc.add_paragraph(block)
+
+                    cursor = self.textEdit.textCursor()
+                    cursor.movePosition(QTextCursor.Start)
+
+                    while True:
+                        char_format = cursor.charFormat()
+                        if char_format.isImageFormat():
+                            image_format = char_format.toImageFormat()
+                            image_path = image_format.name()
+
+                            # 检查路径是否为相对路径并转换为绝对路径
+                            if not os.path.isabs(image_path):
+                                image_path = os.path.join(os.getcwd(), image_path)
+
+                            if os.path.exists(image_path):
+                                doc.add_picture(image_path)
+                            else:
+                                self.bottom_msg(f"Warning: Image not found: {image_path}")
+                        else:
+                            text = cursor.block().text()
+                            doc.add_paragraph(text)
+
+                        # 移动到下一个块
+                        if not cursor.movePosition(QTextCursor.NextBlock):
+                            break
+
                     doc.save(fname)
                 elif file_ext == '.txt':
                     with open(fname, 'w', encoding='utf-8') as file:
@@ -905,22 +965,56 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif file_ext == '.pdf':
                     doc = Document()
                     doc._body.clear_content()  # 清除原有内容
-                    for block in self.textEdit.toPlainText().split('\n'):
-                        doc.add_paragraph(block)
+
+                    cursor = self.textEdit.textCursor()
+                    cursor.movePosition(QTextCursor.Start)
+
+                    while True:
+                        char_format = cursor.charFormat()
+                        if char_format.isImageFormat():
+                            image_format = char_format.toImageFormat()
+                            image_path = image_format.name()
+
+                            # 检查路径是否为相对路径并转换为绝对路径
+                            if not os.path.isabs(image_path):
+                                image_path = os.path.join(os.getcwd(), image_path)
+
+                            if os.path.exists(image_path):
+                                doc.add_picture(image_path)
+                            else:
+                                self.bottom_msg(f"Warning: Image not found: {image_path}")
+                        else:
+                            text = cursor.block().text()
+                            doc.add_paragraph(text)
+
+                        # 移动到下一个块
+                        if not cursor.movePosition(QTextCursor.NextBlock):
+                            break
+
                     temp_docx = f"{os.path.splitext(fname)[0]}.docx"
                     doc.save(temp_docx)  # 先保存为 docx 文件
                     convert(temp_docx, fname)  # 转换为 pdf 文件
                     os.remove(temp_docx)  # 删除中间文件
                 else:
-                    self.bottom_msg("Warning:Unsupported file format.")
+                    self.bottom_msg("Warning: Unsupported file format.")
+
+                # 更新当前文件路径为用户选择的新文件路径
+                self.docfilename = fname
 
                 # 更新配置文件中的路径
-                config = {'report_default_path': os.path.dirname(fname)}
+                try:
+                    with open(config_file, 'r', encoding='utf-8') as f:
+                        config = json.load(f)
+                except (FileNotFoundError, json.JSONDecodeError):
+                    config = {}
+
+                config['report_default_path'] = os.path.dirname(fname)
+
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(config, f, ensure_ascii=False, indent=2)
 
             except Exception as e:
-                self.bottom_msg(f"Error:Could not save as file: {e}")
+                self.bottom_msg(f"Error: Could not save as file: {e}")
 
     def printPreview(self):
         printer = QPrinter(QPrinter.HighResolution)

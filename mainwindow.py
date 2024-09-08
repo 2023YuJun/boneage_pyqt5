@@ -57,7 +57,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         self.maxButton.setCheckable(True)
         self.maxButton.clicked.connect(self.max_or_restore)
-        self.maxButton.animateClick(10)
 
         self.comboBox_model = replace_comboBox_with_checkable(self.comboBox_model)
         self.comboBox_task.addItems(["骨龄评估", "检测", "分类"])
@@ -526,13 +525,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def open_image(self, filename):
         """打开图像文件并加载到标签中。"""
-        file_name, _ = QFileDialog.getOpenFileName(self, "打开图像文件", "", "Image Files (*.png *.jpg)")
-        if file_name:
-            self.repaint_label.setPixmap(QPixmap(file_name))
-            self.current_image_path = file_name
-        elif filename:
+        if filename:
             self.repaint_label.setPixmap(QPixmap(filename))
             self.current_image_path = filename
+        else:
+            file_name, _ = QFileDialog.getOpenFileName(self, "打开图像文件", "", "Image Files (*.png *.jpg)")
+            self.repaint_label.setPixmap(QPixmap(file_name))
+            self.current_image_path = file_name
 
     def clear_current_category_boxes(self):
         """清除当前选择类别的所有方框。"""

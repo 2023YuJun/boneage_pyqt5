@@ -29,37 +29,29 @@
 ## 软件功能展示
 以下是软件界面的截图展示：
 ### 主界面（推理区）
-![1724672295439.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc692cd4c31.png)
+![1726852721571.png](https://krseoul.imgtbl.com/i/2024/09/21/66edae77ece62.png)
 
 ### 主界面（重绘区）
-![1724671650718.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc66a6d991b.png)
+![1726852756228.png](https://krseoul.imgtbl.com/i/2024/09/21/66edae96eea9b.png)
 
 ### 主界面（报告区）
-![1724672194076.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc68d65757c.png)
+![1726852791913.png](https://krseoul.imgtbl.com/i/2024/09/21/66edaebc3c5de.png)
 
-### 骨龄评估示例界面（文件输入）
-![1722328338862.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a51719e4f.png)
+### 骨龄评估示例界面
+![1726852928343.png](https://krseoul.imgtbl.com/i/2024/09/21/66edaf481e9df.png)
 
-### 骨龄评估示例界面（摄像头输入）
-![1722328701274.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a681e397e.png)
+### 关节检测示例界面
+![1726852965480.png](https://krseoul.imgtbl.com/i/2024/09/21/66edaf6b740e6.png)
 
-### 关节检测示例界面（文件输入）
-![1722328871377.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a72f2f4a3.png)
-
-### 关节检测示例界面（摄像头输入）
-![1722329310512.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a8e25263a.png)
-
-### 关节分类示例界面（文件输入）
-![1722329443838.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8a967c174f.png)
-
-### 关节分类示例界面（摄像头输入）
-![1722329605129.png](https://krseoul.imgtbl.com/i/2024/07/30/66a8aa0890213.png)
+### 关节分类示例界面
+![1726853009607.png](https://krseoul.imgtbl.com/i/2024/09/21/66edaf957400c.png)
 
 ### 关节等级标注示例界面
-![1724671335321.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc656cc4223.png)
+![1726853636077.png](https://krseoul.imgtbl.com/i/2024/09/21/66edb20911cc1.png)
 
 ### 关节检测标注示例界面
-![1724672125960.png](https://krseoul.imgtbl.com/i/2024/08/26/66cc68825c2a5.png)
+![1726853838753.png](https://krseoul.imgtbl.com/i/2024/09/21/66edb2d3c2a9f.png)
+
 
 ## 许可证
 此项目采用 MIT 许可证。
